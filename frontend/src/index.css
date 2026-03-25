@@ -123,3 +123,17 @@
 .btn-os {
   @apply px-12 py-6 rounded-full font-black text-[10px] uppercase tracking-[0.5em] transition-all duration-500 overflow-hidden relative;
 }
+
+@keyframes gradient-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient-flow {
+  animation: gradient-flow 6s ease infinite;
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}

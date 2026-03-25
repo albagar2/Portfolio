@@ -135,14 +135,52 @@ export const EnhancedHero = ({ profile, t }: { profile: any, t: any }) => {
              <Zap size={14} className="fill-current animate-pulse" /> {t.hero.system_loaded}
           </motion.div>
           
-          <div className="relative">
+          <div className="relative group perspective-1000">
+            {/* Capa de Brillo/Glow Dinámico Detrás del Título */}
+            <motion.div 
+               style={{ y: y1 }}
+               initial={{ opacity: 0 }}
+               animate={{ opacity: 1 }}
+               className="absolute inset-0 flex items-center justify-center -z-10 blur-[120px] opacity-30 group-hover:opacity-50 transition-opacity duration-1000"
+            >
+               <div className="w-[80%] h-32 bg-gradient-to-r from-[#00FFF0] via-[#D9FF00] to-[#FF007A]" />
+            </motion.div>
+
             <motion.h1 
               style={{ y: y1 }}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="text-9xl md:text-[15rem] lg:text-[16rem] font-black tracking-tighter leading-[0.7] text-white italic uppercase relative z-10 font-outfit"
+              initial={{ opacity: 0, scale: 0.9, rotateX: -20 }}
+              animate={{ opacity: 1, scale: 1, rotateX: 0 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              className="text-9xl md:text-[15rem] lg:text-[18rem] font-black tracking-tighter leading-[0.7] text-white italic uppercase relative z-10 font-outfit select-none"
             >
-              ALBA<span className="text-transparent bg-clip-text bg-gradient-to-br from-[#00FFF0] to-[#D9FF00]">.G</span>
+              <span className="relative inline-block">
+                ALBA
+                {/* Efecto de Glitch Sutil (Capa Superior) */}
+                <motion.span 
+                   animate={{ 
+                      x: [0, 2, -2, 0], 
+                      opacity: [1, 0.8, 1] 
+                   }} 
+                   transition={{ 
+                      duration: 0.2, 
+                      repeat: Infinity, 
+                      repeatType: "mirror",
+                      repeatDelay: 5 
+                   }}
+                   className="absolute inset-0 text-[#00FFF0] opacity-20 translate-x-[2px] translate-y-[-1px] pointer-events-none"
+                >
+                  ALBA
+                </motion.span>
+              </span>
+              <span className="relative inline-block ml-2 translate-y-[0.05em]">
+                 <span className="text-transparent bg-clip-text bg-gradient-to-br from-[#00FFF0] via-[#D9FF00] to-[#00FFF0] bg-[length:200%_auto] animate-gradient-flow">.G</span>
+                 {/* Nodo de Interfaz en el punto */}
+                 <motion.div 
+                    animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                    className="absolute -bottom-2 right-0 w-8 h-8 rounded-full border border-[#D9FF00]/50 -z-10 blur-sm" 
+                 />
+              </span>
             </motion.h1>
           </div>
 

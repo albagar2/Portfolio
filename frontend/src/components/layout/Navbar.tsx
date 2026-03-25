@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { zap as Zap, Cpu, Database, Activity, User } from 'lucide-react';
+import { Zap, Cpu, Database, Activity, User } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 interface NavbarProps {
@@ -143,6 +143,3 @@ export const Navbar = ({ onOpenContact, lang, setLang, t }: NavbarProps) => {
     </nav>
   );
 };
-
-// Pequeño workaround para Zap con minúsculas si es necesario, lucide usa PascalCase
-import { Zap as zap } from 'lucide-react';
