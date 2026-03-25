@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #010310;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #00FFF0, #4f46e5);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #D9FF00;
+}
+
+:root {
+    --background: 230 40% 4%;
+    --foreground: 210 40% 98%;
+    --color-aqua: #00FFF0;
+    --color-lime: #D9FF00;
+    --color-rose: #FF007A;
+    --color-amber: #FFB800;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-outfit: 'Outfit', sans-serif;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-white/5;
+  }
+  body {
+    @apply bg-[#010309] text-foreground antialiased selection:bg-[#D9FF00] selection:text-black;
+    font-family: var(--font-outfit);
+    margin: 0;
+    overflow-x: hidden;
+    cursor: none; /* Vamos a crear nuestro propio cursor-mira */
+  }
+}
+
+/* --- EFECTO DATA-FEED (MATRIX) --- */
+.bg-data-feed::before {
+  content: "IMPORT { AG_ENGINE } FROM './CORE'; CONST SYSTEM = NEW ARCHITECTURE(); SYSTEM.BOOT(); LOG('INTEGRITY: 100%'); ";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-mono);
+  font-size: 15rem;
+  font-weight: 900;
+  color: white;
+  opacity: 0.015;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  line-height: 0.8;
+  letter-spacing: -0.1em;
+}
+
+/* --- HUD DE DIAGNÓSTICO --- */
+.hud-line {
+  @apply fixed z-[200] pointer-events-none opacity-10;
+  background-color: var(--color-aqua);
+}
+
+/* --- GLASSMORPHISM 4.0 (OS CORE) --- */
+.os-window {
+  @apply backdrop-blur-[100px] bg-black/40 border-[1px] border-white/10 shadow-[0_0_80px_rgba(0,0,0,0.8)] ;
+  @apply rounded-[3rem] transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)];
+}
+
+.os-header {
+  @apply flex items-center gap-2 px-10 py-6 border-b border-white/5;
+}
+
+.os-dot {
+  @apply w-2 h-2 rounded-full;
+}
+
+/* --- TIPOGRAFÍA DE INGENIERÍA --- */
+.text-terminal {
+  font-family: var(--font-mono);
+}
+
+.scan-line {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, transparent, rgba(0, 255, 240, 0.2), transparent);
+  animation: scan 8s linear infinite;
+  z-index: 250;
+  pointer-events: none;
+}
+
+@keyframes scan {
+  from { top: -2%; }
+  to { top: 102%; }
+}
+
+/* --- UTILS --- */
+.glow-text {
+  text-shadow: 0 0 20px currentColor;
+}
+
+.btn-os {
+  @apply px-12 py-6 rounded-full font-black text-[10px] uppercase tracking-[0.5em] transition-all duration-500 overflow-hidden relative;
+}
