@@ -113,20 +113,104 @@ async function main() {
     await prisma.skill.create({ data: skill });
   }
 
-  // 7. Proyecto de Referencia (Control Gasoil)
-  await prisma.project.create({
-    data: {
+  // 7. Proyectos de Referencia (Sistemas Core)
+  await prisma.projectTech.deleteMany({});
+  await prisma.project.deleteMany({});
+
+  const exampleProjects = [
+    {
       title: 'Control Gasoil Familiar',
       slug: 'control-gasoil-fam',
-      description: 'Sistema completo de gestión para mantenimientos y repostajes familiares con integración en Google Drive.',
+      description: 'Sistema completo de gestión para mantenimientos y repostajes familiares con integración en Google Drive y alertas de consumo.',
       category: 'web',
       featured: true,
       status: 'PUBLISHED',
-      technologies: {
-        create: [{ name: 'React' }, { name: 'Node.js' }, { name: 'PostgreSQL' }]
-      }
+      technologies: { create: [{ name: 'React' }, { name: 'Node.js' }, { name: 'PostgreSQL' }] }
+    },
+    {
+      title: 'ALBA-OS Control Center',
+      slug: 'alba-os-control-center',
+      description: 'Interfaz de mando para la monitorización de servicios cloud en tiempo real bajo estética Command Line.',
+      category: 'arquitectura',
+      featured: true,
+      status: 'PUBLISHED',
+      technologies: { create: [{ name: 'TypeScript' }, { name: 'Framer Motion' }, { name: 'Redis' }] }
+    },
+    {
+      title: 'Neural Link Guard',
+      slug: 'neural-link-guard',
+      description: 'Sistema de seguridad perimetral para APIs REST con detección de intrusiones mediante análisis heurístico.',
+      category: 'api',
+      featured: false,
+      status: 'PUBLISHED',
+      technologies: { create: [{ name: 'Express' }, { name: 'Python' }, { name: 'Docker' }] }
+    },
+    {
+      title: 'Crypto Terminal Pro',
+      slug: 'crypto-terminal-pro',
+      description: 'Dashboard de trading de alta fidelidad con actualizaciones de mercado vía WebSockets de baja latencia.',
+      category: 'web',
+      featured: true,
+      status: 'PUBLISHED',
+      technologies: { create: [{ name: 'Next.js' }, { name: 'Socket.io' }, { name: 'Tailwind' }] }
+    },
+    {
+      title: 'Bio-Sync Health Tech',
+      slug: 'bio-sync-health',
+      description: 'Aplicación móvil para la sincronización de datos biométricos y análisis de rendimiento deportivo.',
+      category: 'web',
+      featured: false,
+      status: 'PUBLISHED',
+      technologies: { create: [{ name: 'React Native' }, { name: 'Firebase' }, { name: 'GraphQL' }] }
+    },
+    {
+      title: 'Echo Vault Storage',
+      slug: 'echo-vault-storage',
+      description: 'Solución de almacenamiento cifrado punto a punto para activos digitales de alta sensibilidad.',
+      category: 'api',
+      featured: false,
+      status: 'PUBLISHED',
+      technologies: { create: [{ name: 'Go' }, { name: 'PostgreSQL' }, { name: 'AWS S3' }] }
     }
-  });
+  ];
+
+  for (const projData of exampleProjects) {
+    await prisma.project.create({ data: projData });
+  }
+
+  // 8. Blog Posts de Ejemplo (Visualización Técnica)
+  await prisma.postTag.deleteMany({});
+  await prisma.post.deleteMany({});
+  
+  const user = await prisma.user.findFirst({ where: { email: ADMIN_EMAIL } });
+  if (user) {
+    const examplePosts = [
+      {
+        title: 'Arquitectura de Microservicios en Node.js',
+        slug: 'arquitectura-microservicios-nodejs',
+        excerpt: 'Explorando cómo escalar sistemas distribuidos mediante el uso de patrones de diseño avanzados.',
+        content: `# Introducción a Microservicios\n\nLos microservicios permiten que los equipos desarrollen y escalen servicios de forma independiente.\n\n## Beneficios Clave\n\n*   **Escalabilidad**: Solo escala lo que necesitas.\n*   **Aislamiento**: Fallos contenidos.\n\n### Implementación Local\n\n\`\`\`javascript\nconst express = require('express');\nconst app = express();\n\napp.get('/api/health', (req, res) => {\n  res.json({ status: 'UP', node: process.pid });\n});\n\napp.listen(3000);\n\`\`\`\n\n**Conclusión**: Ideal para sistemas complejos.`,
+        published: true,
+        publishedAt: new Date(),
+        authorId: user.id,
+        tags: { create: [{ name: 'backend' }, { name: 'node' }] }
+      },
+      {
+        title: 'Domina Framer Motion en React 18',
+        slug: 'domina-framer-motion-react-18',
+        excerpt: 'Cómo crear interfaces fluidas y animaciones cinemáticas de alto impacto.',
+        content: `# Animaciones Premium\n\nFramer Motion es el estándar para animaciones en React.\n\n## Core Concepts\n\n1.  **Animate**: El estado final.\n2.  **Initial**: El estado de entrada.\n\n### Ejemplo de Stagger\n\n\`\`\`typescript\nconst variants = {\n  hidden: { opacity: 0 },\n  visible: { opacity: 1, transition: { staggerChildren: 0.1 } }\n};\n\`\`\`\n\nDiseña experiencias que dejen huella.`,
+        published: true,
+        publishedAt: new Date(),
+        authorId: user.id,
+        tags: { create: [{ name: 'frontend' }, { name: 'ui' }] }
+      }
+    ];
+
+    for (const p of examplePosts) {
+      await prisma.post.create({ data: p });
+    }
+  }
 
   console.log('🎉 ¡Sincronización Total Completada! Tu portfolio refleja ahora tu CV real.');
 }

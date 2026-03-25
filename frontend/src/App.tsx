@@ -4,6 +4,7 @@ import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 
 // --- SERVICIOS Y CONSTANTES ---
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { NotificationProvider } from './context/NotificationContext';
 import { api } from './services/api';
 import { translations } from './constants/translations';
 
@@ -79,11 +80,11 @@ export const App = () => {
     const fetchData = async () => {
       try {
         const [proj, prof, exp, edu, posts] = await Promise.all([
-          api.get('/projects'), 
+          api.get('/projects').catch(() => ({ data: { data: [] } })), 
           api.get('/profile').catch(() => ({ data: { data: null } })), 
-          api.get('/experience'), 
-          api.get('/education'), 
-          api.get('/posts')
+          api.get('/experience').catch(() => ({ data: { data: [] } })), 
+          api.get('/education').catch(() => ({ data: { data: [] } })), 
+          api.get('/posts').catch(() => ({ data: { data: [] } }))
         ]);
 
         setData({ 
@@ -103,10 +104,11 @@ export const App = () => {
   }, []);
 
   return (
-    <AuthProvider>
-      <div className="bg-[#010309] min-h-screen selection:bg-[#D9FF00] selection:text-black bg-data-feed overflow-x-hidden">
-        {/* Capas de Interfaz Crítica */}
-        <CustomCursor />
+    <NotificationProvider>
+      <AuthProvider>
+        <div className="bg-[#010309] min-h-screen selection:bg-[#D9FF00] selection:text-black bg-data-feed overflow-x-hidden">
+          {/* Capas de Interfaz Crítica */}
+          <CustomCursor />
         <div className="scan-line" aria-hidden="true" />
         
         {/* Gestor de Transiciones de Página */}
@@ -163,7 +165,8 @@ export const App = () => {
         </AnimatePresence>
       </div>
     </AuthProvider>
-  );
+  </NotificationProvider>
+);
 };
 
 export default App;

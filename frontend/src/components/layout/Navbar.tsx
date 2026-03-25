@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Zap, Cpu, Database, Activity, User } from 'lucide-react';
+import { Zap, Cpu, Database, Activity, User, Layers, GraduationCap, Newspaper } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 interface NavbarProps {
@@ -20,11 +20,14 @@ export const Navbar = ({ onOpenContact, lang, setLang, t }: NavbarProps) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Configuración de los nodos de navegación
+  // Configuración de los nodos de navegación expandidos
   const NAVBAR_LINKS = [
     { id: 'hero', label: t.nav.boot, icon: Zap },
-    { id: 'projects', label: t.nav.systems, icon: Cpu },
-    { id: 'experience', label: t.nav.registry, icon: Database },
+    { id: 'skills', label: t.nav.skills, icon: Cpu },
+    { id: 'projects', label: t.nav.projects, icon: Layers },
+    { id: 'experience', label: t.nav.experience, icon: Database },
+    { id: 'education', label: t.nav.education, icon: GraduationCap },
+    { id: 'posts', label: t.nav.posts, icon: Newspaper },
     { id: 'contact', label: t.nav.signal, icon: Activity },
   ];
 
@@ -70,8 +73,11 @@ export const Navbar = ({ onOpenContact, lang, setLang, t }: NavbarProps) => {
   // Colores Temáticos del Sistema según la sección
   const getThemeColor = () => {
     switch (activeTab) {
+      case 'skills': return '#00FFF0';
       case 'projects': return '#D9FF00';
       case 'experience': return '#FF007A';
+      case 'education': return '#A855F7';
+      case 'posts': return '#6366F1';
       case 'contact': return '#FFB800';
       default: return '#00FFF0';
     }

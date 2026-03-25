@@ -7,6 +7,7 @@ import {
   Eye, EyeOff, Calendar, LayoutGrid
 } from 'lucide-react';
 import { api } from '../../services/api';
+import { useNotification } from '../../context/NotificationContext';
 
 interface Post {
   id: string;
@@ -23,6 +24,7 @@ interface Post {
 export const BlogPostsManager = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
+  const { showNotification } = useNotification();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<Post | null>(null);
   const [formData, setFormData] = useState<Partial<Post>>({
@@ -87,11 +89,12 @@ export const BlogPostsManager = () => {
         const slug = formData.title?.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '') || 'new-post';
         await api.post('/posts', { ...payload, slug });
       }
+      showNotification(editingPost ? 'ARTÍCULO_ACTUALIZADO_CORRECTAMENTE' : 'ARTÍCULO_CREADO_CORRECTAMENTE', 'success');
       fetchPosts();
       closeModal();
     } catch (err) {
       console.error('Error saving post:', err);
-      alert('Error al guardar el artículo. Revisa la consola.');
+      showNotification('ERROR_AL_GUARDAR_ARTÍCULO', 'error');
     }
   };
 

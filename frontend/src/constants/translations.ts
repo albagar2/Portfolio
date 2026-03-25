@@ -5,7 +5,15 @@
 
 export const translations: any = {
     es: {
-      nav: { boot: 'Inicio', systems: 'Sistemas', registry: 'Registro', signal: 'Señal' },
+      nav: { 
+        boot: 'Inicio', 
+        skills: 'Sistemas', 
+        projects: 'Servicios', 
+        experience: 'Trayectoria', 
+        education: 'Nodos', 
+        posts: 'Escritos', 
+        signal: 'Señal' 
+      },
       hero: { 
         system_loaded: 'ALBA_OS_CORE_v1.5_READY', 
         bio_1: 'CONSTRUYENDO EL FUTURO DE LAS', 
@@ -47,7 +55,15 @@ export const translations: any = {
       footer: { architecture: 'Arquitectura de Core 2.9 // LISTO', rights: 'TODOS LOS DERECHOS RESERVADOS' }
     },
     en: {
-      nav: { boot: 'Boot', systems: 'Systems', registry: 'Registry', signal: 'Signal' },
+      nav: { 
+        boot: 'Boot', 
+        skills: 'Systems', 
+        projects: 'Services', 
+        experience: 'Timeline', 
+        education: 'Nodes', 
+        posts: 'Logs', 
+        signal: 'Signal' 
+      },
       hero: { 
         system_loaded: 'ALBA_OS_CORE_v1.5_READY', 
         bio_1: 'BUILDING THE FUTURE OF', 

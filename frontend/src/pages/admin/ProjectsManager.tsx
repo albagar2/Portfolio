@@ -6,6 +6,7 @@ import {
   Image as ImageIcon, Tag, Hash, Globe
 } from 'lucide-react';
 import { api } from '../../services/api';
+import { useNotification } from '../../context/NotificationContext';
 
 interface Project {
   id: string;
@@ -25,6 +26,7 @@ interface Project {
 export const ProjectsManager = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
+  const { showNotification } = useNotification();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [formData, setFormData] = useState<Partial<Project>>({
@@ -92,11 +94,12 @@ export const ProjectsManager = () => {
         const slug = formData.title?.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '') || 'new-project';
         await api.post('/projects', { ...payload, slug });
       }
+      showNotification(editingProject ? 'PROYECTO_ACTUALIZADO_CORRECTAMENTE' : 'PROYECTO_CREADO_CORRECTAMENTE', 'success');
       fetchProjects();
       closeModal();
     } catch (err) {
       console.error('Error saving project:', err);
-      alert('Error al guardar el proyecto. Revisa la consola.');
+      showNotification('ERROR_AL_GUARDAR_PROYECTO', 'error');
     }
   };
 
