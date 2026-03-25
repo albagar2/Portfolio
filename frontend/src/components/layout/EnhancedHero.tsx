@@ -118,7 +118,7 @@ export const EnhancedHero = ({ profile, t }: { profile: any, t: any }) => {
   const opacity = useTransform(scrollY, [0, 400], [0.3, 0]);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-56 pb-24 lg:px-24 overflow-hidden bg-[#010309]">
+    <section className="relative min-h-screen flex items-center justify-center pt-32 pb-12 lg:px-24 bg-[#010309]">
       <div className="hero-glow pointer-events-none" aria-hidden="true" />
       <motion.div style={{ opacity }} className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
          <span className="text-[20rem] md:text-[35rem] font-black text-white uppercase tracking-tighter italic leading-none opacity-20 select-none blur-2xl">ALBA</span>
@@ -135,53 +135,91 @@ export const EnhancedHero = ({ profile, t }: { profile: any, t: any }) => {
              <Zap size={14} className="fill-current animate-pulse" /> {t.hero.system_loaded}
           </motion.div>
           
-          <div className="relative group perspective-1000">
-            {/* Capa de Brillo/Glow Dinámico Detrás del Título */}
-            <motion.div 
-               style={{ y: y1 }}
-               initial={{ opacity: 0 }}
-               animate={{ opacity: 1 }}
-               className="absolute inset-0 flex items-center justify-center -z-10 blur-[120px] opacity-30 group-hover:opacity-50 transition-opacity duration-1000"
-            >
-               <div className="w-[80%] h-32 bg-gradient-to-r from-[#00FFF0] via-[#D9FF00] to-[#FF007A]" />
-            </motion.div>
+          <div className="relative group perspective-2000 py-32 overflow-visible flex flex-col items-center justify-center">
+            {/* Capa de Distorsión de Fondo (Mesh) */}
+            <div className="absolute inset-x-[-20vw] h-64 bg-gradient-to-r from-transparent via-[#00FFF0]/5 to-transparent blur-[120px] -z-10 animate-pulse" />
+            
+            <div className="relative">
+               {/* Metadata de Sistema Flotante (Órbita del Título) */}
+               <motion.div 
+                  animate={{ y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }}
+                  transition={{ duration: 4, repeat: Infinity }}
+                  className="absolute -top-16 -left-32 font-mono text-[8px] text-[#00FFF0] tracking-[0.5em] hidden lg:block border-l border-[#00FFF0]/30 pl-4 py-2"
+               >
+                  CORE_LINK: STABLE <br /> 
+                  DATA_STREAM: [1011001...] <br />
+                  SYNC_STATUS: 100%
+               </motion.div>
 
-            <motion.h1 
-              style={{ y: y1 }}
-              initial={{ opacity: 0, scale: 0.9, rotateX: -20 }}
-              animate={{ opacity: 1, scale: 1, rotateX: 0 }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              className="text-9xl md:text-[15rem] lg:text-[18rem] font-black tracking-tighter leading-[0.7] text-white italic uppercase relative z-10 font-outfit select-none"
-            >
-              <span className="relative inline-block">
-                ALBA
-                {/* Efecto de Glitch Sutil (Capa Superior) */}
-                <motion.span 
-                   animate={{ 
-                      x: [0, 2, -2, 0], 
-                      opacity: [1, 0.8, 1] 
-                   }} 
-                   transition={{ 
-                      duration: 0.2, 
-                      repeat: Infinity, 
-                      repeatType: "mirror",
-                      repeatDelay: 5 
-                   }}
-                   className="absolute inset-0 text-[#00FFF0] opacity-20 translate-x-[2px] translate-y-[-1px] pointer-events-none"
-                >
-                  ALBA
-                </motion.span>
-              </span>
-              <span className="relative inline-block ml-2 translate-y-[0.05em]">
-                 <span className="text-transparent bg-clip-text bg-gradient-to-br from-[#00FFF0] via-[#D9FF00] to-[#00FFF0] bg-[length:200%_auto] animate-gradient-flow">.G</span>
-                 {/* Nodo de Interfaz en el punto */}
-                 <motion.div 
-                    animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                    className="absolute -bottom-2 right-0 w-8 h-8 rounded-full border border-[#D9FF00]/50 -z-10 blur-sm" 
-                 />
-              </span>
-            </motion.h1>
+               <motion.div 
+                  animate={{ y: [0, 20, 0], opacity: [0.2, 0.5, 0.2] }}
+                  transition={{ duration: 5, repeat: Infinity }}
+                  className="absolute -bottom-16 -right-32 font-mono text-[8px] text-[#D9FF00] tracking-[0.5em] hidden lg:block border-r border-[#D9FF00]/30 pr-4 py-2 text-right"
+               >
+                  COORDS_X: {Math.random().toFixed(4)} <br /> 
+                  COORDS_Y: {Math.random().toFixed(4)} <br />
+                  NODE: ALBA_G_V1.5
+               </motion.div>
+
+               <motion.h1 
+                 className="text-[14vw] md:text-[16vw] font-black tracking-[0.05em] leading-none relative z-10 font-outfit select-none flex items-center justify-center gap-2 md:gap-4"
+               >
+                 {/* ANALIZANDO CADA LETRA INDIVIDUALMENTE PARA EL EFECTO WOW */}
+                 {['A', 'L', 'B', 'A'].map((letter, i) => (
+                   <motion.span
+                     key={i}
+                     initial={{ opacity: 0, x: -100, rotateY: -90 }}
+                     animate={{ opacity: 1, x: 0, rotateY: 0 }}
+                     transition={{ duration: 1.2, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
+                     whileHover={{ scale: 1.1, z: 50, color: '#00FFF0', textShadow: "0 0 50px #00FFF0" }}
+                     className="relative inline-block text-white transition-all cursor-default"
+                   >
+                     {letter}
+                     {/* Efecto de Refracción (Sombra de Cristal) */}
+                     <span className="absolute inset-0 text-white/10 blur-[4px] -z-10 translate-x-2 translate-y-2">{letter}</span>
+                   </motion.span>
+                 ))}
+
+                 {/* EL NODO .G (EL MÓDULO DE INTERFAZ) */}
+                 <motion.span 
+                   initial={{ opacity: 0, x: 20 }}
+                   animate={{ opacity: 1, x: 0 }}
+                   transition={{ delay: 1 }}
+                   className="relative flex items-center ml-12"
+                 >
+                    {/* El Punto como LED de Estado */}
+                    <div className="relative mr-6">
+                       <div className="w-5 h-5 rounded-full bg-[#00FFF0] shadow-[0_0_20px_#00FFF0]" />
+                       <motion.div animate={{ scale: [1, 2, 1], opacity: [0.5, 0, 0.5] }} transition={{ duration: 1.5, repeat: Infinity }} className="absolute inset-0 bg-[#00FFF0] rounded-full" />
+                    </div>
+
+                    {/* La G dentro de un Marco Técnico 'Elite' */}
+                    <div className="relative group/g">
+                       {/* Esquinas del Marco (Cantoneras) */}
+                       <div className="absolute -top-4 -left-4 w-6 h-6 border-t-2 border-l-2 border-[#D9FF00]" />
+                       <div className="absolute -bottom-4 -right-4 w-6 h-6 border-b-2 border-r-2 border-[#D9FF00]" />
+                       
+                       <div className="px-10 py-4 bg-white/5 border border-white/10 rounded-xl backdrop-blur-xl group-hover/g:border-[#D9FF00]/50 transition-all duration-700">
+                          <span className="text-10xl md:text-[12rem] font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-[#D9FF00]">
+                             G
+                          </span>
+                       </div>
+
+                       {/* Etiquetas de Calibración */}
+                       <div className="absolute -top-12 left-0 font-mono text-[7px] text-[#D9FF00] tracking-[0.4em] opacity-40">CALIBRATING_NODE_v1.5</div>
+                       <div className="absolute -bottom-10 right-0 font-mono text-[7px] text-white/20 tracking-[0.4em]">ADDR: 0xG_LOG</div>
+                    </div>
+                 </motion.span>
+               </motion.h1>
+
+               {/* Reflejo Horizontal de Escaneo de Datos */}
+               <motion.div 
+                  initial={{ width: 0 }}
+                  animate={{ width: '100%' }}
+                  transition={{ duration: 2, delay: 1 }}
+                  className="absolute -bottom-12 left-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#00FFF0] to-transparent shadow-[0_0_20px_#00FFF0]"
+               />
+            </div>
           </div>
 
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }} className="space-y-12">

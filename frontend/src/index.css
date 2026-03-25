@@ -137,3 +137,7 @@
 .perspective-1000 {
   perspective: 1000px;
 }
+
+.animate-gradient-slow {
+  animation: gradient-flow 12s ease infinite;
+}
