@@ -20,7 +20,7 @@ const InteractiveTerminal = () => {
             case 'help': response = 'AVAILABLE_CMDS: bio, skills, projects, stack, clear, whoami'; break;
             case 'bio': response = 'Alba García: Software Architect specializing in high-performance digital ecosystems.'; break;
             case 'skills': response = 'CORE_STACK: React 18, TypeScript, Node.js, PostgreSQL, Cloud_Infra.'; break;
-            case 'projects': response = 'SCANNING: [Gasoil, EsquelasTV, ALBA-OS, NeuralGuard, CryptoPro, BioSync, EchoVault, GestorPro] Found 8 active nodes.'; break;
+            case 'projects': response = 'SCANNING: [Gasoil, EsquelasTV, ALBA-OS, NeuralGuard, CryptoPro, BioSync, EchoVault, GestorPro, ComfortFood] Found 9 active nodes.'; break;
             case 'stack': response = 'TECH: Next.js, Framer_Motion, Tailwind, Python, SQLite.'; break;
             case 'whoami': response = 'USER: Recruiter_Entity // STATUS: Authorized_Access'; break;
             case 'clear': setHistory([]); setInput(''); return;
@@ -103,8 +103,26 @@ export const ProjectCard: React.FC<{ project: Project; index: number }> = ({ pro
           </div>
 
           <div className="flex items-center gap-10 pt-10 border-t border-white/10">
-            <span className="flex items-center gap-2 text-[10px] font-mono font-black uppercase tracking-[0.4em] text-white hover:text-[#D9FF00] transition-colors cursor-pointer"><Globe size={14} /> BOOT_PRJ</span>
-            <span className="flex items-center gap-2 text-[10px] font-mono font-black uppercase tracking-[0.4em] text-white hover:text-[#D9FF00] transition-colors cursor-pointer"><Github size={14} /> SRC_CODE</span>
+            {project.liveUrl && (
+              <a 
+                href={project.liveUrl} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="flex items-center gap-2 text-[10px] font-mono font-black uppercase tracking-[0.4em] text-white hover:text-[#D9FF00] transition-colors cursor-pointer"
+              >
+                <Globe size={14} /> BOOT_PRJ
+              </a>
+            )}
+            {project.githubUrl && (
+              <a 
+                href={project.githubUrl} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="flex items-center gap-2 text-[10px] font-mono font-black uppercase tracking-[0.4em] text-white hover:text-[#D9FF00] transition-colors cursor-pointer"
+              >
+                <Github size={14} /> SRC_CODE
+              </a>
+            )}
           </div>
         </div>
       </div>

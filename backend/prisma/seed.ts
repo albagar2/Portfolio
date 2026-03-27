@@ -125,6 +125,8 @@ async function main() {
       category: 'web',
       featured: true,
       status: 'PUBLISHED',
+      githubUrl: 'https://github.com/albagar2/controlGasoilFamiliar',
+      liveUrl: 'https://familydrive.onrender.com',
       technologies: { create: [{ name: 'Angular' }, { name: 'Node.js' }, { name: 'PostgreSQL' }, { name: 'Google Drive API' }] }
     },
     {
@@ -134,6 +136,7 @@ async function main() {
       category: 'arquitectura',
       featured: true,
       status: 'PUBLISHED',
+      githubUrl: 'https://github.com/albagar2/alba-os-control-center',
       technologies: { create: [{ name: 'TypeScript' }, { name: 'React' }, { name: 'Framer Motion' }, { name: 'Prisma' }] }
     },
     {
@@ -143,6 +146,7 @@ async function main() {
       category: 'web',
       featured: true,
       status: 'PUBLISHED',
+      githubUrl: 'https://github.com/albagar2/gestorDeProyectos',
       technologies: { create: [{ name: 'React' }, { name: 'Node.js' }, { name: 'PostgreSQL' }, { name: 'Socket.io' }, { name: 'Docker' }] }
     },
     {
@@ -152,6 +156,7 @@ async function main() {
       category: 'api',
       featured: true,
       status: 'PUBLISHED',
+      githubUrl: 'https://github.com/albagar2/neural-link-guard',
       technologies: { create: [{ name: 'Express' }, { name: 'Python' }, { name: 'Docker' }, { name: 'Zod' }] }
     },
     {
@@ -161,6 +166,7 @@ async function main() {
       category: 'web',
       featured: true,
       status: 'PUBLISHED',
+      githubUrl: 'https://github.com/albagar2/crypto-terminal-pro',
       technologies: { create: [{ name: 'Next.js' }, { name: 'Socket.io' }, { name: 'Tailwind' }, { name: 'Recharts' }] }
     },
     {
@@ -170,6 +176,7 @@ async function main() {
       category: 'web',
       featured: true,
       status: 'PUBLISHED',
+      githubUrl: 'https://github.com/albagar2/bio-sync-health',
       technologies: { create: [{ name: 'React Native' }, { name: 'Firebase' }, { name: 'GraphQL' }] }
     },
     {
@@ -179,6 +186,7 @@ async function main() {
       category: 'api',
       featured: true,
       status: 'PUBLISHED',
+      githubUrl: 'https://github.com/albagar2/echo-vault-storage',
       technologies: { create: [{ name: 'Go' }, { name: 'PostgreSQL' }, { name: 'AWS S3' }] }
     },
     {
@@ -188,7 +196,19 @@ async function main() {
       category: 'web',
       featured: true,
       status: 'PUBLISHED',
+      githubUrl: 'https://github.com/albagar2/tanatorio-tv',
+      liveUrl: 'https://esquelastv.up.railway.app',
       technologies: { create: [{ name: 'Node.js' }, { name: 'Express' }, { name: 'SQLite' }, { name: 'Vanilla JS' }] }
+    },
+    {
+      title: 'Comfort Food',
+      slug: 'comfort-food',
+      description: 'Plataforma de gestión de restauración y pedidos a domicilio con sistema de administración, menús dinámicos y perfiles de usuario diferenciados.',
+      category: 'web',
+      featured: true,
+      status: 'PUBLISHED',
+      githubUrl: 'https://github.com/albagar2/ComfortFood.git',
+      technologies: { create: [{ name: 'Laravel' }, { name: 'Livewire' }, { name: 'Flux UI' }, { name: 'PHP' }, { name: 'MySQL' }] }
     }
   ];
 
@@ -231,6 +251,7 @@ async function main() {
   }
 
   console.log('🎉 ¡Sincronización Total Completada! Tu portfolio refleja ahora tu CV real.');
+  require('fs').writeFileSync('seed_done.txt', 'DONE at ' + new Date().toISOString());
 }
 
 main()
