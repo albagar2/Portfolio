@@ -121,56 +121,74 @@ async function main() {
     {
       title: 'Control Gasoil Familiar',
       slug: 'control-gasoil-fam',
-      description: 'Sistema completo de gestión para mantenimientos y repostajes familiares con integración en Google Drive y alertas de consumo.',
+      description: 'Sistema completo de gestión integral para vehículos, repostajes, mantenimientos y seguros en entornos familiares con integración en Google Drive.',
       category: 'web',
       featured: true,
       status: 'PUBLISHED',
-      technologies: { create: [{ name: 'React' }, { name: 'Node.js' }, { name: 'PostgreSQL' }] }
+      technologies: { create: [{ name: 'Angular' }, { name: 'Node.js' }, { name: 'PostgreSQL' }, { name: 'Google Drive API' }] }
     },
     {
       title: 'ALBA-OS Control Center',
       slug: 'alba-os-control-center',
-      description: 'Interfaz de mando para la monitorización de servicios cloud en tiempo real bajo estética Command Line.',
+      description: 'Interfaz de mando de alta seguridad para la monitorización de servicios cloud en tiempo real bajo estética Command Line y arquitectura hexagonal.',
       category: 'arquitectura',
       featured: true,
       status: 'PUBLISHED',
-      technologies: { create: [{ name: 'TypeScript' }, { name: 'Framer Motion' }, { name: 'Redis' }] }
+      technologies: { create: [{ name: 'TypeScript' }, { name: 'React' }, { name: 'Framer Motion' }, { name: 'Prisma' }] }
+    },
+    {
+      title: 'GestorPro ERP',
+      slug: 'gestor-pro-erp',
+      description: 'Sistema empresarial avanzado para la gestión de proyectos, tareas y analítica financiera con arquitectura multi-tenant y diseño Glassmorphism.',
+      category: 'web',
+      featured: true,
+      status: 'PUBLISHED',
+      technologies: { create: [{ name: 'React' }, { name: 'Node.js' }, { name: 'PostgreSQL' }, { name: 'Socket.io' }, { name: 'Docker' }] }
     },
     {
       title: 'Neural Link Guard',
       slug: 'neural-link-guard',
-      description: 'Sistema de seguridad perimetral para APIs REST con detección de intrusiones mediante análisis heurístico.',
+      description: 'Sistema de seguridad perimetral para APIs REST con detección de intrusiones mediante análisis heurístico y protección OWASP Top 10.',
       category: 'api',
-      featured: false,
+      featured: true,
       status: 'PUBLISHED',
-      technologies: { create: [{ name: 'Express' }, { name: 'Python' }, { name: 'Docker' }] }
+      technologies: { create: [{ name: 'Express' }, { name: 'Python' }, { name: 'Docker' }, { name: 'Zod' }] }
     },
     {
       title: 'Crypto Terminal Pro',
       slug: 'crypto-terminal-pro',
-      description: 'Dashboard de trading de alta fidelidad con actualizaciones de mercado vía WebSockets de baja latencia.',
+      description: 'Dashboard de trading de alta fidelidad con actualizaciones de mercado vía WebSockets de baja latencia y visualización avanzada.',
       category: 'web',
       featured: true,
       status: 'PUBLISHED',
-      technologies: { create: [{ name: 'Next.js' }, { name: 'Socket.io' }, { name: 'Tailwind' }] }
+      technologies: { create: [{ name: 'Next.js' }, { name: 'Socket.io' }, { name: 'Tailwind' }, { name: 'Recharts' }] }
     },
     {
       title: 'Bio-Sync Health Tech',
       slug: 'bio-sync-health',
-      description: 'Aplicación móvil para la sincronización de datos biométricos y análisis de rendimiento deportivo.',
+      description: 'Aplicación móvil para la sincronización de datos biométricos y análisis de rendimiento deportivo en tiempo real.',
       category: 'web',
-      featured: false,
+      featured: true,
       status: 'PUBLISHED',
       technologies: { create: [{ name: 'React Native' }, { name: 'Firebase' }, { name: 'GraphQL' }] }
     },
     {
       title: 'Echo Vault Storage',
       slug: 'echo-vault-storage',
-      description: 'Solución de almacenamiento cifrado punto a punto para activos digitales de alta sensibilidad.',
+      description: 'Solución de almacenamiento cifrado punto a punto para activos digitales de alta sensibilidad con protocolos de seguridad bancaria.',
       category: 'api',
-      featured: false,
+      featured: true,
       status: 'PUBLISHED',
       technologies: { create: [{ name: 'Go' }, { name: 'PostgreSQL' }, { name: 'AWS S3' }] }
+    },
+    {
+      title: 'Esquelas TV',
+      slug: 'tanatorio-tv',
+      description: 'Aplicación para gestionar y mostrar esquelas en pantallas de TV de tanatorios, con panel de administración y visualización dinámica optimizada para Digital Signage.',
+      category: 'web',
+      featured: true,
+      status: 'PUBLISHED',
+      technologies: { create: [{ name: 'Node.js' }, { name: 'Express' }, { name: 'SQLite' }, { name: 'Vanilla JS' }] }
     }
   ];
 

@@ -20,7 +20,7 @@ const InteractiveTerminal = () => {
             case 'help': response = 'AVAILABLE_CMDS: bio, skills, projects, stack, clear, whoami'; break;
             case 'bio': response = 'Alba García: Software Architect specializing in high-performance digital ecosystems.'; break;
             case 'skills': response = 'CORE_STACK: React 18, TypeScript, Node.js, PostgreSQL, Cloud_Infra.'; break;
-            case 'projects': response = 'SCANNING: [Familiar, EsquelasTV, Mio, Gasoil, GestorProyectos] Found 5 active nodes.'; break;
+            case 'projects': response = 'SCANNING: [Gasoil, EsquelasTV, ALBA-OS, NeuralGuard, CryptoPro, BioSync, EchoVault, GestorPro] Found 8 active nodes.'; break;
             case 'stack': response = 'TECH: Next.js, Framer_Motion, Tailwind, Python, SQLite.'; break;
             case 'whoami': response = 'USER: Recruiter_Entity // STATUS: Authorized_Access'; break;
             case 'clear': setHistory([]); setInput(''); return;
