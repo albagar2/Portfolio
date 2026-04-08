@@ -242,6 +242,46 @@ async function main() {
         publishedAt: new Date(),
         authorId: user.id,
         tags: { create: [{ name: 'frontend' }, { name: 'ui' }] }
+      },
+      {
+        title: 'Estrategias de Seguridad OWASP Top 10 para APIs Modernas',
+        slug: 'seguridad-apis-owasp-top-10',
+        excerpt: 'Cómo proteger tus servicios backend contra las vulnerabilidades más críticas según el estándar OWASP.',
+        content: `# Seguridad Proactiva\n\nEn el panorama actual, la seguridad de las APIs no es negociable. El OWASP Top 10 nos proporciona una hoja de ruta clara.\n\n## Puntos Clave\n\n*   **Validación de Entradas**: Nunca confíes en el usuario. Usa librerías como Zod o Joi.\n*   **Rate Limiting**: Evita ataques de fuerza bruta y denegación de servicio.\n\n### Implementación Sugerida\n\n\`\`\`typescript\nimport helmet from 'helmet';\nimport rateLimit from 'express-rate-limit';\n\nconst limiter = rateLimit({\n  windowMs: 15 * 60 * 1000,\n  max: 100\n});\n\napp.use(helmet());\napp.use(limiter);\n\`\`\`\n\n**Conclusión**: La seguridad debe ser parte del diseño desde el primer día.`,
+        published: true,
+        publishedAt: new Date(),
+        authorId: user.id,
+        tags: { create: [{ name: 'seguridad' }, { name: 'backend' }] }
+      },
+      {
+        title: 'Arquitecturas en Tiempo Real con WebSockets',
+        slug: 'arquitecturas-tiempo-real-websockets',
+        excerpt: 'Implementando sistemas de baja latencia para visualización de datos en vivo y colaboración instantánea.',
+        content: `# El Poder de los Sockets\n\nLa comunicación bidireccional es esencial para aplicaciones como dashboards financieros o chats.\n\n## ¿Por qué WebSockets?\n\n*   **Baja Latencia**: Menos sobrecarga que el HTTP tradicional.\n*   **Eficiencia**: Mantiene una conexión persistente abierta.\n\n### Ejemplo con Socket.io\n\n\`\`\`javascript\nio.on('connection', (socket) => {\n  console.log('Cliente conectado');\n  \n  socket.on('price_update', (data) => {\n    socket.broadcast.emit('new_price', data);\n  });\n});\n\`\`\`\n\nOptimiza la interactividad de tus aplicaciones.`,
+        published: true,
+        publishedAt: new Date(),
+        authorId: user.id,
+        tags: { create: [{ name: 'sockets' }, { name: 'realtime' }] }
+      },
+      {
+        title: 'Gestión de Estado: De Context API a Zustand',
+        slug: 'gestion-estado-react-zustand',
+        excerpt: 'Comparativa de las mejores herramientas para manejar el estado global en aplicaciones React de gran escala.',
+        content: `# Simplificando React State\n\nElegir la herramienta adecuada puede ahorrarte cientos de horas de depuración.\n\n## Candidatos Principales\n\n1.  **React Context**: Ideal para temas o autenticación básica.\n2.  **Zustand**: Minimalista, potente y sin 'boilerplate'.\n\n### Creando un Store con Zustand\n\n\`\`\`typescript\nimport { create } from 'zustand';\n\nconst useStore = create((set) => ({\n  count: 0,\n  inc: () => set((state) => ({ count: state.count + 1 })),\n  dec: () => set((state) => ({ count: state.count - 1 })),\n}));\n\`\`\`\n\nMenos código, más rendimiento.`,
+        published: true,
+        publishedAt: new Date(),
+        authorId: user.id,
+        tags: { create: [{ name: 'frontend' }, { name: 'react' }] }
+      },
+      {
+        title: 'Despliegue Continuo con Docker y GitHub Actions',
+        slug: 'despliegue-continuo-docker-github-actions',
+        excerpt: 'Automatiza el ciclo de vida de tus aplicaciones desde el commit hasta la producción con flujos de trabajo profesionales.',
+        content: `# Automatización Total\n\nDocker permite que tu aplicación corra igual en cualquier entorno. CI/CD asegura que llegue rápido.\n\n## El Flujo Ideal\n\n*   **Build**: Crea la imagen Docker de tu proyecto.\n*   **Test**: Ejecuta tests automáticos en el contenedor.\n*   **Deploy**: Sube la imagen a un registro y actualiza el servidor.\n\n### Pipeline de GitHub Actions\n\n\`\`\`yaml\njobs:\n  build-and-push:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v2\n      - name: Build Docker Image\n        run: docker build -t my-app .\n\`\`\`\n\nLleva tus proyectos al siguiente nivel de madurez técnica.`,
+        published: true,
+        publishedAt: new Date(),
+        authorId: user.id,
+        tags: { create: [{ name: 'devops' }, { name: 'docker' }] }
       }
     ];
 
