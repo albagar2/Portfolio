@@ -1,54 +1,95 @@
-# 🦅 ALBA-OS v1.5: ELITE_SOFTWARE_COMMAND_CENTER 🦅
+<div align="center">
 
-### 🚀 RESUMEN DEL SISTEMA
-**ALBA-OS** no es un porfolio convencional; es un **Ecosistema Digital de Alta Ingeniería** diseñado para proyectar una identidad profesional disruptiva, innovadora e internacional. Ha sido concebido como un Sistema Operativo táctico que fusiona un diseño vanguardista de "Silicon Valley" con una arquitectura técnica de alto rendimiento.
+![ALBA-OS Banner](media/banner.png)
+
+# 🦅 ALBA-OS v2.0: ELITE_SOFTWARE_COMMAND_CENTER 🦅
+
+[![Status](https://img.shields.io/badge/STATUS-OPERATIONAL-success?style=for-the-badge&logo=statuspage)](https://github.com/albagar2/Portfolio)
+[![Version](https://img.shields.io/badge/VERSION-2.0.4--STABLE-blue?style=for-the-badge&logo=gitbook)](https://github.com/albagar2/Portfolio)
+[![Stack](https://img.shields.io/badge/STACK-FULL--STACK-orange?style=for-the-badge&logo=stackshare)](https://github.com/albagar2/Portfolio)
+
+**ALBA-OS** no es un porfolio convencional; es un **Ecosistema Digital de Alta Ingeniería** diseñado para proyectar una identidad profesional disruptiva e innovadora.
+
+[🚀 Despliegue Rápido](#-operación_prod) • [📂 Módulos del Sistema](#-estructura-de-módulos_sys) • [🏛️ Arquitectura](#-arquitectura-técnica) • [🔬 Protocolos](#-protocolos-de-ingeniería-desplegados)
+
+</div>
 
 ---
 
-### 🔬 PROTOCOLOS DE INGENIERÍA DESPLEGADOS:
+### 🔬 PROTOCOLOS DE INGENIERÍA DESPLEGADOS
 
-#### 1. 🌍 CONECTIVIDAD GLOBAL (MULTI-LENGUAJE ES/EN)
-El sistema integra un **Protocolo de Traducción Dinámica** nativo. Mediante un selector de idioma de alta fidelidad, la interfaz conmuta instantáneamente entre español e inglés, sincronizando todos los módulos, botones, telemetría y mensajes de sistema sin refrescar la página.
+> [!NOTE]
+> Todos los sistemas están optimizados para una experiencia inmersiva y de alto rendimiento.
 
-#### 2. 🤖 BLINDAJE PARA IA RECLUTADORA (ATS/SEO OPTIMIZED)
-Optimizado estructuralmente para superar cualquier filtro de Inteligencia Artificial (ATS):
-- **JSON-LD Structured Data**: Inyección de metadatos de esquema (Person, JobTitle, CreativeWork) para indexación automática.
-- **Semántica Pura (HTML5)**: Uso de jerarquías `<main>`, `<article>`, `<header>` y `<section>`.
-- **Capa de Invisibilidad Técnica (SR-Only)**: Inserción de palabras clave críticas invisibles para humanos pero prioritarias para algoritmos.
+#### 🌍 01. CONECTIVIDAD GLOBAL (MULTI-LENGUAJE)
+Integración de un **Protocolo de Traducción Dinámica** nativo. Conmutación instantánea entre español e inglés sincronizando telemetría y mensajes de sistema sin refresco de página.
 
-#### 3. 🎯 INTERFAZ DE OPERACIONES TÁCTICA (UI/UX LUXURY)
-- **HUD Cursor (MIRA LÁSER)**: Cursor personalizado con diagnóstico de coordenadas X/Y y estado del sistema.
-- **Glassmorphism 4.0**: Ventanas de sistema con desenfoque de alta intensidad y bordes de luz reactivos.
-- **Efectos de Escaneo Láser**: Scan-lines constantes y flujo de datos de fondo (Data-Feed) para una inmersión total.
+#### 🤖 02. BLINDAJE IA (ATS/SEO OPTIMIZED)
+Arquitectura diseñada para superar filtros de Inteligencia Artificial (ATS):
+- **JSON-LD Structured Data**: Inyección de metadatos de esquema para indexación proactiva.
+- **Semántica Pura (HTML5)**: Jerarquías atómicas para legibilidad algorítmica.
+- **Data Layer Invisible**: Palabras clave críticas priorizadas para bots de reclutamiento.
 
-#### 4. 📟 CANAL DE COMUNICACIÓN NATIVO (CONTACT_MODAL)
-Sustitución de protocolos externos (`mailto:`) por un módulo de comunicación cifrado interno. Incluye un **Protocolo de Confirmación Visual (Success State)** que valida la integridad del envío de datos.
-
-#### 5. 🔐 RESERVA LEGAL DE DERECHOS (COPYRIGHT)
-Protección integral de la propiedad intelectual. El sistema incorpora una cláusula de reserva de derechos dinámica adaptada a cada idioma.
+#### 🎯 03. INTERFAZ OPERATIVA TÁCTICA
+- **HUD Cursor (Laser Aim)**: Diagnóstico de coordenadas X/Y en tiempo real.
+- **Glassmorphism 4.0**: Paneles translúcidos con bordes de luz reactivos.
+- **Scan-Line Engine**: Efectos de barrido láser para una inmersión "Cyber-OS" total.
 
 ---
 
 ### 🏛️ ARQUITECTURA TÉCNICA
-- **Cerebro (Frontend)**: React 18, Tailwind CSS, Framer Motion (para fluidez de OS).
-- **Control (Backend)**: Node.js + Express.js.
-- **Memoria (Database)**: SQLite / PostgreSQL.
-- **Seguridad**: AuthContext con protocolos de validación de acceso.
+
+```mermaid
+graph LR
+    subgraph Frontend
+    Core[React 18] --> Style[Tailwind CSS]
+    Core --> Anim[Framer Motion]
+    end
+    subgraph Backend
+    Srv[Node.js / Express] --> DB[(PostgreSQL / SQLite)]
+    Srv --> Auth[Security Layer]
+    end
+    Frontend <--> Backend
+```
+
+- **Runtime**: Node.js v20+
+- **Styling**: TailwindCSS con custom design system.
+- **State**: Context API con persistencia local.
 
 ---
 
-### 📂 ESTRUCUTRA DE MÓDULOS_SYS
-- `/src/App.tsx`: Núcleo de control y diccionario de traducciones.
-- `/src/components/layout/EnhancedHero.tsx`: Arquitectura monumental y telemetría de arranque.
-- `/src/index.css`: ADN visual (Scan-lines, Gradients, Fonts).
+### 📂 ESTRUCTURA DE MÓDULOS_SYS
+
+| Módulo | Función | Tecnología |
+| :--- | :--- | :--- |
+| `Core Engine` | Gestión de rutas y traducciones | React / TSS |
+| `Visual DNA` | Estilos, animaciones y efectos | CSS-Next / Framer |
+| `Data Link` | API de servicios y proyectos | Express / Prisma |
+| `Security` | Protocolos de validación y acceso | JWT / Argon2 |
 
 ---
 
 ### 🏁 OPERACIÓN_PROD
-1. `npm install` - Cargar dependencias de hardware.
-2. `npm run dev` - Arrancar motor local (ALBA_HOST:5173).
-3. `INICIALIZACIÓN COMPLETA // OPERATIVO`
+
+Para inicializar el núcleo del sistema en un entorno local:
+
+1. **Cargar Dependencias:**
+   ```bash
+   npm install
+   ```
+2. **Arrancar Motor Local:**
+   ```bash
+   npm run dev
+   ```
+3. **Estado del Sistema:**
+   > `ALBA_HOST:5173 // INICIALIZACIÓN COMPLETA // OPERATIVO`
 
 ---
-© 2026 ALBA GARCÍA LÓPEZ // TODOS LOS DERECHOS RESERVADOS.
-"# Portfolio" 
+
+<div align="center">
+
+© 2026 **ALBA GARCÍA LÓPEZ** | INGENIERÍA DE SOFTWARE & DISEÑO TÁCTICO
+*Todos los derechos reservados.*
+
+</div>
+
