@@ -66,7 +66,7 @@ export class ProfileController {
   });
 
   updateProfile = asyncHandler(async (req: Request, res: Response) => {
-    const profile = await this.profileUC.updateProfile(req.params.id, req.body);
+    const profile = await this.profileUC.updateProfile((req.params.id as string), req.body);
     res.json({ success: true, data: profile });
   });
 }
@@ -89,12 +89,12 @@ export class ProjectController {
   });
 
   getBySlug = asyncHandler(async (req: Request, res: Response) => {
-    const project = await this.projectUC.getBySlug(req.params.slug);
+    const project = await this.projectUC.getBySlug((req.params.slug as string));
     res.json({ success: true, data: project });
   });
 
   getById = asyncHandler(async (req: Request, res: Response) => {
-    const project = await this.projectUC.getById(req.params.id);
+    const project = await this.projectUC.getById((req.params.id as string));
     res.json({ success: true, data: project });
   });
 
@@ -116,12 +116,12 @@ export class ProjectController {
         typeof t === 'object' ? t.name : t
       );
     }
-    const project = await this.projectUC.update(req.params.id, req.body);
+    const project = await this.projectUC.update((req.params.id as string), req.body);
     res.json({ success: true, data: project });
   });
 
   delete = asyncHandler(async (req: Request, res: Response) => {
-    await this.projectUC.delete(req.params.id);
+    await this.projectUC.delete((req.params.id as string));
     res.json({ success: true, message: 'Proyecto eliminado' });
   });
 }
@@ -138,7 +138,7 @@ export class ExperienceController {
   });
 
   getById = asyncHandler(async (req: Request, res: Response) => {
-    const experience = await this.expUC.getById(req.params.id);
+    const experience = await this.expUC.getById((req.params.id as string));
     res.json({ success: true, data: experience });
   });
 
@@ -148,12 +148,12 @@ export class ExperienceController {
   });
 
   update = asyncHandler(async (req: Request, res: Response) => {
-    const experience = await this.expUC.update(req.params.id, req.body);
+    const experience = await this.expUC.update((req.params.id as string), req.body);
     res.json({ success: true, data: experience });
   });
 
   delete = asyncHandler(async (req: Request, res: Response) => {
-    await this.expUC.delete(req.params.id);
+    await this.expUC.delete((req.params.id as string));
     res.json({ success: true, message: 'Experiencia eliminada' });
   });
 }
@@ -170,7 +170,7 @@ export class SkillController {
   });
 
   getById = asyncHandler(async (req: Request, res: Response) => {
-    const skill = await this.skillUC.getById(req.params.id);
+    const skill = await this.skillUC.getById((req.params.id as string));
     res.json({ success: true, data: skill });
   });
 
@@ -180,12 +180,12 @@ export class SkillController {
   });
 
   update = asyncHandler(async (req: Request, res: Response) => {
-    const skill = await this.skillUC.update(req.params.id, req.body);
+    const skill = await this.skillUC.update((req.params.id as string), req.body);
     res.json({ success: true, data: skill });
   });
 
   delete = asyncHandler(async (req: Request, res: Response) => {
-    await this.skillUC.delete(req.params.id);
+    await this.skillUC.delete((req.params.id as string));
     res.json({ success: true, message: 'Skill eliminada' });
   });
 }
@@ -202,7 +202,7 @@ export class EducationController {
   });
 
   getById = asyncHandler(async (req: Request, res: Response) => {
-    const education = await this.eduUC.getById(req.params.id);
+    const education = await this.eduUC.getById((req.params.id as string));
     res.json({ success: true, data: education });
   });
 
@@ -212,12 +212,12 @@ export class EducationController {
   });
 
   update = asyncHandler(async (req: Request, res: Response) => {
-    const education = await this.eduUC.update(req.params.id, req.body);
+    const education = await this.eduUC.update((req.params.id as string), req.body);
     res.json({ success: true, data: education });
   });
 
   delete = asyncHandler(async (req: Request, res: Response) => {
-    await this.eduUC.delete(req.params.id);
+    await this.eduUC.delete((req.params.id as string));
     res.json({ success: true, message: 'Educación eliminada' });
   });
 }
@@ -239,12 +239,12 @@ export class PostController {
   });
 
   getBySlug = asyncHandler(async (req: Request, res: Response) => {
-    const post = await this.postUC.getBySlug(req.params.slug);
+    const post = await this.postUC.getBySlug((req.params.slug as string));
     res.json({ success: true, data: post });
   });
 
   getById = asyncHandler(async (req: Request, res: Response) => {
-    const post = await this.postUC.getById(req.params.id);
+    const post = await this.postUC.getById((req.params.id as string));
     res.json({ success: true, data: post });
   });
 
@@ -254,12 +254,12 @@ export class PostController {
   });
 
   update = asyncHandler(async (req: Request, res: Response) => {
-    const post = await this.postUC.update(req.params.id, req.body);
+    const post = await this.postUC.update((req.params.id as string), req.body);
     res.json({ success: true, data: post });
   });
 
   delete = asyncHandler(async (req: Request, res: Response) => {
-    await this.postUC.delete(req.params.id);
+    await this.postUC.delete((req.params.id as string));
     res.json({ success: true, message: 'Post eliminado' });
   });
 }
@@ -277,7 +277,7 @@ export class ContactController {
   });
 
   getById = asyncHandler(async (req: Request, res: Response) => {
-    const message = await this.contactUC.getById(req.params.id);
+    const message = await this.contactUC.getById((req.params.id as string));
     res.json({ success: true, data: message });
   });
 
@@ -289,17 +289,17 @@ export class ContactController {
   });
 
   markAsRead = asyncHandler(async (req: Request, res: Response) => {
-    const message = await this.contactUC.markAsRead(req.params.id);
+    const message = await this.contactUC.markAsRead((req.params.id as string));
     res.json({ success: true, data: message });
   });
 
   markAsReplied = asyncHandler(async (req: Request, res: Response) => {
-    const message = await this.contactUC.markAsReplied(req.params.id);
+    const message = await this.contactUC.markAsReplied((req.params.id as string));
     res.json({ success: true, data: message });
   });
 
   delete = asyncHandler(async (req: Request, res: Response) => {
-    await this.contactUC.delete(req.params.id);
+    await this.contactUC.delete((req.params.id as string));
     res.json({ success: true, message: 'Mensaje eliminado' });
   });
 

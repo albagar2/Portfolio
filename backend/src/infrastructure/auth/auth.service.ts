@@ -46,12 +46,12 @@ export class AuthService {
    * Refresh token: vida larga (7d por defecto)
    */
   static generateTokens(payload: TokenPayload): TokenPair {
-    const accessToken = jwt.sign(payload, config.JWT_SECRET, {
-      expiresIn: config.JWT_EXPIRATION,
+    const accessToken = jwt.sign(payload, config.JWT_SECRET as string, {
+      expiresIn: config.JWT_EXPIRATION as any,
     });
 
-    const refreshToken = jwt.sign(payload, config.JWT_REFRESH_SECRET, {
-      expiresIn: config.JWT_REFRESH_EXPIRATION,
+    const refreshToken = jwt.sign(payload, config.JWT_REFRESH_SECRET as string, {
+      expiresIn: config.JWT_REFRESH_EXPIRATION as any,
     });
 
     return { accessToken, refreshToken };
@@ -62,7 +62,7 @@ export class AuthService {
    */
   static verifyAccessToken(token: string): TokenPayload {
     try {
-      const decoded = jwt.verify(token, config.JWT_SECRET) as JwtPayload & TokenPayload;
+      const decoded = jwt.verify(token, config.JWT_SECRET as string) as JwtPayload & TokenPayload;
       return {
         userId: decoded.userId,
         email: decoded.email,
@@ -81,7 +81,7 @@ export class AuthService {
    */
   static verifyRefreshToken(token: string): TokenPayload {
     try {
-      const decoded = jwt.verify(token, config.JWT_REFRESH_SECRET) as JwtPayload & TokenPayload;
+      const decoded = jwt.verify(token, config.JWT_REFRESH_SECRET as string) as JwtPayload & TokenPayload;
       return {
         userId: decoded.userId,
         email: decoded.email,

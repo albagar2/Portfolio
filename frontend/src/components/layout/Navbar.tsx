@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Zap, Cpu, Database, Activity, User, Layers, GraduationCap, Newspaper } from 'lucide-react';
+import { Zap, Cpu, Database, Activity, User, Layers, GraduationCap, Newspaper, TerminalSquare } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 interface NavbarProps {
@@ -132,6 +132,18 @@ export const Navbar = ({ onOpenContact, lang, setLang, t }: NavbarProps) => {
 
              {/* Selectores de Configuración (Lang y Admin) */}
              <div className="flex items-center gap-4 pl-8 border-l border-white/10">
+
+                {/* BOTON DE DEMOS INTEGRADO */}
+                <a 
+                  href="/PORTAL_DEMOS.html" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="px-6 h-12 rounded-xl bg-[#00FFF0]/10 border border-[#00FFF0]/30 flex items-center justify-center font-mono text-[9px] font-black text-[#00FFF0] hover:bg-[#00FFF0] hover:text-black hover:shadow-[0_0_20px_#00FFF0] transition-all duration-300 group tracking-[0.4em] uppercase"
+                  title="Abrir Centro de Demos ALBA-OS"
+                >
+                   <TerminalSquare size={16} className="mr-3 group-hover:animate-pulse" /> DEMOS
+                </a>
+
                 <button 
                   onClick={() => setLang(lang === 'es' ? 'en' : 'es')}
                   className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center font-mono text-[10px] font-black text-white hover:bg-[#D9FF00] hover:text-black transition-all group"
