@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALBA-OS | Demo Command Center</title>
+    <title>ALBA-OS | Command Center</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Inter:wght@400;900&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -12,15 +13,16 @@
                 extend: {
                     colors: {
                         cyber: {
-                            900: '#0a0a0f',
-                            800: '#111118',
+                            900: '#02040a',
+                            800: '#0d1117',
                             blue: '#00f0ff',
-                            purple: '#b026ff',
-                            green: '#39ff14'
+                            purple: '#bc13fe',
+                            green: '#39ff14',
+                            red: '#ff003c'
                         }
                     },
                     fontFamily: {
-                        mono: ['"Fira Code"', 'monospace', 'Courier New', 'Courier'],
+                        mono: ['"Fira Code"', 'monospace'],
                         sans: ['Inter', 'sans-serif']
                     }
                 }
@@ -28,175 +30,339 @@
         }
     </script>
     <style>
+        :root {
+            --glow-color: rgba(0, 240, 255, 0.4);
+        }
         body {
-            background-color: #0a0a0f;
+            background-color: #02040a;
             background-image: 
-                radial-gradient(circle at 50% 0%, #111118 0%, transparent 70%),
-                linear-gradient(rgba(0,240,255,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0,240,255,0.03) 1px, transparent 1px);
-            background-size: 100% 100%, 40px 40px, 40px 40px;
-            color: #e2e8f0;
+                radial-gradient(circle at 50% -20%, #1a1a2e 0%, transparent 80%),
+                linear-gradient(rgba(0, 240, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 30px 30px, 30px 30px;
+            color: #c9d1d9;
+            overflow-x: hidden;
         }
-        .glass-panel {
-            background: rgba(17, 17, 24, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 240, 255, 0.2);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-            transition: all 0.3s ease;
+        .glass-card {
+            background: rgba(13, 17, 23, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
         }
-        .glass-panel:hover {
-            border-color: #00f0ff;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
-            transform: translateY(-2px);
+        .glass-card:hover {
+            border-color: rgba(0, 240, 255, 0.5);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.15);
+            transform: translateY(-5px);
         }
-        .scan-line {
-            position: fixed;
-            top: 0;
-            left: 0;
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            box-shadow: 0 0 10px currentColor;
+        }
+        .scanline {
             width: 100%;
-            height: 2px;
-            background: linear-gradient(to right, transparent, rgba(0, 240, 255, 0.8), transparent);
-            opacity: 0.5;
-            animation: scan 8s linear infinite;
+            height: 100px;
+            z-index: 5;
+            background: linear-gradient(0deg, transparent 0%, rgba(0, 240, 255, 0.05) 50%, transparent 100%);
+            opacity: 0.1;
+            position: absolute;
+            bottom: 100%;
+            animation: scanline 10s linear infinite;
             pointer-events: none;
-            z-index: 50;
         }
-        @keyframes scan {
-            0% { top: -10%; }
-            100% { top: 110%; }
+        @keyframes scanline {
+            0% { bottom: 100%; }
+            100% { bottom: -100px; }
         }
-        .glitch-text {
-            text-shadow: 2px 0 #b026ff, -2px 0 #00f0ff;
-            animation: glitch 1.5s infinite;
+        .glitch-hover:hover {
+            animation: glitch 0.3s infinite;
         }
         @keyframes glitch {
-            0% { text-shadow: 2px 0 #b026ff, -2px 0 #00f0ff; }
-            20% { text-shadow: -2px 0 #b026ff, 2px 0 #00f0ff; }
-            40% { text-shadow: 2px 0 #00f0ff, -2px 0 #b026ff; }
-            60% { text-shadow: -2px 0 #00f0ff, 2px 0 #b026ff; }
-            80% { text-shadow: 2px 0 #b026ff, -2px 0 #00f0ff; }
-            100% { text-shadow: -2px 0 #b026ff, 2px 0 #00f0ff; }
+            0% { transform: translate(2px, 0); }
+            25% { transform: translate(-2px, 2px); }
+            50% { transform: translate(-1px, -2px); }
+            75% { transform: translate(2px, -1px); }
+            100% { transform: translate(0, 0); }
+        }
+        .cyber-btn {
+            position: relative;
+            background: transparent;
+            border: 1px solid currentColor;
+            clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+            transition: all 0.3s;
+        }
+        .cyber-btn:hover {
+            background: currentColor;
+            color: black;
+            padding-left: 2rem;
         }
     </style>
 </head>
-<body class="font-sans antialiased min-h-screen relative overflow-x-hidden">
-    <div class="scan-line"></div>
+<body class="font-sans min-h-screen">
+    <div class="scanline"></div>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
-        <!-- Header -->
-        <header class="text-center mb-16">
-            <h1 class="text-xs font-mono text-cyber-blue mb-2 tracking-[0.3em] uppercase">Secuencia Iniciada</h1>
-            <h2 class="text-5xl font-extrabold text-white tracking-tight mb-4 select-none">
-                ALBA-OS <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue to-cyber-purple glitch-text hover:animate-none">DEMO_LAUNCHER</span>
-            </h2>
-            <p class="text-gray-400 max-w-2xl mx-auto font-mono text-sm leading-relaxed">
-                Panel central interactivo de demostración. Los proyectos ya han sido inicializados por el bat. Haz click en Iniciar Demo para acceder a su entorno local temporal.
+    <main class="max-w-7xl mx-auto px-6 py-16">
+        <!-- HEADER SYSTEM -->
+        <header class="mb-20 space-y-4">
+            <div class="flex items-center gap-4 text-cyber-blue font-mono text-xs tracking-[0.5em] uppercase">
+                <span class="animate-pulse">●</span>
+                <span>Alba-OS v4.0 — Mainframe Demo Access</span>
+            </div>
+            <h1 class="text-6xl font-black text-white tracking-tighter">
+                SISTEMA <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue via-cyber-purple to-pink-500">MULTIVERSE</span>
+            </h1>
+            <p class="max-w-xl text-gray-400 font-mono text-sm border-l-2 border-cyber-purple pl-6">
+                Acceso centralizado a microservicios locales. El sistema realiza un barrido de puertos para verificar la integridad de las demos antes de la conexión.
             </p>
         </header>
 
-        <!-- Grid de Proyectos -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-            <!-- Bateria de Preguntas -->
-            <article class="glass-panel rounded-xl p-6 relative overflow-hidden group">
-                <div class="absolute top-0 right-0 p-3">
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-cyber-green/10 text-cyber-green border border-cyber-green/20">OPERATIVO</span>
-                </div>
-                <h3 class="text-xl font-bold text-white mb-2 font-mono group-hover:text-cyber-blue transition-colors">Batería de Preguntas</h3>
-                <p class="text-sm text-gray-400 mb-4 h-16">Sistema Tutor IA. Permite a los opositores entrenar test y resolver dudas con Inteligencia Artificial.</p>
-                <div class="flex flex-col gap-3">
-                    <a href="http://localhost:5173" target="_blank" class="w-full text-center px-4 py-2 border border-cyber-blue/50 text-cyber-blue rounded hover:bg-cyber-blue hover:text-cyber-900 transition-all font-mono text-sm font-bold uppercase tracking-wide">
-                        [ Iniciar Demo ]
-                    </a>
-                </div>
-                <!-- UI Effect -->
-                <div class="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyber-blue to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
-            </article>
-
-            <!-- Control Gasoil Familiar -->
-            <article class="glass-panel rounded-xl p-6 relative overflow-hidden group">
-                <div class="absolute top-0 right-0 p-3">
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-cyber-blue/10 text-cyber-blue border border-cyber-blue/20">STANDBY</span>
-                </div>
-                <h3 class="text-xl font-bold text-white mb-2 font-mono group-hover:text-cyber-blue transition-colors">Gasoil Familiar</h3>
-                <p class="text-sm text-gray-400 mb-4 h-16">App de control de gastos de combustible y mantenimientos vehiculares del núcleo familiar.</p>
-                <div class="flex flex-col gap-3">
-                    <a href="http://localhost:5174" target="_blank" class="w-full text-center px-4 py-2 border border-cyber-blue/50 text-cyber-blue rounded hover:bg-cyber-blue hover:text-cyber-900 transition-all font-mono text-sm font-bold uppercase tracking-wide">
-                        [ Conectar P.5174 ]
-                    </a>
-                </div>
-                <div class="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyber-blue to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
-            </article>
-
-            <!-- Gestor de Proyectos -->
-            <article class="glass-panel rounded-xl p-6 relative overflow-hidden group">
-                <div class="absolute top-0 right-0 p-3">
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-cyber-purple/10 text-cyber-purple border border-cyber-purple/20">DOCKER-DEPLOY</span>
-                </div>
-                <h3 class="text-xl font-bold text-white mb-2 font-mono group-hover:text-cyber-blue transition-colors">GestorPro</h3>
-                <p class="text-sm text-gray-400 mb-4 h-16">ERP/CRM de gestión de proyectos Full Stack con despliegues automatizados y containers.</p>
-                <div class="flex flex-col gap-3">
-                    <a href="http://localhost:3001" target="_blank" class="w-full text-center px-4 py-2 border border-cyber-blue/50 text-cyber-blue rounded hover:bg-cyber-blue hover:text-cyber-900 transition-all font-mono text-sm font-bold uppercase tracking-wide">
-                        [ Conectar P.3001 ]
-                    </a>
-                </div>
-                <div class="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyber-blue to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
-            </article>
-
-            <!-- Bio Sync Health -->
-            <article class="glass-panel rounded-xl p-6 relative overflow-hidden group">
-                <div class="absolute top-0 right-0 p-3">
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-cyber-green/10 text-cyber-green border border-cyber-green/20">OPERATIVO</span>
-                </div>
-                <h3 class="text-xl font-bold text-white mb-2 font-mono group-hover:text-cyber-blue transition-colors">Bio Sync Health</h3>
-                <p class="text-sm text-gray-400 mb-4 h-16">Monitor de constantes vitales biométricas y tracking de salud sincronizado.</p>
-                <div class="flex flex-col gap-3">
-                    <a href="http://localhost:5175" target="_blank" onclick="alert('Buscando endpoints 5173-5176 si Vite asignó otro puerto.')" class="w-full text-center px-4 py-2 border border-cyber-blue/50 text-cyber-blue rounded hover:bg-cyber-blue hover:text-cyber-900 transition-all font-mono text-sm font-bold uppercase tracking-wide">
-                        [ Enlace Vite ]
-                    </a>
-                </div>
-                <div class="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyber-blue to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
-            </article>
-
-            <!-- Neural Link Guard -->
-            <article class="glass-panel rounded-xl p-6 relative overflow-hidden group">
-                 <div class="absolute top-0 right-0 p-3">
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-cyber-green/10 text-cyber-green border border-cyber-green/20">OPERATIVO</span>
-                </div>
-                <h3 class="text-xl font-bold text-white mb-2 font-mono group-hover:text-cyber-blue transition-colors">Neural Link Guard</h3>
-                <p class="text-sm text-gray-400 mb-4 h-16">Sistema ciberseguridad neuro-conectada de prevención de intrusos.</p>
-                <div class="flex flex-col gap-3">
-                    <a href="http://localhost:5176" target="_blank" onclick="alert('Buscando endpoints 5173-5176 si Vite asignó otro puerto.')" class="w-full text-center px-4 py-2 border border-cyber-blue/50 text-cyber-blue rounded hover:bg-cyber-blue hover:text-cyber-900 transition-all font-mono text-sm font-bold uppercase tracking-wide">
-                        [ Enlace Vite ]
-                    </a>
-                </div>
-                <div class="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyber-blue to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
-            </article>
+        <!-- GRID DE PROYECTOS -->
+        <div id="grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Los componentes se inyectan dinámicamente o se manejan por JS -->
             
-            <!-- Portfolio Principal -->
-            <article class="glass-panel rounded-xl p-6 relative overflow-hidden group border-cyber-purple/40">
-                <div class="absolute top-0 right-0 p-3">
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-cyber-purple/10 text-cyber-purple border border-cyber-purple/20">CORE_SYSTEM</span>
+            <!-- Bateria de Preguntas -->
+            <div class="glass-card rounded-2xl p-8 group overflow-hidden" data-port="5174">
+                <div class="flex justify-between items-start mb-6">
+                    <div class="flex flex-col">
+                        <span class="text-[10px] font-mono text-cyber-blue mb-1 uppercase tracking-tighter">Project_01</span>
+                        <h3 class="text-2xl font-bold text-white group-hover:text-cyber-blue transition-colors">Batería Preguntas</h3>
+                    </div>
+                    <div class="status-badge px-3 py-1 rounded-full border border-gray-800 bg-black/40 text-[10px] font-bold font-mono">
+                        <span class="status-dot text-gray-600"></span><span class="status-text uppercase">Checking...</span>
+                    </div>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-2 font-mono group-hover:text-cyber-purple transition-colors">ALBA-OS (Portfolio)</h3>
-                <p class="text-sm text-gray-400 mb-4 h-16">Centro de operaciones principal que hospeda tu currículum, trayectoria y base de datos maestra.</p>
-                <div class="flex flex-col gap-3">
-                    <a href="http://localhost:3000" target="_blank" class="w-full text-center px-4 py-2 border border-cyber-purple/50 text-cyber-purple rounded hover:bg-cyber-purple hover:text-cyber-900 transition-all font-mono text-sm font-bold uppercase tracking-wide">
-                        [ C-3000 / MAIN ]
+                <p class="text-gray-400 text-sm mb-8 leading-relaxed">Plataforma de estudio con Tutor IA persistente para opositores.</p>
+                <div class="space-y-4">
+                    <a href="http://localhost:5174" target="_blank" class="cyber-btn w-full block text-center py-3 text-cyber-blue text-sm font-bold uppercase tracking-widest">
+                        Establecer Link
                     </a>
                 </div>
-                <div class="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyber-purple to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
-            </article>
+            </div>
 
+            <!-- Gasoil Familiar -->
+            <div class="glass-card rounded-2xl p-8 group" data-port="4200">
+                <div class="flex justify-between items-start mb-6">
+                    <div class="flex flex-col">
+                        <span class="text-[10px] font-mono text-cyber-purple mb-1 uppercase tracking-tighter">Project_02</span>
+                        <h3 class="text-2xl font-bold text-white group-hover:text-cyber-purple transition-colors">Gasoil Familiar</h3>
+                    </div>
+                    <div class="status-badge px-3 py-1 rounded-full border border-gray-800 bg-black/40 text-[10px] font-bold font-mono">
+                        <span class="status-dot text-gray-600"></span><span class="status-text uppercase">Checking...</span>
+                    </div>
+                </div>
+                <p class="text-gray-400 text-sm mb-8 leading-relaxed">Gestor de gastos de combustible y mantenimientos vehiculares.</p>
+                <a href="http://localhost:4200" target="_blank" class="cyber-btn w-full block text-center py-3 text-cyber-purple text-sm font-bold uppercase tracking-widest">
+                    Vincular Sync
+                </a>
+            </div>
+
+            <!-- GestorPro -->
+            <div class="glass-card rounded-2xl p-8 group" data-port="3001">
+                <div class="flex justify-between items-start mb-6">
+                    <div class="flex flex-col">
+                        <span class="text-[10px] font-mono text-cyber-green mb-1 uppercase tracking-tighter">Project_03</span>
+                        <h3 class="text-2xl font-bold text-white group-hover:text-cyber-green transition-colors">GestorPro</h3>
+                    </div>
+                    <div class="status-badge px-3 py-1 rounded-full border border-gray-800 bg-black/40 text-[10px] font-bold font-mono">
+                        <span class="status-dot text-gray-600"></span><span class="status-text uppercase">Checking...</span>
+                    </div>
+                </div>
+                <p class="text-gray-400 text-sm mb-8 leading-relaxed">ERP CRM completo para gestión de tareas y proyectos empresariales.</p>
+                <a href="http://localhost:3001" target="_blank" class="cyber-btn w-full block text-center py-3 text-cyber-green text-sm font-bold uppercase tracking-widest">
+                    Entrar Admin
+                </a>
+            </div>
+
+            <!-- Bio Sync -->
+            <div class="glass-card rounded-2xl p-8 group border-orange-500/10" data-port="5176">
+                <div class="flex justify-between items-start mb-6">
+                    <div class="flex flex-col">
+                        <span class="text-[10px] font-mono text-orange-500 mb-1 uppercase tracking-tighter">Project_04</span>
+                        <h3 class="text-2xl font-bold text-white group-hover:text-orange-400 transition-colors">Bio Sync Health</h3>
+                    </div>
+                    <div class="status-badge px-3 py-1 rounded-full border border-gray-800 bg-black/40 text-[10px] font-bold font-mono">
+                        <span class="status-dot text-gray-600"></span><span class="status-text uppercase">Checking...</span>
+                    </div>
+                </div>
+                <p class="text-gray-400 text-sm mb-8 leading-relaxed">Monitoreo biométrico avanzado con visualización de salud en tiempo real.</p>
+                <a href="http://localhost:5176" target="_blank" class="cyber-btn w-full block text-center py-3 text-orange-500 text-sm font-bold uppercase tracking-widest">
+                    Live Data
+                </a>
+            </div>
+
+            <!-- Neural Link -->
+            <div class="glass-card rounded-2xl p-8 group border-pink-500/10" data-port="5175">
+                <div class="flex justify-between items-start mb-6">
+                    <div class="flex flex-col">
+                        <span class="text-[10px] font-mono text-pink-500 mb-1 uppercase tracking-tighter">Project_05</span>
+                        <h3 class="text-2xl font-bold text-white group-hover:text-pink-400 transition-colors">Neural Link Guard</h3>
+                    </div>
+                    <div class="status-badge px-3 py-1 rounded-full border border-gray-800 bg-black/40 text-[10px] font-bold font-mono">
+                        <span class="status-dot text-gray-600"></span><span class="status-text uppercase">Checking...</span>
+                    </div>
+                </div>
+                <p class="text-gray-400 text-sm mb-8 leading-relaxed">Ciberseguridad neuroconectada para prevención de intrusiones Alpha.</p>
+                <a href="http://localhost:5175" target="_blank" class="cyber-btn w-full block text-center py-3 text-pink-500 text-sm font-bold uppercase tracking-widest">
+                    Secure Port
+                </a>
+            </div>
+
+            <!-- Crypto Terminal Pro -->
+            <div class="glass-card rounded-2xl p-8 group border-cyber-blue/5" data-port="5177">
+                <div class="flex justify-between items-start mb-6">
+                    <div class="flex flex-col">
+                        <span class="text-[10px] font-mono text-cyan-400 mb-1 uppercase tracking-tighter">Project_06</span>
+                        <h3 class="text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors">Crypto Terminal</h3>
+                    </div>
+                    <div class="status-badge px-3 py-1 rounded-full border border-gray-800 bg-black/40 text-[10px] font-bold font-mono">
+                        <span class="status-dot text-gray-600"></span><span class="status-text uppercase">Checking...</span>
+                    </div>
+                </div>
+                <p class="text-gray-400 text-sm mb-8 leading-relaxed">Terminal de trading en tiempo real para activos crypto con WebSockets.</p>
+                <a href="http://localhost:5177" target="_blank" class="cyber-btn w-full block text-center py-3 text-cyan-400 text-sm font-bold uppercase tracking-widest">
+                    Open Market
+                </a>
+            </div>
+
+            <!-- Echo Vault Storage -->
+            <div class="glass-card rounded-2xl p-8 group border-yellow-500/5" data-port="5178">
+                <div class="flex justify-between items-start mb-6">
+                    <div class="flex flex-col">
+                        <span class="text-[10px] font-mono text-yellow-500 mb-1 uppercase tracking-tighter">Project_07</span>
+                        <h3 class="text-2xl font-bold text-white group-hover:text-yellow-500 transition-colors">Echo Vault</h3>
+                    </div>
+                    <div class="status-badge px-3 py-1 rounded-full border border-gray-800 bg-black/40 text-[10px] font-bold font-mono">
+                        <span class="status-dot text-gray-600"></span><span class="status-text uppercase">Checking...</span>
+                    </div>
+                </div>
+                <p class="text-gray-400 text-sm mb-8 leading-relaxed">Almacenamiento encriptado de archivos con persistencia segura y redundante.</p>
+                <a href="http://localhost:5178" target="_blank" class="cyber-btn w-full block text-center py-3 text-yellow-500 text-sm font-bold uppercase tracking-widest">
+                    Access Vault
+                </a>
+            </div>
+
+            <!-- Tanatorio TV -->
+            <div class="glass-card rounded-2xl p-8 group border-white/5" data-port="3011">
+                <div class="flex justify-between items-start mb-6">
+                    <div class="flex flex-col">
+                        <span class="text-[10px] font-mono text-white mb-1 uppercase tracking-tighter">Project_08</span>
+                        <h3 class="text-2xl font-bold text-white group-hover:text-gray-300 transition-colors">Tanatorio TV</h3>
+                    </div>
+                    <div class="status-badge px-3 py-1 rounded-full border border-gray-800 bg-black/40 text-[10px] font-bold font-mono">
+                        <span class="status-dot text-gray-600"></span><span class="status-text uppercase">Checking...</span>
+                    </div>
+                </div>
+                <p class="text-gray-400 text-sm mb-8 leading-relaxed">Sistema de gestión de esquelas y visualización dinámica para pantallas TV.</p>
+                <a href="http://localhost:3011" target="_blank" class="cyber-btn w-full block text-center py-3 text-white text-sm font-bold uppercase tracking-widest">
+                    Cast Stream
+                </a>
+            </div>
+
+            <!-- Alba-OS Control Center -->
+            <div class="glass-card rounded-2xl p-8 group border-red-500/10" data-port="5180">
+                <div class="flex justify-between items-start mb-6">
+                    <div class="flex flex-col">
+                        <span class="text-[10px] font-mono text-red-500 mb-1 uppercase tracking-tighter">Admin_Tool</span>
+                        <h3 class="text-2xl font-bold text-white group-hover:text-red-500 transition-colors">OS Control Center</h3>
+                    </div>
+                    <div class="status-badge px-3 py-1 rounded-full border border-gray-800 bg-black/40 text-[10px] font-bold font-mono">
+                        <span class="status-dot text-gray-600"></span><span class="status-text uppercase">Checking...</span>
+                    </div>
+                </div>
+                <p class="text-gray-400 text-sm mb-8 leading-relaxed">Herramienta de monitorización y gestión de todos los servicios de Alba-OS.</p>
+                <a href="http://localhost:5180" target="_blank" class="cyber-btn w-full block text-center py-3 text-red-500 text-sm font-bold uppercase tracking-widest">
+                    Manage OS
+                </a>
+            </div>
+
+            <!-- Portfolio Core -->
+            <div class="glass-card rounded-2xl p-8 group border-cyber-blue/10" data-port="3000">
+                <div class="flex justify-between items-start mb-6">
+                    <div class="flex flex-col">
+                        <span class="text-[10px] font-mono text-cyber-blue mb-1 uppercase tracking-tighter">Core_System</span>
+                        <h3 class="text-2xl font-bold text-white group-hover:text-cyber-blue transition-colors">Alba-OS Core</h3>
+                    </div>
+                    <div class="status-badge px-3 py-1 rounded-full border border-gray-800 bg-black/40 text-[10px] font-bold font-mono">
+                        <span class="status-dot text-gray-600"></span><span class="status-text uppercase">Checking...</span>
+                    </div>
+                </div>
+                <p class="text-gray-400 text-sm mb-8 leading-relaxed">El corazón del sistema. Dashboard principal, CV y analíticas maestras.</p>
+                <a href="http://localhost:3000" target="_blank" class="cyber-btn w-full block text-center py-3 text-cyber-blue text-sm font-bold uppercase tracking-widest">
+                    Root Console
+                </a>
+            </div>
         </div>
 
-        <!-- Footer Terminal -->
-        <div class="mt-16 glass-panel rounded-xl p-4 font-mono text-xs text-cyber-green space-y-1">
-            <p>> root@alba-os:~$ STATUS_CHECK</p>
-            <p>> Verificando servicios en background...</p>
-            <p>> Todos los puertos locales se encuentran activos gracias al script BAT.</p>
-            <p class="animate-pulse">> _</p>
-        </div>
+        <!-- LOG TERMINAL -->
+        <footer class="mt-16 glass-card rounded-xl p-6 font-mono text-[10px] text-gray-500">
+            <div id="terminal-log" class="space-y-1">
+                <p class="text-cyber-blue">> system_init... OK</p>
+                <p class="text-cyber-purple">> kernel_loaded... OK</p>
+                <p>> scan_all_ports --verbose</p>
+                <div id="scan-results" class="space-y-1"></div>
+            </div>
+        </footer>
     </main>
+
+    <script>
+        /**
+         * PING SYSTEM
+         * Comprueba si los servicios locales están respondiendo
+         */
+        async function checkPort(port) {
+            try {
+                // Usamos fetch con modo 'no-cors' para evitar errores de CORS al solo querer saber si "responde"
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 2000);
+                
+                await fetch(`http://localhost:${port}`, { mode: 'no-cors', signal: controller.signal });
+                return true;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        async function scanPorts() {
+            const cards = document.querySelectorAll('.glass-card');
+            const logContainer = document.getElementById('scan-results');
+            logContainer.innerHTML = '';
+
+            for (const card of cards) {
+                const port = card.getAttribute('data-port');
+                if (!port) continue;
+
+                const statusDot = card.querySelector('.status-dot');
+                const statusText = card.querySelector('.status-text');
+                const btn = card.querySelector('.cyber-btn');
+
+                const isOnline = await checkPort(port);
+                
+                const logEntry = document.createElement('p');
+                logEntry.innerHTML = `> Scan Port ${port}: <span class="${isOnline ? 'text-cyber-green' : 'text-cyber-red'}">${isOnline ? 'UP' : 'DOWN'}</span>`;
+                logContainer.appendChild(logEntry);
+
+                if (isOnline) {
+                    statusDot.className = 'status-dot text-cyber-green';
+                    statusText.textContent = 'Online';
+                    statusText.className = 'status-text uppercase text-cyber-green';
+                } else {
+                    statusDot.className = 'status-dot text-cyber-red';
+                    statusText.textContent = 'Offline';
+                    statusText.className = 'status-text uppercase text-cyber-red';
+                    btn.classList.add('opacity-50');
+                    btn.textContent = `Offline (Port ${port})`;
+                }
+            }
+        }
+
+        // Ejecutar primer escaneo
+        window.onload = scanPorts;
+        // Re-escanear cada 30 segundos
+        setInterval(scanPorts, 30000);
+    </script>
 </body>
 </html>
