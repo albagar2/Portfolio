@@ -86,76 +86,90 @@ export const Navbar = ({ onOpenContact, lang, setLang, t }: NavbarProps) => {
   const isHome = location.pathname === '/';
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-1000 ${(scrolled || !isHome) ? 'py-4' : 'py-16'}`} aria-label="Navegación principal">
-       <div className="container-custom flex items-center justify-center font-terminal px-4">
+    <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-1000 ${(scrolled || !isHome) ? 'py-4' : 'py-10'}`} aria-label="Navegación principal">
+       <div className="container-custom flex flex-col items-center justify-center font-terminal px-4">
           <motion.div 
             layout
-            className={`relative p-3 flex items-center gap-2 border-[1.5px] border-white/10 backdrop-blur-3xl transition-all duration-1000 ${
-               scrolled ? 'rounded-full px-10 shadow-2xl bg-black/60' : 'rounded-[3rem] px-16 bg-white/5 shadow-2xl'
+            className={`relative p-2 flex items-center justify-between border border-white/10 backdrop-blur-4xl transition-all duration-1000 ${
+               scrolled 
+               ? 'rounded-full px-4 lg:px-8 shadow-2xl bg-black/85' 
+               : 'rounded-[1.5rem] lg:rounded-[4rem] px-6 lg:px-12 bg-white/5 shadow-2xl'
             }`}
-            style={{ boxShadow: `0 0 80px -20px ${getThemeColor()}30` }}
+            style={{ 
+              boxShadow: `0 0 100px -30px ${getThemeColor()}20`,
+              borderColor: `${getThemeColor()}30`,
+              maxWidth: '98vw',
+              width: '100%'
+            }}
           >
-             {/* Logo / Boot Link */}
-             <button onClick={() => scrollToSection('hero')} className="flex items-center gap-5 pr-8 border-r border-white/10 group">
+             {/* Bloque Izquierdo: Logo (Compacto) */}
+             <button onClick={() => scrollToSection('hero')} className="flex items-center gap-2 lg:gap-4 pr-3 lg:pr-6 border-r border-white/10 group shrink-0">
                 <motion.div 
-                  animate={{ rotate: 360 }} 
                   transition={{ duration: 30, repeat: Infinity, ease: "linear" }} 
-                  className="w-12 h-12 border border-current rounded-2xl flex items-center justify-center shadow-xl hover:shadow-[0_0_20px_current]" 
+                  animate={{ rotate: 360 }}
+                  className="w-9 h-9 lg:w-12 lg:h-12 border border-current rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-[0_0_10px_current]" 
                   style={{ color: getThemeColor() }}
                 >
-                   <Zap size={24} className="fill-current" />
+                   <Zap size={20} className="fill-current" />
                 </motion.div>
                 {!scrolled && (
-                   <span className="font-mono text-[10px] font-black uppercase tracking-[0.6em] hidden sm:block text-white">
+                   <span className="font-mono text-[10px] lg:text-[11px] font-black uppercase tracking-[0.3em] lg:tracking-[0.6em] hidden md:block text-white">
                       ALBA<span style={{ color: getThemeColor() }}>.SYS</span>
                    </span>
                 )}
              </button>
              
-             {/* Nodos de Navegación */}
-             <div className="flex items-center gap-2">
+             {/* Bloque Central: Nodos (Gap mínimo de seguridad) */}
+             <div className="flex items-center gap-0.5 lg:gap-1.5 overflow-hidden">
                 {NAVBAR_LINKS.map((link) => (
                    <button 
                     key={link.id} 
                     onClick={() => scrollToSection(link.id)}
-                    className="relative px-6 py-3.5 rounded-2xl flex items-center gap-4 text-[9px] font-mono uppercase tracking-[0.4em] transition-all duration-700 group"
+                    className="relative px-2 lg:px-5 py-3 rounded-xl flex items-center gap-2 text-[9px] lg:text-[10px] font-mono uppercase tracking-[0.1em] lg:tracking-[0.3em] transition-all duration-500 group"
                     style={{ color: activeTab === link.id ? 'white' : 'rgba(255,255,255,0.2)' }}
                    >
-                      <link.icon size={18} className={`transition-all duration-500 ${activeTab === link.id ? 'scale-110' : 'opacity-20'}`} />
-                      <span className="hidden lg:block">{link.label}</span>
+                      <link.icon size={16} className={`transition-all duration-500 ${activeTab === link.id ? 'scale-110' : 'opacity-20 group-hover:opacity-100'}`} style={{ color: activeTab === link.id ? getThemeColor() : '' }} />
+                      <span className="hidden xl:block">{link.label}</span>
                       {activeTab === link.id && (
-                         <motion.div layoutId="nav-bg" className="absolute inset-0 -z-10 rounded-2xl bg-white/[0.04] shadow-2xl" />
+                         <motion.div layoutId="nav-bg" className="absolute inset-0 -z-10 rounded-xl bg-white/[0.06]" />
                       )}
                    </button>
                 ))}
              </div>
-
-             {/* Selectores de Configuración (Lang y Admin) */}
-             <div className="flex items-center gap-4 pl-8 border-l border-white/10">
-
-                {/* BOTON DE DEMOS INTEGRADO */}
+             
+             {/* Bloque Derecho: Acciones (Compacto) */}
+             <div className="flex items-center gap-2 lg:gap-4 pl-3 lg:pl-6 border-l border-white/10 shrink-0">
                 <a 
                   href="/PORTAL_DEMOS.html" 
                   target="_blank" 
-                  rel="noopener noreferrer"
-                  className="px-6 h-12 rounded-xl bg-[#00FFF0]/10 border border-[#00FFF0]/30 flex items-center justify-center font-mono text-[9px] font-black text-[#00FFF0] hover:bg-[#00FFF0] hover:text-black hover:shadow-[0_0_20px_#00FFF0] transition-all duration-300 group tracking-[0.4em] uppercase"
-                  title="Abrir Centro de Demos ALBA-OS"
+                  className="px-3 lg:px-6 h-9 lg:h-11 rounded-lg bg-cyber-blue/10 border border-cyber-blue/30 flex items-center justify-center font-mono text-[9px] font-black text-cyber-blue hover:bg-cyber-blue hover:text-black transition-all group tracking-[0.1em] lg:tracking-[0.3em] uppercase"
                 >
-                   <TerminalSquare size={16} className="mr-3 group-hover:animate-pulse" /> DEMOS
+                   <TerminalSquare size={14} className="lg:mr-2" />
+                   <span className="hidden lg:block">DEMOS</span>
                 </a>
 
                 <button 
                   onClick={() => setLang(lang === 'es' ? 'en' : 'es')}
-                  className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center font-mono text-[10px] font-black text-white hover:bg-[#D9FF00] hover:text-black transition-all group"
-                  title="Cambiar Idioma"
+                  className="w-9 h-9 lg:w-11 lg:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center font-mono text-[10px] font-black text-white hover:border-cyber-blue transition-all"
                 >
                    {lang.toUpperCase()}
                 </button>
                 
-                <Link to="/admin/dashboard" className="w-12 h-12 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full flex items-center justify-center transition-all group overflow-hidden">
-                   <User size={18} className="group-hover:text-[#00FFF0] transition-colors text-white" />
+                <Link to="/admin/dashboard" className="w-9 h-9 lg:w-11 lg:h-11 bg-white/5 border border-white/10 rounded-full flex items-center justify-center transition-all group overflow-hidden">
+                   <User size={16} className="group-hover:text-cyber-blue transition-colors text-white" />
                 </Link>
              </div>
+          </motion.div>
+
+          <motion.div 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: scrolled ? 0 : 1, y: scrolled ? -10 : 0 }}
+            className="mt-4 flex items-center gap-3 px-6 py-1.5 rounded-full border border-cyber-blue/20 bg-black/40 backdrop-blur-md pointer-events-none"
+          >
+             <Zap size={10} className="text-cyber-blue animate-pulse" />
+             <span className="text-[8px] font-mono text-cyber-blue uppercase tracking-[0.5em] font-bold">
+                ALBA_OS_CORE_V1.5_READY
+             </span>
           </motion.div>
        </div>
     </nav>
