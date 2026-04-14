@@ -21,14 +21,16 @@ echo [3/3] Apagando procesos de desarrollo en background...
 echo Matando todos los procesos de Node.js (Vite, Express, etc...)
 taskkill /F /IM node.exe /T 2>nul
 
-echo Cerrando ventanas CMD hijas de las demos...
-taskkill /F /IM cmd.exe /FI "WINDOWTITLE eq BP-IA" 2>nul
-taskkill /F /IM cmd.exe /FI "WINDOWTITLE eq GASOIL" 2>nul
-taskkill /F /IM cmd.exe /FI "WINDOWTITLE eq BIO-SYNC" 2>nul
-taskkill /F /IM cmd.exe /FI "WINDOWTITLE eq NEURAL-LINK" 2>nul
+echo Cerrando ventanas CMD de las demos...
+for %%T in ("BP-IA*" "GASOIL*" "BIO-SYNC*" "NEURAL-LINK*" "CRYPTO-PRO*" "ECHO-VAULT*" "TANATORIO-TV*" "CONTROL-CENTER*" "BACKEND - Puerto*" "IA MICROSERVICE*" "FRONTEND - Puerto*" "Backend API*" "Frontend App*") do (
+    taskkill /F /IM cmd.exe /FI "WINDOWTITLE eq %%T" 2>nul
+)
+
 
 echo.
 echo =====================================================================
 echo   SISTEMA COMPLETAMENTE APAGADO Y RECURSOS LIBERADOS.
 echo =====================================================================
-pause
+timeout /t 5
+exit
+

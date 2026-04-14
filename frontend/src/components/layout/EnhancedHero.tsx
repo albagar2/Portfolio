@@ -54,8 +54,8 @@ const InteractiveTerminal = () => {
                    type="text" 
                    value={input}
                    onChange={(e) => setInput(e.target.value)}
-                   className="bg-transparent border-none outline-none font-mono text-[10px] text-foreground w-full uppercase tracking-widest"
-                   placeholder="COMMAND_INPUT..." className="placeholder:text-foreground/70"
+                   className="bg-transparent border-none outline-none font-mono text-[10px] text-foreground w-full uppercase tracking-widest placeholder:text-foreground/70"
+                   placeholder="COMMAND_INPUT..."
                 />
             </form>
         </div>

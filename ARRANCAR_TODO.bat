@@ -31,23 +31,23 @@ echo.
 :: Iterar proyectos que tengan scripts de arranque
 if exist "proyectos\bateriaDePreguntas\ARRANCAR_TODO.bat" (
     echo [-] Levantando Bateria de Preguntas...
-    cd proyectos\bateriaDePreguntas
+    pushd proyectos\bateriaDePreguntas
     start "BP-IA" cmd /c "ARRANCAR_TODO.bat"
-    cd ..\..
+    popd
 )
 
 if exist "proyectos\controlGasoilFamiliar\start-dev.bat" (
     echo [-] Levantando Control Gasoil...
-    cd proyectos\controlGasoilFamiliar
+    pushd proyectos\controlGasoilFamiliar
     start "GASOIL" cmd /c "start-dev.bat"
-    cd ..\..
+    popd
 )
 
 if exist "proyectos\gestorDeProyectos\docker-compose.yml" (
     echo [-] Levantando Gestor de Proyectos...
-    cd proyectos\gestorDeProyectos
+    pushd proyectos\gestorDeProyectos
     docker-compose up -d
-    cd ..\..
+    popd
 )
 
 :: Arrancar algunos Frontends de proyectos destacables
@@ -72,11 +72,14 @@ start "CONTROL-CENTER" cmd /c "cd proyectos\alba-os-control-center\frontend && n
 echo.
 echo [3/3] Generando Portal de Demos...
 echo El Portal interactivo se abrira en su navegador para interactuar con las apps.
+timeout /t 3 /nobreak > nul
 start PORTAL_DEMOS.html
 
 echo.
 echo =====================================================================
 echo   TODOS LOS SISTEMAS ESTAN EN LINEA Y OPERATIVOS.
-echo   Mantenga abiertas las ventanas de consola (minimizadas).
+echo   El entorno de desarrollo esta configurado al 100%%.
 echo =====================================================================
-pause
+timeout /t 10
+exit
+
