@@ -179,10 +179,10 @@ export const App = () => {
             <main id="main-content">
               <Routes>
                 {/* RUTA: Inicio */}
-                <Route path="/" element={<Home data={data} scaleX={scaleX} onOpenContact={() => setIsContactOpen(true)} t={t} />} />
+                <Route path="/" element={<Home data={data} scaleX={scaleX} onOpenContact={() => setIsContactOpen(true)} t={t} lang={lang} />} />
                 
                 {/* RUTA: Detalle de Artículo */}
-                <Route path="/blog/:slug" element={<BlogPostDetail />} />
+                <Route path="/blog/:slug" element={<BlogPostDetail lang={lang} />} />
                 
                 {/* RUTAS DE ADMINISTRACIÓN (Protegidas) */}
                 <Route path="/admin/login" element={<Login />} />

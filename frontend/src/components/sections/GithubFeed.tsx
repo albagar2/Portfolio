@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Github, Star, Share2, GitFork, ExternalLink, Activity } from 'lucide-react';
 
-export const GithubFeed = () => {
+export const GithubFeed = ({ t }: { t: any }) => {
     const [repos, setRepos] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -21,7 +21,7 @@ export const GithubFeed = () => {
 
     if (loading) return (
         <div className="flex items-center justify-center p-20 font-mono text-[10px] text-[var(--color-aqua)] animate-pulse">
-            CONNECTING_TO_GITHUB_API...
+            {t.github.loading}
         </div>
     );
 
@@ -54,12 +54,12 @@ export const GithubFeed = () => {
                     </h4>
                     
                     <p className="text-[10px] font-mono text-foreground/85 line-clamp-2 uppercase tracking-widest mb-6 h-10">
-                        {repo.description || 'NO_DESCRIPTION_STUB'}
+                        {repo.description || t.github.description_stub}
                     </p>
 
                     <div className="flex items-center justify-between pt-6 border-t border-border">
                         <span className="text-[8px] font-mono font-black text-[var(--color-aqua)]/60 uppercase tracking-[0.3em]">
-                            {repo.language || 'DATA'}
+                            {repo.language || t.github.lang_data}
                         </span>
                         <ExternalLink size={12} className="text-foreground/20 group-hover:text-foreground transition-colors" />
                     </div>
@@ -68,3 +68,4 @@ export const GithubFeed = () => {
         </div>
     );
 };
+

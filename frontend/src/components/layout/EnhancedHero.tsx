@@ -6,8 +6,13 @@ interface Project {
   id: string; title: string; description: string; technologies: { name: string }[]; imageUrl?: string; liveUrl?: string; githubUrl?: string; category: string;
 }
 
-const InteractiveTerminal = () => {
-    const [history, setHistory] = useState<string[]>(['ALBA_OS_BOOT_SEQUENCE_OK', 'Initializing kernel...', 'Accessing user_profile.bin', 'Type "help" for a list of commands.']);
+const InteractiveTerminal = ({ lang }: { lang: string }) => {
+    const isEn = lang === 'en';
+    const [history, setHistory] = useState<string[]>(
+      isEn 
+      ? ['ALBA_OS_BOOT_SEQUENCE_OK', 'Initializing kernel...', 'Accessing user_profile.bin', 'Type "help" for a list of commands.']
+      : ['ALBA_OS_BOOT_SEQUENCE_OK', 'Inicializando kernel...', 'Accediendo a user_profile.bin', 'Escribe "help" para ver los comandos.']
+    );
     const [input, setInput] = useState('');
     const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -16,15 +21,28 @@ const InteractiveTerminal = () => {
         const cmd = input.toLowerCase().trim();
         let response = '';
         
-        switch(cmd) {
-            case 'help': response = 'AVAILABLE_CMDS: bio, skills, projects, stack, clear, whoami'; break;
-            case 'bio': response = 'Alba García: Software Architect specializing in high-performance digital ecosystems.'; break;
-            case 'skills': response = 'CORE_STACK: React 18, TypeScript, Node.js, PostgreSQL, Cloud_Infra.'; break;
-            case 'projects': response = 'SCANNING: [Gasoil, EsquelasTV, ALBA-OS, NeuralGuard, CryptoPro, BioSync, EchoVault, GestorPro, ComfortFood] Found 9 active nodes.'; break;
-            case 'stack': response = 'TECH: Next.js, Framer_Motion, Tailwind, Python, SQLite.'; break;
-            case 'whoami': response = 'USER: Recruiter_Entity // STATUS: Authorized_Access'; break;
-            case 'clear': setHistory([]); setInput(''); return;
-            default: response = `ERR: Command "${cmd}" not found in core database.`;
+        if (isEn) {
+            switch(cmd) {
+                case 'help': response = 'AVAILABLE_CMDS: bio, skills, projects, stack, clear, whoami'; break;
+                case 'bio': response = 'Alba García: Software Architect specializing in high-performance digital ecosystems.'; break;
+                case 'skills': response = 'CORE_STACK: React 18, TypeScript, Node.js, PostgreSQL, Cloud_Infra.'; break;
+                case 'projects': response = 'SCANNING: [Gasoil, EsquelasTV, ALBA-OS, NeuralGuard, CryptoPro, BioSync, EchoVault, GestorPro, ComfortFood] Found 9 active nodes.'; break;
+                case 'stack': response = 'TECH: Next.js, Framer_Motion, Tailwind, Python, SQLite.'; break;
+                case 'whoami': response = 'USER: Recruiter_Entity // STATUS: Authorized_Access'; break;
+                case 'clear': setHistory([]); setInput(''); return;
+                default: response = `ERR: Command "${cmd}" not found in core database.`;
+            }
+        } else {
+            switch(cmd) {
+                case 'help': response = 'CMDS_DISPONIBLES: bio, skills, projects, stack, clear, whoami'; break;
+                case 'bio': response = 'Alba García: Arquitecta de Software especializada en ecosistemas digitales de alto rendimiento.'; break;
+                case 'skills': response = 'CORE_STACK: React 18, TypeScript, Node.js, PostgreSQL, Cloud_Infra.'; break;
+                case 'projects': response = 'ESCANEANDO: [Gasoil, EsquelasTV, ALBA-OS, NeuralGuard, CryptoPro, BioSync, EchoVault, GestorPro, ComfortFood] 9 nodos activos.'; break;
+                case 'stack': response = 'TECH: Next.js, Framer_Motion, Tailwind, Python, SQLite.'; break;
+                case 'whoami': response = 'USUARIO: Recruiter_Entity // ESTADO: Acceso_Autorizado'; break;
+                case 'clear': setHistory([]); setInput(''); return;
+                default: response = `ERR: Comando "${cmd}" no encontrado en el núcleo.`;
+            }
         }
         
         setHistory([...history, `> ${input}`, response]);
@@ -36,26 +54,29 @@ const InteractiveTerminal = () => {
     }, [history]);
 
     return (
-        <div className="os-window w-full max-w-2xl mx-auto backdrop-blur-3xl overflow-hidden mt-12 group hover:border-[var(--color-aqua)]/30 transition-all duration-700 shadow-2xl">
-            <div className="os-header bg-foreground/[0.03] border-b border-border py-3 px-6 flex items-center justify-between">
-                <div className="flex gap-2"><div className="w-2 h-2 rounded-full bg-red-500/30" /><div className="w-2 h-2 rounded-full bg-yellow-400/30" /><div className="w-2 h-2 rounded-full bg-green-500/30" /></div>
-                <div className="font-mono text-[8px] text-foreground/70 uppercase tracking-[0.5em] flex items-center gap-2">
-                   <TerminalIcon size={12} /> SESSION_TTY_01
+        <div className="os-window w-full max-w-2xl mx-auto backdrop-blur-3xl overflow-hidden mt-12 group hover:border-[var(--color-aqua)]/30 transition-all duration-700 shadow-2xl border-white/5">
+            <div className="os-header bg-white/[0.03] border-b border-white/5 py-3 px-6 flex items-center justify-between">
+                <div className="flex gap-2"><div className="w-2 h-2 rounded-full bg-red-500/50 shadow-[0_0_5px_red]" /><div className="w-2 h-2 rounded-full bg-yellow-400/50 shadow-[0_0_5px_yellow]" /><div className="w-2 h-2 rounded-full bg-green-500/50 shadow-[0_0_5px_green]" /></div>
+                <div className="font-mono text-[8px] text-foreground/50 uppercase tracking-[0.5em] flex items-center gap-2">
+                   <TerminalIcon size={12} className="text-[var(--color-aqua)]" /> SESSION_TTY_01
                 </div>
             </div>
-            <div ref={scrollRef} className="p-8 h-48 overflow-y-auto font-mono text-[10px] space-y-2 custom-scrollbar text-foreground">
+            <div ref={scrollRef} className="p-8 h-48 overflow-y-auto font-mono text-[10px] space-y-2 custom-scrollbar text-foreground/90">
                 {history.map((line, i) => (
-                    <div key={i} className={line.startsWith('>') ? 'text-[var(--color-aqua)]' : ''}>{line}</div>
+                    <div key={i} className={line.startsWith('>') ? 'text-[var(--color-aqua)]' : ''}>
+                        {line.startsWith('>') ? '' : <span className="text-white/20 mr-4">[{new Date().toLocaleTimeString()}]</span>}
+                        {line}
+                    </div>
                 ))}
             </div>
-            <form onSubmit={handleCommand} className="p-4 border-t border-border flex items-center gap-4 bg-foreground/[0.02]">
-                <span className="text-[var(--color-aqua)] font-mono text-[10px] ml-4 animate-pulse">{'>'}</span>
+            <form onSubmit={handleCommand} className="p-4 border-t border-white/5 flex items-center gap-4 bg-white/[0.01]">
+                <span className="text-[var(--color-aqua)] font-mono text-[10px] ml-4 animate-pulse">ALBA_OS_{'>'}</span>
                 <input 
                    type="text" 
                    value={input}
                    onChange={(e) => setInput(e.target.value)}
-                   className="bg-transparent border-none outline-none font-mono text-[10px] text-foreground w-full uppercase tracking-widest placeholder:text-foreground/70"
-                   placeholder="COMMAND_INPUT..."
+                   className="bg-transparent border-none outline-none font-mono text-[10px] text-foreground w-full uppercase tracking-widest placeholder:text-foreground/30"
+                   placeholder={isEn ? "COMMAND_INPUT..." : "ENTRADA_COMANDO..."}
                 />
             </form>
         </div>
@@ -68,54 +89,84 @@ export const ProjectCard: React.FC<{ project: Project; index: number; onClick?: 
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="group relative h-full cursor-pointer"
+      className="group relative h-full cursor-pointer perspective-1000"
       onClick={onClick}
     >
-      <div className="absolute -inset-0.5 bg-gradient-to-br from-[var(--color-lime)]/20 to-[var(--color-aqua)]/20 rounded-[3rem] blur-2xl opacity-0 group-hover:opacity-100 transition duration-1000" />
-      <div className="relative os-window overflow-hidden flex flex-col h-full rounded-[2.5rem] bg-background/90 backdrop-blur-3xl hover:border-[var(--color-lime)]/50 transition-all duration-700">
-        <div className="relative h-60 bg-foreground/[0.05] overflow-hidden border-b border-border">
-           <div className="absolute inset-0 opacity-10 bg-[radial-gradient(var(--color-lime)_1px,transparent_1px)] [background-size:16px_16px]" />
-           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
-           <motion.div whileHover={{ scale: 1.1 }} className="absolute inset-0 flex items-center justify-center">
-              <div className="p-10 rounded-[2.5rem] bg-foreground/[0.05] border border-border backdrop-blur-3xl shadow-2xl transition-all group-hover:bg-[var(--color-lime)]/5">
-                 <Code2 size={44} className="text-[var(--color-lime)] drop-shadow-[0_0_15px_rgba(217,255,0,0.5)]" />
-              </div>
-           </motion.div>
-           <div className="absolute top-8 left-8">
-              <div className="glass-badge border-[var(--color-lime)]/30 text-[var(--color-lime)] font-black uppercase tracking-[0.4em] italic text-[8px] bg-[var(--color-lime)]/5">
-                 MODULE_{project.category}
-              </div>
+      {/* Glow Dinámico */}
+      <div className="absolute -inset-0.5 bg-gradient-to-br from-[var(--color-aqua)]/30 to-purple-500/30 rounded-[2.5rem] blur-2xl opacity-0 group-hover:opacity-100 transition duration-1000" />
+      
+      <div className="relative os-window overflow-hidden flex flex-col h-full rounded-[2.2rem] bg-foreground/[0.02] border border-white/10 backdrop-blur-xl group-hover:border-[var(--color-aqua)]/40 transition-all duration-700">
+        
+        {/* Header de la Tarjeta Estilo OS */}
+        <div className="os-header py-4 px-8 bg-white/[0.05] border-b border-white/5 flex justify-between items-center">
+            <div className="flex gap-2">
+                <div className="w-2 h-2 rounded-full bg-white/10" />
+                <div className="w-2 h-2 rounded-full bg-white/10" />
+            </div>
+            <div className="text-[8px] font-mono font-black text-white/30 uppercase tracking-[0.4em]">
+                NODE_0{index + 1}
+            </div>
+        </div>
+
+        {/* Contenedor Visual */}
+        <div className="relative h-56 overflow-hidden">
+           {/* Imagen de Fondo (o fallback con patrón técnico) */}
+           <div className="absolute inset-0 bg-[#000]">
+              {project.imageUrl ? (
+                <img src={project.imageUrl} className="w-full h-full object-cover opacity-40 grayscale group-hover:grayscale-0 group-hover:opacity-60 transition-all duration-1000" alt={project.title} />
+              ) : (
+                <div className="absolute inset-0 opacity-10 bg-[radial-gradient(var(--color-aqua)_1px,transparent_1px)] [background-size:16px_16px]" />
+              )}
            </div>
            
-           <div className="absolute bottom-8 right-8">
+           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+           
+           <div className="absolute inset-0 flex items-center justify-center">
               <motion.div 
-                whileHover={{ scale: 1.1, x: 5 }}
-                className="w-12 h-12 rounded-full bg-[var(--color-lime)] text-black flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 transition-all duration-500"
+                whileHover={{ rotate: 360 }}
+                transition={{ duration: 0.8 }}
+                className="w-20 h-20 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-3xl flex items-center justify-center group-hover:bg-[var(--color-aqua)]/10 group-hover:border-[var(--color-aqua)]/30 transition-all"
               >
-                 <ArrowRight size={20} />
+                 <Code2 size={32} className="text-[var(--color-aqua)] drop-shadow-[0_0_15px_rgba(0,255,240,0.4)]" />
               </motion.div>
+           </div>
+
+           {/* Badge de Categoría */}
+           <div className="absolute top-6 left-6">
+              <div className="px-5 py-2 rounded-lg bg-black/60 border border-white/10 backdrop-blur-md text-[7px] font-mono font-black text-white/70 uppercase tracking-[0.4em] shadow-xl">
+                 {project.category}
+              </div>
+           </div>
+
+           {/* Indicador de Estado */}
+           <div className="absolute bottom-6 left-8 flex items-center gap-3">
+              <div className="w-1.5 h-1.5 rounded-full bg-[var(--color-aqua)] shadow-[0_0_10px_var(--color-aqua)] animate-pulse" />
+              <div className="text-[8px] font-mono font-black text-[var(--color-aqua)] tracking-[0.3em]">SYSTEM_STABLE</div>
            </div>
         </div>
 
-        <div className="p-12 flex flex-col flex-grow">
-          <h3 className="text-4xl font-black mb-4 tracking-tighter uppercase italic leading-none text-foreground group-hover:text-[var(--color-lime)] transition-all font-outfit">
+        {/* Contenido de Texto */}
+        <div className="p-10 flex flex-col flex-grow bg-gradient-to-b from-transparent to-white/[0.01]">
+          <h3 className="text-4xl font-black mb-4 tracking-tighter uppercase italic text-white group-hover:text-[var(--color-aqua)] transition-all">
              {project.title}
           </h3>
-          <p className="text-foreground font-mono text-[10px] leading-relaxed mb-10 flex-grow uppercase tracking-widest opacity-100">
+          <p className="text-white/60 font-mono text-[10px] leading-relaxed mb-8 flex-grow uppercase tracking-widest line-clamp-3">
             {project.description}
           </p>
-          <div className="flex flex-wrap gap-2.5 mb-10">
-            {project.technologies?.slice(0, 4).map((tech, i) => (
-              <span key={i} className="text-[8px] font-mono px-4 py-1.5 bg-foreground/[0.05] rounded-full border border-border font-black uppercase tracking-[0.2em] text-foreground">
+          
+          <div className="flex flex-wrap gap-2 mb-10">
+            {project.technologies?.slice(0, 3).map((tech, i) => (
+              <span key={i} className="text-[7px] font-mono px-3 py-1 bg-white/[0.05] rounded shadow-sm border border-white/5 font-black uppercase tracking-[0.2em] text-white/50">
                  {tech.name}
               </span>
             ))}
           </div>
 
-          <div className="flex items-center gap-10 pt-10 border-t border-border">
-            <span className="flex items-center gap-2 text-[10px] font-mono font-black uppercase tracking-[0.4em] text-[var(--color-lime)] hover:underline transition-all">
-                VIEW_SYSTEM_DETAILS_v1.5
-            </span>
+          <div className="flex items-center justify-between pt-8 border-t border-white/5">
+             <span className="text-[9px] font-mono font-black uppercase tracking-[0.4em] text-white/30 group-hover:text-[var(--color-aqua)] transition-all">
+                INIT_PROTOCOL
+             </span>
+             <ArrowRight size={16} className="text-white/20 group-hover:text-[var(--color-aqua)] group-hover:translate-x-2 transition-all" />
           </div>
         </div>
       </div>
@@ -123,49 +174,54 @@ export const ProjectCard: React.FC<{ project: Project; index: number; onClick?: 
   );
 };
 
-export const EnhancedHero = ({ profile, t }: { profile: any, t: any }) => {
+export const EnhancedHero = ({ profile, t, lang }: { profile: any, t: any, lang: string }) => {
   const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 500], [0, 150]);
-  const opacity = useTransform(scrollY, [0, 400], [0.3, 0]);
+  const opacity = useTransform(scrollY, [0, 400], [1, 0]);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-32 pb-12 lg:px-24 bg-background">
+    <section className="relative min-h-[110vh] flex items-center justify-center pt-32 pb-40 lg:px-24 bg-background overflow-hidden">
+      {/* Background Grid & FX */}
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-[0.03] pointer-events-none" />
       <div className="hero-glow pointer-events-none" aria-hidden="true" />
-      <motion.div style={{ opacity }} className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
-         <span className="text-[20rem] md:text-[35rem] font-black text-foreground uppercase tracking-tighter italic leading-none opacity-[0.03] select-none blur-2xl">ALBA</span>
+      
+      {/* Mesh Gradient Animado */}
+      <div className="absolute -top-[20%] -left-[10%] w-[60%] h-[60%] bg-[var(--color-aqua)]/10 blur-[150px] rounded-full animate-pulse" />
+      <div className="absolute -bottom-[20%] -right-[10%] w-[60%] h-[60%] bg-purple-500/10 blur-[150px] rounded-full animate-pulse" style={{ animationDelay: '2s' }} />
+
+      <motion.div style={{ opacity }} className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
+         <span className="text-[25rem] md:text-[45rem] font-black text-foreground uppercase tracking-tighter italic leading-none opacity-[0.02] select-none blur-3xl">ALBA</span>
       </motion.div>
 
       <div className="container-custom relative z-10 w-full text-center">
-        <div className="max-w-7xl mx-auto space-y-12">
+        <div className="max-w-[1400px] mx-auto space-y-16">
           
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="inline-flex items-center gap-4 px-10 py-3 rounded-full bg-[var(--color-aqua)]/5 border border-[var(--color-aqua)]/30 backdrop-blur-3xl text-[var(--color-aqua)] font-mono text-[9px] font-black uppercase tracking-[0.6em] mb-4 shadow-2xl"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="inline-flex items-center gap-4 px-10 py-4 rounded-full bg-white/[0.03] border border-white/10 backdrop-blur-3xl text-[var(--color-aqua)] font-mono text-[9px] font-black uppercase tracking-[0.6em] mb-4 shadow-[0_0_30px_rgba(0,0,0,0.5)] border-white/10"
           >
-             <Zap size={14} className="fill-current animate-pulse" /> {t.hero.system_loaded}
+             <div className="w-2 h-2 rounded-full bg-[var(--color-aqua)] animate-pulse shadow-[0_0_10px_var(--color-aqua)]" /> {t.hero.system_loaded}
           </motion.div>
           
-          <div className="relative group perspective-2000 py-32 overflow-visible flex flex-col items-center justify-center">
-            {/* Capa de Distorsión de Fondo (Mesh) */}
-            <div className="absolute inset-x-[-20vw] h-64 hero-mesh animate-pulse" />
+          <div className="relative group perspective-2000 py-10 overflow-visible flex flex-col items-center justify-center uppercase">
             
             <div className="relative">
-               {/* Metadata de Sistema Flotante (Órbita del Título) */}
+               {/* Metadata de Sistema Flotante */}
                <motion.div 
-                  animate={{ y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }}
+                  animate={{ y: [0, -10, 0] }}
                   transition={{ duration: 4, repeat: Infinity }}
-                  className="absolute -top-16 -left-32 font-mono text-[8px] text-[var(--color-aqua)] tracking-[0.5em] hidden lg:block border-l border-[var(--color-aqua)]/30 pl-4 py-2"
+                  className="absolute -top-10 -left-40 font-mono text-[8px] text-white/20 tracking-[0.5em] hidden xl:block border-l border-white/10 pl-6 py-4"
                >
                   CORE_LINK: STABLE <br /> 
-                  DATA_STREAM: [1011001...] <br />
+                  DATA_STREAM: [100101...] <br />
                   SYNC_STATUS: 100%
                </motion.div>
 
                <motion.div 
-                  animate={{ y: [0, 20, 0], opacity: [0.2, 0.5, 0.2] }}
+                  animate={{ y: [0, 10, 0] }}
                   transition={{ duration: 5, repeat: Infinity }}
-                  className="absolute -bottom-16 -right-32 font-mono text-[8px] text-[var(--color-lime)] tracking-[0.5em] hidden lg:block border-r border-[var(--color-lime)]/30 pr-4 py-2 text-right"
+                  className="absolute -bottom-10 -right-40 font-mono text-[8px] text-white/20 tracking-[0.5em] hidden xl:block border-r border-white/10 pr-6 py-4 text-right"
                >
                   COORDS_X: {Math.random().toFixed(4)} <br /> 
                   COORDS_Y: {Math.random().toFixed(4)} <br />
@@ -173,101 +229,95 @@ export const EnhancedHero = ({ profile, t }: { profile: any, t: any }) => {
                </motion.div>
 
                <motion.h1 
-                 className="text-[14vw] md:text-[16vw] font-black tracking-[0.05em] leading-none relative z-10 font-outfit select-none flex items-center justify-center gap-2 md:gap-4"
+                 className="text-[14vw] md:text-[16vw] font-black tracking-[0.01em] leading-none relative z-10 font-outfit select-none flex items-center justify-center gap-4 filter drop-shadow-[0_0_50px_rgba(0,0,0,0.5)]"
                >
-                 {/* ANALIZANDO CADA LETRA INDIVIDUALMENTE PARA EL EFECTO WOW */}
                  {['A', 'L', 'B', 'A'].map((letter, i) => (
                    <motion.span
                      key={i}
-                     initial={{ opacity: 0, x: -100, rotateY: -90 }}
+                     initial={{ opacity: 0, x: -50, rotateY: -45 }}
                      animate={{ opacity: 1, x: 0, rotateY: 0 }}
-                     transition={{ duration: 1.2, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                     whileHover={{ scale: 1.1, z: 50, color: 'var(--color-aqua)', textShadow: "0 0 50px var(--color-aqua)" }}
-                     className="relative inline-block text-foreground transition-all cursor-default"
+                     transition={{ duration: 1.5, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                     whileHover={{ scale: 1.05, filter: "brightness(1.5)" }}
+                     className="text-white relative group/letter"
                    >
                      {letter}
-                     {/* Efecto de Refracción (Sombra de Cristal) */}
-                     <span className="absolute inset-0 text-foreground/10 blur-[4px] -z-10 translate-x-2 translate-y-2">{letter}</span>
+                     <span className="absolute inset-0 text-[var(--color-aqua)]/20 blur-2xl opacity-0 group-hover/letter:opacity-100 transition-opacity">{letter}</span>
                    </motion.span>
                  ))}
 
-                 {/* EL NODO .G (EL MÓDULO DE INTERFAZ) */}
                  <motion.span 
-                   initial={{ opacity: 0, x: 20 }}
-                   animate={{ opacity: 1, x: 0 }}
-                   transition={{ delay: 1 }}
-                   className="relative flex items-center ml-12"
+                   initial={{ opacity: 0, scale: 0.5 }}
+                   animate={{ opacity: 1, scale: 1 }}
+                   transition={{ delay: 0.8, type: 'spring' }}
+                   className="relative flex items-center ml-10"
                  >
-                    {/* El Punto como LED de Estado */}
-                    <div className="relative mr-6">
-                       <div className="w-5 h-5 rounded-full bg-[var(--color-aqua)] shadow-[0_0_20px_var(--color-aqua)]" />
-                       <motion.div animate={{ scale: [1, 2, 1], opacity: [0.5, 0, 0.5] }} transition={{ duration: 1.5, repeat: Infinity }} className="absolute inset-0 bg-[var(--color-aqua)] rounded-full" />
-                    </div>
-
-                    {/* La G dentro de un Marco Técnico 'Elite' */}
-                    <div className="relative group/g">
-                       {/* Esquinas del Marco (Cantoneras) */}
-                       <div className="absolute -top-4 -left-4 w-6 h-6 border-t-2 border-l-2 border-[var(--color-lime)]" />
-                       <div className="absolute -bottom-4 -right-4 w-6 h-6 border-b-2 border-r-2 border-[var(--color-lime)]" />
-                       
-                       <div className="px-10 py-4 bg-foreground/[0.02] border border-border rounded-xl backdrop-blur-xl group-hover/g:border-[var(--color-lime)]/50 transition-all duration-700">
-                          <span className="text-10xl md:text-[12rem] font-black text-transparent bg-clip-text bg-gradient-to-r from-foreground to-[var(--color-lime)]">
-                             G
-                          </span>
-                       </div>
-
-                       {/* Etiquetas de Calibración */}
-                       <div className="absolute -top-12 left-0 font-mono text-[7px] text-[var(--color-lime)] tracking-[0.4em] opacity-40">CALIBRATING_NODE_v1.5</div>
-                       <div className="absolute -bottom-10 right-0 font-mono text-[7px] text-muted-foreground/20 tracking-[0.4em]">ADDR: 0xG_LOG</div>
+                    {/* El Nodo .G */}
+                    <div className="relative group/g px-10 py-6 bg-white/[0.02] border border-white/10 rounded-[2rem] backdrop-blur-3xl hover:border-[var(--color-aqua)]/50 transition-all duration-700 shadow-3xl">
+                       <span className="text-10xl md:text-[13rem] font-black text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-[var(--color-aqua)]">
+                          G
+                       </span>
+                       {/* Cantoneras High-Tech */}
+                       <div className="absolute -top-3 -left-3 w-8 h-8 border-t-2 border-l-2 border-[var(--color-aqua)] transition-all group-hover/g:w-12 group-hover/g:h-12" />
+                       <div className="absolute -bottom-3 -right-3 w-8 h-8 border-b-2 border-r-2 border-[var(--color-aqua)] transition-all group-hover/g:w-12 group-hover/g:h-12" />
                     </div>
                  </motion.span>
                </motion.h1>
 
-               {/* Reflejo Horizontal de Escaneo de Datos */}
+               {/* Línea de Escaneo Láser */}
                <motion.div 
-                  initial={{ width: 0 }}
-                  animate={{ width: '100%' }}
-                  transition={{ duration: 2, delay: 1 }}
-                  className="absolute -bottom-12 left-0 h-[1.5px] bg-gradient-to-r from-transparent via-[var(--color-aqua)] to-transparent shadow-[0_0_20px_var(--color-aqua)]"
+                  animate={{ left: ['0%', '100%'], opacity: [0, 1, 0] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+                  className="absolute -bottom-4 left-0 w-32 h-[2px] bg-[var(--color-aqua)] shadow-[0_0_20px_var(--color-aqua)] z-20"
                />
             </div>
           </div>
 
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }} className="space-y-12">
-            <p className="text-muted-foreground text-xl md:text-3xl lg:text-4xl max-w-7xl mx-auto font-mono uppercase tracking-[0.2em] font-black px-12 leading-tight border-l-[4px] border-[var(--color-aqua)]/20 inline-block text-left opacity-100">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }} className="space-y-20 pt-10">
+            <p className="text-white/70 text-xl md:text-3xl lg:text-4xl max-w-7xl mx-auto font-mono uppercase tracking-[0.25em] font-black px-12 leading-snug border-l-[6px] border-[var(--color-aqua)]/40 inline-block text-left italic">
               {t.hero.bio_1} <br /> 
-              <span className="text-[var(--color-aqua)]">{t.hero.bio_highlight}</span> <br />
-              <span className="italic text-foreground underline decoration-[var(--color-lime)]/40 underline-offset-8">{t.hero.bio_2}</span>
+              <span className="text-white font-black drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">{t.hero.bio_highlight}</span> <br />
+              <span className="text-[var(--color-aqua)] opacity-90">{t.hero.bio_2}</span>
             </p>
 
-            <div className="flex flex-wrap items-center justify-center gap-8 pt-6">
+            <div className="flex flex-wrap items-center justify-center gap-10">
                <motion.button 
-                 whileHover={{ scale: 1.05, boxShadow: "0 0 50px rgba(0, 255, 240, 0.3)" }}
+                 whileHover={{ scale: 1.05, boxShadow: "0 0 50px rgba(0, 255, 240, 0.4)" }}
                  whileTap={{ scale: 0.95 }}
-                 className="px-16 py-8 bg-[var(--color-aqua)] text-black rounded-full font-black text-[10px] font-mono uppercase tracking-[0.5em] shadow-3xl transition-all"
-                 onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+                 className="px-20 py-10 bg-[var(--color-aqua)] text-black rounded-full font-black text-[11px] font-mono uppercase tracking-[0.6em] shadow-[0_0_40px_rgba(0,255,240,0.2)]"
+                 onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
                >
-                  {t.hero.btn_deploy} <Rocket size={20} className="ml-3 inline-block" />
+                  {t.hero.btn_deploy} <Rocket size={20} className="ml-4 inline-block" />
                </motion.button>
                
                <motion.a 
                   href="/downloads/CV-Alba-Garcia-Lopez.pdf"
                   download="CV-Alba-Garcia-Lopez.pdf"
-                  whileHover={{ backgroundColor: 'hsl(var(--foreground))', color: 'hsl(var(--background))', scale: 1.05 }}
-                  className="px-16 py-8 border-2 border-border rounded-full font-black text-[10px] font-mono uppercase tracking-[0.5em] flex items-center gap-4 transition-all text-foreground"
+                  whileHover={{ backgroundColor: 'rgba(255,255,255,0.05)', scale: 1.05 }}
+                  className="px-20 py-10 border-2 border-white/10 rounded-full font-black text-[11px] font-mono uppercase tracking-[0.6em] flex items-center gap-4 text-white/50 hover:text-white transition-all backdrop-blur-md"
                >
                   {t.hero.btn_dump} <Download size={20} />
                </motion.a>
             </div>
             
-            {/* TERMINAL INTERACTIVA - EL FACTOR WOW DEFINITIVO */}
-            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1 }} className="pt-10">
-               <InteractiveTerminal />
+            {/* TERMINAL INTERACTIVA - PASANDO LANG */}
+            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 1 }} className="pt-16">
+               <InteractiveTerminal lang={lang} />
             </motion.div>
 
           </motion.div>
         </div>
       </div>
+      
+      {/* Scroll Indicator */}
+      <motion.div 
+        animate={{ y: [0, 10, 0] }}
+        transition={{ duration: 2, repeat: Infinity }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 opacity-30"
+      >
+        <div className="w-[1px] h-20 bg-gradient-to-b from-transparent via-white to-transparent" />
+        <span className="text-[8px] font-mono font-black uppercase tracking-[0.5em] text-white">SCROLL_TO_BOOT</span>
+      </motion.div>
     </section>
   );
 };
+

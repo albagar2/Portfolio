@@ -70,10 +70,12 @@ echo [-] Levantando OS Control Center (Frontend)...
 start "CONTROL-CENTER" cmd /c "cd proyectos\alba-os-control-center\frontend && npm run dev"
 
 echo.
-echo [3/3] Generando Portal de Demos...
-echo El Portal interactivo se abrira en su navegador para interactuar con las apps.
-timeout /t 3 /nobreak > nul
-start PORTAL_DEMOS.html
+echo [3/3] Abriendo Portfolio Principal...
+echo Se abrira http://localhost:3000 en su navegador.
+echo (El Portal de Demos sigue disponible en PORTAL_DEMOS.html)
+timeout /t 5 /nobreak > nul
+start http://localhost:3000
+
 
 echo.
 echo =====================================================================

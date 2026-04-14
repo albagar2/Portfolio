@@ -13,6 +13,7 @@ interface HomeProps {
   scaleX: any;
   onOpenContact: () => void;
   t: any;
+  lang: string;
 }
 
 /**
@@ -20,8 +21,17 @@ interface HomeProps {
  * Estructura de la página central del portafolio.
  * Orquesta todas las secciones principales (Hero, Skills, Proyectos, Experiencia, Blog).
  */
-export const Home = ({ data, scaleX, onOpenContact, t }: HomeProps) => {
+export const Home = ({ data, scaleX, onOpenContact, t, lang }: HomeProps) => {
   const [selectedProject, setSelectedProject] = React.useState<any>(null);
+
+  // Helper para obtener el campo traducido o el original de respaldo
+  const getT = (obj: any, field: string) => {
+    if (lang === 'en') {
+      const enField = `${field}_en`;
+      return obj[enField] || obj[field];
+    }
+    return obj[field];
+  };
 
   return (
     <div className="pb-40 relative lg:px-20 overflow-x-hidden scroll-smooth">
@@ -33,7 +43,7 @@ export const Home = ({ data, scaleX, onOpenContact, t }: HomeProps) => {
 
       {/* SECCIÓN HERO (Presentación Principal) */}
       <header id="hero" className="mb-20 scroll-mt-32">
-         <EnhancedHero profile={data.profile} t={t} />
+         <EnhancedHero profile={data.profile} t={t} lang={lang} />
       </header>
 
       {/* SECCIÓN SOBRE MÍ (Nuevo) */}
@@ -55,7 +65,7 @@ export const Home = ({ data, scaleX, onOpenContact, t }: HomeProps) => {
                      {t.about.subtitle}
                   </h2>
                   <p className="text-xl lg:text-2xl text-foreground/85 font-mono uppercase tracking-widest leading-relaxed border-l-4 border-[var(--color-aqua)] pl-10">
-                     {t.about.bio}
+                     {getT(data.profile, 'bio')}
                   </p>
                </div>
                <div className="relative group perspective-1000">
@@ -73,7 +83,7 @@ export const Home = ({ data, scaleX, onOpenContact, t }: HomeProps) => {
                         <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
                         <div className="absolute bottom-8 left-8 right-8 space-y-2">
                            <div className="text-[10px] font-mono text-[var(--color-aqua)] font-black tracking-[0.4em]">ADDR: 0xALBA_G</div>
-                           <div className="text-2xl font-black text-foreground italic uppercase">{data.profile?.title || 'Junior Web Developer'}</div>
+                           <div className="text-2xl font-black text-foreground italic uppercase">{getT(data.profile, 'title')}</div>
                         </div>
                      </div>
                   </div>
@@ -99,18 +109,18 @@ export const Home = ({ data, scaleX, onOpenContact, t }: HomeProps) => {
 
       {/* SECCIÓN PROYECTOS (Sistemas Core) */}
       <section id="projects" className="py-20 px-6 lg:px-0">
-         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="os-window max-w-full overflow-hidden border-[var(--color-lime)]/10">
-            <header className="os-header bg-[var(--color-lime)]/10 border-[var(--color-lime)]/20">
-               <div className="flex gap-2 mr-6"><div className="os-dot bg-red-500/50" /><div className="os-dot bg-yellow-500/50" /><div className="os-dot bg-green-500/50" /></div>
-               <span className="font-mono text-[9px] font-black uppercase tracking-[0.5em] text-[var(--color-lime)] flex items-center gap-3">
+         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="os-window max-w-full overflow-hidden border-[var(--color-aqua)]/20 shadow-[0_0_50px_rgba(0,0,0,0.3)]">
+            <header className="os-header bg-foreground/[0.03] border-b border-white/5">
+               <div className="flex gap-2 mr-6"><div className="os-dot bg-red-500/50 shadow-[0_0_10px_rgba(239,68,68,0.5)]" /><div className="os-dot bg-yellow-500/50 shadow-[0_0_10px_rgba(234,179,8,0.5)]" /><div className="os-dot bg-green-500/50 shadow-[0_0_10px_rgba(34,197,94,0.5)]" /></div>
+               <span className="font-mono text-[9px] font-black uppercase tracking-[0.5em] text-foreground/70 flex items-center gap-3">
                   <Cpu size={14} /> {t.projects.module_title}
                </span>
             </header>
-            <div className="p-10 lg:p-24">
+            <div className="p-10 lg:p-24 bg-gradient-to-b from-transparent to-foreground/[0.02]">
                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16">
                   {data.projects.map((p: any, idx: number) => (
                     <article key={p.id} className="h-full">
-                       <ProjectCard project={p} index={idx} onClick={() => setSelectedProject(p)} />
+                       <ProjectCard project={{...p, title: getT(p, 'title'), description: getT(p, 'description')}} index={idx} onClick={() => setSelectedProject(p)} />
                     </article>
                   ))}
                </div>
@@ -122,7 +132,7 @@ export const Home = ({ data, scaleX, onOpenContact, t }: HomeProps) => {
       <AnimatePresence>
         {selectedProject && (
           <ProjectModal 
-            project={selectedProject} 
+            project={{...selectedProject, title: getT(selectedProject, 'title'), description: getT(selectedProject, 'description'), longDescription: getT(selectedProject, 'longDescription')}} 
             isOpen={!!selectedProject} 
             onClose={() => setSelectedProject(null)} 
             t={t} 
@@ -140,7 +150,7 @@ export const Home = ({ data, scaleX, onOpenContact, t }: HomeProps) => {
                </span>
             </header>
             <div className="p-10 lg:p-24">
-               <GithubFeed />
+               <GithubFeed t={t} />
             </div>
          </motion.div>
       </section>
@@ -170,8 +180,8 @@ export const Home = ({ data, scaleX, onOpenContact, t }: HomeProps) => {
                       <div className="text-[10px] font-mono font-black text-[#FF007A] uppercase tracking-[0.6em] mb-4 flex items-center gap-4">
                          <div className="w-8 h-[1px] bg-[#FF007A]/50" /> LOG_{new Date(exp.startDate).getFullYear()} // SECTOR: PROD
                       </div>
-                      <h4 className="text-6xl font-black tracking-tighter uppercase italic text-foreground group-hover:text-[#FF007A] transition-colors leading-none mb-8">{exp.position}</h4>
-                      <p className="text-foreground/85 leading-relaxed font-mono text-[11px] uppercase tracking-[0.2em] opacity-80 border-t border-border pt-10">{exp.description}</p>
+                      <h4 className="text-6xl font-black tracking-tighter uppercase italic text-foreground group-hover:text-[#FF007A] transition-colors leading-none mb-8">{getT(exp, 'position')}</h4>
+                      <p className="text-foreground/85 leading-relaxed font-mono text-[11px] uppercase tracking-[0.2em] opacity-80 border-t border-border pt-10">{getT(exp, 'description')}</p>
                    </article>
                  ))}
               </div>
@@ -204,9 +214,9 @@ export const Home = ({ data, scaleX, onOpenContact, t }: HomeProps) => {
                       <div className="text-[10px] font-mono font-black text-purple-400 uppercase tracking-[0.6em] mb-4 flex items-center gap-4">
                          <div className="w-8 h-[1px] bg-purple-500/50" /> LOG_{new Date(edu.startDate).getFullYear()} // SECTOR: ACAD
                       </div>
-                      <h4 className="text-5xl font-black tracking-tighter uppercase italic text-foreground group-hover:text-purple-400 transition-colors leading-none mb-3">{edu.degree}</h4>
-                      <p className="text-purple-400/60 font-mono text-[10px] uppercase font-bold tracking-widest mb-6">{edu.institution} // {edu.field}</p>
-                      {edu.description && <p className="text-foreground/85 leading-relaxed font-mono text-[11px] uppercase tracking-[0.2em] opacity-80 border-t border-border pt-6">{edu.description}</p>}
+                      <h4 className="text-5xl font-black tracking-tighter uppercase italic text-foreground group-hover:text-purple-400 transition-colors leading-none mb-3">{getT(edu, 'degree')}</h4>
+                      <p className="text-purple-400/60 font-mono text-[10px] uppercase font-bold tracking-widest mb-6">{edu.institution} // {getT(edu, 'field')}</p>
+                      {edu.description && <p className="text-foreground/85 leading-relaxed font-mono text-[11px] uppercase tracking-[0.2em] opacity-80 border-t border-border pt-6">{getT(edu, 'description')}</p>}
                    </article>
                  ))}
               </div>
@@ -244,11 +254,11 @@ export const Home = ({ data, scaleX, onOpenContact, t }: HomeProps) => {
                           </header>
 
                           <h3 className="text-4xl lg:text-5xl font-black tracking-tighter uppercase italic leading-[0.9] text-foreground group-hover:text-indigo-400 transition-all duration-500 mb-8 relative z-10 pr-10">
-                             {post.title}
+                             {getT(post, 'title')}
                           </h3>
                           
                           <p className="text-foreground/85 font-mono text-[10px] leading-relaxed mb-12 line-clamp-3 uppercase tracking-widest opacity-100 italic border-l-2 border-border pl-8 flex-grow relative z-10">
-                             {post.excerpt}
+                             {getT(post, 'excerpt')}
                           </p>
 
                           <Link to={`/blog/${post.slug}`} className="text-[10px] font-black text-indigo-400 uppercase tracking-[0.5em] flex items-center gap-6 group/btn w-fit relative z-10">
@@ -264,6 +274,7 @@ export const Home = ({ data, scaleX, onOpenContact, t }: HomeProps) => {
             </div>
          </motion.div>
       </section>
+
 
       {/* FOOTER CALL TO ACTION (Handshake) */}
       <section id="contact" className="py-40 px-6 lg:px-0">
@@ -281,7 +292,7 @@ export const Home = ({ data, scaleX, onOpenContact, t }: HomeProps) => {
       </section>
       
       {/* FINALIZACIÓN TOTAL DEL SISTEMA */}
-      <Footer data={data} t={t} />
+      <Footer data={data} t={t} lang={lang} />
     </div>
   );
 };

@@ -43,7 +43,7 @@ export const ContactModal = ({ isOpen, onClose, t }: ContactModalProps) => {
            .join(' // ');
          setErrorDetails(details);
        } else {
-         setErrorDetails(err.response?.data?.message || 'Error en la transmisión. Reintente.');
+         setErrorDetails(err.response?.data?.message || t.contact.fail_desc);
        }
      } finally {
        setLoading(false);
@@ -81,7 +81,7 @@ export const ContactModal = ({ isOpen, onClose, t }: ContactModalProps) => {
                    <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="p-6 bg-red-500/10 border border-red-500/30 rounded-2xl flex items-start gap-5">
                       <ShieldAlert className="text-red-500 shrink-0 mt-1" size={20} />
                       <div className="space-y-2">
-                         <div className="text-[10px] font-black uppercase tracking-[0.3em] text-red-500">Transmisión Fallida</div>
+                         <div className="text-[10px] font-black uppercase tracking-[0.3em] text-red-500">{t.contact.fail_title}</div>
                          <p className="text-[9px] font-mono text-foreground/85 leading-relaxed uppercase tracking-widest">{errorDetails}</p>
                       </div>
                    </motion.div>
@@ -93,12 +93,12 @@ export const ContactModal = ({ isOpen, onClose, t }: ContactModalProps) => {
                        <input required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} type="text" placeholder={t.contact.user_id} className="w-full bg-foreground/[0.05] border border-border p-8 rounded-3xl font-mono text-[10px] uppercase tracking-widest focus:border-[#FFB800]/50 outline-none transition-all text-foreground" />
                        <input required value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} type="email" placeholder={t.contact.signal_email} className="w-full bg-foreground/[0.05] border border-border p-8 rounded-3xl font-mono text-[10px] uppercase tracking-widest focus:border-[#FFB800]/50 outline-none transition-all text-foreground" />
                     </div>
-                    <input required value={formData.subject} onChange={e => setFormData({...formData, subject: e.target.value})} type="text" placeholder="SUBJECT // ASUNTO" className="w-full bg-foreground/[0.05] border border-border p-8 rounded-3xl font-mono text-[10px] uppercase tracking-widest focus:border-[#FFB800]/50 outline-none transition-all text-foreground" />
+                    <input required value={formData.subject} onChange={e => setFormData({...formData, subject: e.target.value})} type="text" placeholder={t.contact.subject} className="w-full bg-foreground/[0.05] border border-border p-8 rounded-3xl font-mono text-[10px] uppercase tracking-widest focus:border-[#FFB800]/50 outline-none transition-all text-foreground" />
                     
                     <div className="relative">
                        <textarea required value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})} placeholder={t.contact.data_packet} rows={6} className="w-full bg-foreground/[0.05] border border-border p-8 rounded-3xl font-mono text-[10px] uppercase tracking-widest focus:border-[#FFB800]/50 outline-none transition-all resize-none text-foreground" />
                        <div className={`absolute bottom-6 right-8 font-mono text-[9px] font-black uppercase tracking-tighter ${formData.message.length < 10 ? 'text-red-500 animate-pulse' : 'text-foreground/85'}`}>
-                          Len: {formData.message.length} / MIN: 10
+                          {t.contact.length}: {formData.message.length} / MIN: 10
                        </div>
                     </div>
                     

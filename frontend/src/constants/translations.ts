@@ -53,6 +53,7 @@ export const translations: any = {
         timeline_desc: 'Validación secuencial de formación académica y certificaciones de ingeniería.' 
       },
       posts: { module_title: 'ARCHIVO: CONTENT_LOGS.bin', read_more: 'LEER_ARTÍCULO' },
+      github: { loading: 'CONECTANDO_A_GITHUB_API...', description_stub: 'SIN_DESCRIPCIÓN', lang_data: 'DATOS' },
       contact: { 
         connect: 'CONECTAR', 
         handshake: 'INICIAR_HANDSHAKE_v1.5', 
@@ -62,6 +63,10 @@ export const translations: any = {
         signal_email: 'CORREO_SEÑAL', 
         data_packet: 'CONTENIDO_PAQUETE_DATOS', 
         establish_link: 'ESTABLECER_CONEXIÓN', 
+        subject: 'ASUNTO // SUBJECT',
+        fail_title: 'Transmisión Fallida',
+        fail_desc: 'Error en la transmisión. Reintente.',
+        length: 'Longitud',
         success_title: 'Señal Sincronizada', 
         success_desc: 'Integridad 100% // Paquete entregado' 
       },
@@ -116,6 +121,7 @@ export const translations: any = {
         timeline_desc: 'Sequential validation of academic training and engineering certifications.' 
       },
       posts: { module_title: 'ARCHIVE: CONTENT_LOGS.bin', read_more: 'READ_ARTICLE' },
+      github: { loading: 'CONNECTING_TO_GITHUB_API...', description_stub: 'NO_DESCRIPTION_STUB', lang_data: 'DATA' },
       contact: { 
         connect: 'CONNECT', 
         handshake: 'INITIATE_HANDSHAKE_v1.5', 
@@ -125,6 +131,10 @@ export const translations: any = {
         signal_email: 'SIGNAL_EMAIL', 
         data_packet: 'DATA_PACKET_CONTENT', 
         establish_link: 'ESTABLISH_LINK', 
+        subject: 'SUBJECT // ASUNTO',
+        fail_title: 'Transmission Failed',
+        fail_desc: 'Error in transmission. Retry.',
+        length: 'Length',
         success_title: 'Signal Synchronized', 
         success_desc: 'Integrity 100% // Packet delivered' 
       },

@@ -33,7 +33,7 @@ const TypewriterTitle = ({ text }: { text: string }) => {
  * PÁGINA: BlogPostDetail
  * Detalles extendidos de artículos con sistema de logs, resaltado y navegación técnica.
  */
-export const BlogPostDetail = () => {
+export const BlogPostDetail = ({ lang }: { lang: string }) => {
   const { slug } = useParams();
   const [post, setPost] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -41,6 +41,15 @@ export const BlogPostDetail = () => {
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+
+  // Helper para obtener el campo traducido o el original de respaldo
+  const getT = (obj: any, field: string) => {
+    if (lang === 'en') {
+      const enField = `${field}_en`;
+      return obj[enField] || obj[field];
+    }
+    return obj[field];
+  };
 
   // EFECTO: Carga de datos
   useEffect(() => {
@@ -58,12 +67,16 @@ export const BlogPostDetail = () => {
     window.scrollTo(0, 0);
   }, [slug]);
 
+  const postTitle = useMemo(() => post ? getT(post, 'title') : '', [post, lang]);
+  const postExcerpt = useMemo(() => post ? getT(post, 'excerpt') : '', [post, lang]);
+  const postContent = useMemo(() => post ? getT(post, 'content') : '', [post, lang]);
+
   // LÓGICA: Procesamiento de Contenido (Headers y Code Blocks)
   const processedContent = useMemo(() => {
-    if (!post?.content) return { html: '', headings: [] };
+    if (!postContent) return { html: '', headings: [] };
     
     const headings: { id: string, text: string }[] = [];
-    let html = post.content
+    let html = postContent
       // Bloques de Código (```code```)
       .replace(/```([\s\S]*?)```/g, (_match: string, code: string) => {
         const highlighted = code
@@ -101,14 +114,14 @@ export const BlogPostDetail = () => {
       .replace(/\n/g, '<br />');
 
     return { html: `<p class="mb-8 leading-loose text-lg text-foreground/80 font-medium">${html}</p>`, headings };
-  }, [post]);
+  }, [postContent, lang]);
 
   // CÁLCULO: Tiempo de lectura (Sincronización)
   const syncTime = useMemo(() => {
-    if (!post?.content) return 0;
-    const words = post.content.split(/\s+/).length;
+    if (!postContent) return 0;
+    const words = postContent.split(/\s+/).length;
     return Math.ceil(words / 200);
-  }, [post]);
+  }, [postContent]);
 
   const handleShare = () => {
     const url = window.location.href;
@@ -154,13 +167,13 @@ export const BlogPostDetail = () => {
                    {post.tags?.[0] && <span className="text-foreground/30 font-mono text-[10px] uppercase tracking-[0.4em]">#{post.tags[0].name}</span>}
                 </div>
                 
-                <TypewriterTitle text={post.title} />
+                <TypewriterTitle text={postTitle} />
 
                 <div className="flex flex-wrap items-center gap-10 font-mono text-[10px] text-foreground/85 uppercase tracking-[0.4em] font-black pt-10">
                    <div className="flex items-center gap-3"><Calendar size={14} className="text-foreground/20" /> {new Date(post.publishedAt || post.createdAt).toLocaleDateString()}</div>
-                   <div className="flex items-center gap-3"><Clock size={14} className="text-[var(--color-aqua)]" /> TIME_TO_SYNC: {syncTime} MIN</div>
+                   <div className="flex items-center gap-3"><Clock size={14} className="text-[var(--color-aqua)]" /> {lang === 'en' ? 'TIME_TO_SYNC' : 'TIEMPO_SINCR'} : {syncTime} MIN</div>
                    <button onClick={handleShare} className="group flex items-center gap-3 hover:text-foreground transition-colors border-b border-white/0 hover:border-border pb-1">
-                      <Share2 size={14} /> SHARE_DATA_NODE
+                      <Share2 size={14} /> {lang === 'en' ? 'SHARE_DATA_NODE' : 'COMPARTIR_NODO'}
                    </button>
                 </div>
              </motion.div>
@@ -193,7 +206,7 @@ export const BlogPostDetail = () => {
              <div className="p-10 os-window bg-[var(--color-lime)]/5 border-[var(--color-lime)]/10 rounded-3xl">
                 <Zap size={24} className="text-[var(--color-lime)] mb-6 animate-pulse" />
                 <h4 className="text-[10px] font-black font-mono text-[var(--color-lime)] mb-4 uppercase tracking-[0.5em]">SYSTEM_ACTION</h4>
-                <p className="text-[9px] font-mono text-foreground/80 uppercase leading-relaxed mb-10 tracking-tighter opacity-70 italic border-l border-[var(--color-lime)]/20 pl-4">¿BUSCAS SOLUCIONES DE INGENIERÍA DE ÉLITE? ESTABLECE CONEXIÓN.</p>
+                <p className="text-[9px] font-mono text-foreground/80 uppercase leading-relaxed mb-10 tracking-tighter opacity-70 italic border-l border-[var(--color-lime)]/20 pl-4">{lang === 'en' ? 'LOOKING FOR ELITE ENGINEERING SOLUTIONS? ESTABLISH CONNECTION.' : '¿BUSCAS SOLUCIONES DE INGENIERÍA DE ÉLITE? ESTABLECE CONEXIÓN.'}</p>
                 <Link to="/#contact" className="text-[10px] font-black text-foreground hover:text-[var(--color-lime)] uppercase tracking-[0.6em] flex items-center gap-6 transition-all group">
                    START_HANDSHAKE <ArrowLeft className="rotate-180 group-hover:translate-x-3 transition-transform" size={14} />
                 </Link>
@@ -203,15 +216,15 @@ export const BlogPostDetail = () => {
           {/* CUERPO DEL ARTÍCULO (Lectura Clean) */}
           <article className="lg:col-span-9 max-w-4xl">
              <Link to="/" className="inline-flex items-center gap-6 text-foreground/85 hover:text-[var(--color-aqua)] font-black text-[10px] uppercase tracking-[0.5em] mb-24 transition-all group">
-                <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" /> BACK_TO_DUMP_ARCHIVE
+                <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" /> {lang === 'en' ? 'BACK_TO_DUMP_ARCHIVE' : 'VOLVER_AL_ARCHIVO'}
              </Link>
 
              <div className="glass-card p-12 lg:p-24 border-border bg-slate-950/40 backdrop-blur-3xl shadow-3xl rounded-[3rem]">
-                {post.excerpt && (
+                {postExcerpt && (
                    <div className="relative mb-32">
                       <div className="absolute -left-12 top-0 bottom-0 w-[4px] bg-gradient-to-b from-[var(--color-aqua)] to-transparent rounded-full" />
                       <p className="text-3xl font-light text-slate-300 leading-relaxed italic opacity-90 pl-8 font-outfit">
-                        {post.excerpt}
+                        {postExcerpt}
                       </p>
                       <div className="mt-8 text-[9px] font-black text-[var(--color-aqua)]/30 uppercase tracking-[0.8em] font-mono pr-8 text-right">ABSTRACT_LOG_O1</div>
                    </div>
@@ -227,7 +240,7 @@ export const BlogPostDetail = () => {
              <footer className="mt-40 border-t border-border pt-20 flex flex-col items-center text-center">
                 <Code2 size={64} className="text-slate-900 mb-12 opacity-50" />
                 <h3 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-foreground mb-8">END_OF_TRANSMISSION</h3>
-                <p className="text-foreground/85 font-mono text-[10px] uppercase tracking-[0.6em] mb-20 italic">AUTOR: ALBA_BOSS // SECTOR: CORE_DUMP</p>
+                <p className="text-foreground/85 font-mono text-[10px] uppercase tracking-[0.6em] mb-20 italic">{lang === 'en' ? 'AUTHOR' : 'AUTOR'}: ALBA_BOSS // SECTOR: CORE_DUMP</p>
                 
                 <div className="flex flex-wrap justify-center gap-12">
                    <button 
@@ -249,3 +262,4 @@ export const BlogPostDetail = () => {
     </div>
   );
 };
+

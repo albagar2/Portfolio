@@ -5,14 +5,24 @@ import { Zap, Database, Github, Cpu, ShieldAlert } from 'lucide-react';
 interface FooterProps {
   data: any;
   t: any;
+  lang: string;
 }
 
 /**
  * COMPONENTE: Footer (Sistema de Cierre de Sesión)
  * Muestra información de contacto, redes sociales y créditos de arquitectura.
  */
-export const Footer = ({ data, t }: FooterProps) => {
+export const Footer = ({ data, t, lang }: FooterProps) => {
   const profile = data.profile || {};
+
+  // Helper para obtener el campo traducido o el original de respaldo
+  const getT = (obj: any, field: string) => {
+    if (lang === 'en') {
+      const enField = `${field}_en`;
+      return obj[enField] || obj[field];
+    }
+    return obj[field];
+  };
 
   return (
     <footer className="py-24 px-6 lg:px-20 border-t border-border relative overflow-hidden bg-foreground/[0.02]">
@@ -34,7 +44,7 @@ export const Footer = ({ data, t }: FooterProps) => {
               {profile.name?.toUpperCase().replace(/ /g, '_') || 'ALBA_GARCIA_LOPEZ'}
            </h4>
            <div className="text-[var(--color-aqua)] text-[10px] font-mono uppercase tracking-[0.6em] opacity-30">
-              {profile.title || t.footer.architecture}
+              {getT(profile, 'title') || t.footer.architecture}
            </div>
            
            {/* Enlaces de Conectividad (Redes) */}
@@ -46,12 +56,12 @@ export const Footer = ({ data, t }: FooterProps) => {
               )}
               {profile.githubUrl && (
                  <a href={profile.githubUrl} target="_blank" rel="noreferrer" className="text-[10px] font-mono text-foreground/95 hover:text-foreground transition-colors uppercase tracking-[0.3em] flex items-center gap-3 group">
-                    <Github size={14} className="opacity-40 group-hover:opacity-100" /> GITHUB_REPOSITORY
+                    <Github size={14} className="opacity-40 group-hover:opacity-100" /> {lang === 'en' ? 'GITHUB_REPOSITORY' : 'REPOSITORIO_GITHUB'}
                  </a>
               )}
               {profile.linkedinUrl && (
                  <a href={profile.linkedinUrl} target="_blank" rel="noreferrer" className="text-[10px] font-mono text-foreground/95 hover:text-[var(--color-aqua)] transition-colors uppercase tracking-[0.3em] flex items-center gap-3 group">
-                    <Cpu size={14} className="opacity-40 group-hover:opacity-100" /> LINKEDIN_NODE
+                    <Cpu size={14} className="opacity-40 group-hover:opacity-100" /> {lang === 'en' ? 'LINKEDIN_NODE' : 'NODO_LINKEDIN'}
                  </a>
               )}
            </div>
@@ -68,3 +78,4 @@ export const Footer = ({ data, t }: FooterProps) => {
     </footer>
   );
 };
+

@@ -33,7 +33,9 @@ model Profile {
   id          String  @id @default(uuid())
   name        String
   title       String  
+  title_en    String? 
   bio         String  
+  bio_en      String? 
   email       String
   phone       String?
   location    String?
@@ -53,9 +55,12 @@ model Profile {
 model Project {
   id           String   @id @default(uuid())
   title        String
+  title_en     String?
   slug         String   @unique
   description  String   
+  description_en String?
   longDescription String? 
+  longDescription_en String?
   imageUrl     String?  
   liveUrl      String?  
   githubUrl    String?  
@@ -88,7 +93,9 @@ model Experience {
   id          String   @id @default(uuid())
   company     String
   position    String
+  position_en String?
   description String   
+  description_en String?
   startDate   DateTime 
   endDate     DateTime? 
   current     Boolean  @default(false)
@@ -121,11 +128,14 @@ model Education {
   id          String   @id @default(uuid())
   institution String
   degree      String
+  degree_en   String?
   field       String
+  field_en    String?
   startDate   DateTime 
   endDate     DateTime? 
   current     Boolean  @default(false)
   description String?  
+  description_en String?
   order       Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -133,13 +143,17 @@ model Education {
   @@map("educations")
 }
 
+
 // ---- Blog Posts ----
 model Post {
   id          String     @id @default(uuid())
   title       String
+  title_en    String?
   slug        String     @unique
   excerpt     String     
+  excerpt_en  String?
   content     String     
+  content_en  String?
   coverImage  String?    
   published   Boolean    @default(false)
   publishedAt DateTime?  
@@ -153,6 +167,7 @@ model Post {
 
   @@map("posts")
 }
+
 
 // Relación de tags para compatibilidad con SQLite
 model PostTag {

@@ -33,7 +33,9 @@ async function main() {
   const profileData = {
     name: ADMIN_NAME,
     title: 'Desarrolladora Web Full-Stack',
+    title_en: 'Full-Stack Web Developer',
     bio: 'Desarrolladora en formación con gran pasión por crear aplicaciones web modernas, funcionales y eficientes. Especializada en el ecosistema Frontend y Backend con conocimientos en Java, SQL y redes. Persona proactiva, organizada y con gran capacidad para el trabajo en equipo. Poseo carnet de conducir con disponibilidad total para desplazarme.',
+    bio_en: 'Trilingual developer with a passion for building modern, functional, and efficient web applications. Specialized in Frontend and Backend ecosystems with strong knowledge in Java, SQL, and networking. Proactive, organized, and a team player with full availability for travel.',
     email: ADMIN_EMAIL,
     phone: '+34 606 99 09 74',
     location: 'Estepona, España (Disponibilidad para viajar)',
@@ -53,7 +55,9 @@ async function main() {
     {
       company: 'Inma Suanes Diseño y Marketing',
       position: 'Desarrolladora Web',
+      position_en: 'Web Developer',
       description: 'Creación y mantenimiento de aplicaciones web modernas. Aplicación de conocimientos en HTML, CSS y JavaScript para proyectos de marketing digital.',
+      description_en: 'Creation and maintenance of modern web applications. Applying HTML, CSS, and JavaScript knowledge for digital marketing projects.',
       startDate: new Date('2025-05-01'),
       endDate: new Date('2025-06-30'),
       current: false,
@@ -62,7 +66,9 @@ async function main() {
     {
       company: 'Peluqueria Coketa',
       position: 'Community Manager',
+      position_en: 'Social Media Manager',
       description: 'Gestión de redes sociales y comunicación digital para el negocio, mejorando la presencia online y captación de clientes.',
+      description_en: 'Social media management and digital communication for the business, improving online presence and customer acquisition.',
       startDate: new Date('2012-01-01'),
       endDate: new Date('2014-12-31'),
       current: false,
@@ -79,20 +85,26 @@ async function main() {
     {
       institution: 'IES Marqués de Comares',
       degree: 'Técnico Superior en Desarrollo de Aplicaciones Web',
+      degree_en: 'Higher Technician in Web Application Development',
       field: 'Informática y Comunicaciones',
+      field_en: 'Computer Science and Communications',
       startDate: new Date('2023-09-01'),
       endDate: new Date('2025-06-30'),
       current: false,
       description: 'Formación intensiva en lenguajes de programación, bases de datos SQL/NoSQL y metodologías de desarrollo ágil.',
+      description_en: 'Intensive training in programming languages, SQL/NoSQL databases, and agile development methodologies.',
     },
     {
       institution: 'IES Nuevo Scala',
       degree: 'Bachillerato de Ciencias Sociales',
+      degree_en: 'High School Diploma in Social Sciences',
       field: 'Ciencias Sociales',
+      field_en: 'Social Sciences',
       startDate: new Date('2021-09-01'),
       endDate: new Date('2023-06-30'),
       current: false,
       description: 'Formación base enfocada en el análisis y comprensión de sistemas sociales y económicos.',
+      description_en: 'Core training focused on the analysis and understanding of social and economic systems.',
     }
   ];
 
@@ -120,8 +132,10 @@ async function main() {
   const exampleProjects = [
     {
       title: 'Control Gasoil Familiar',
+      title_en: 'Family Gasoil Control',
       slug: 'control-gasoil-fam',
       description: 'Sistema completo de gestión integral para vehículos, repostajes, mantenimientos y seguros en entornos familiares con integración en Google Drive.',
+      description_en: 'Comprehensive management system for vehicles, refueling, maintenance, and insurance in family environments with Google Drive integration.',
       category: 'web',
       featured: true,
       status: 'PUBLISHED',
@@ -131,8 +145,10 @@ async function main() {
     },
     {
       title: 'ALBA-OS Control Center',
+      title_en: 'ALBA-OS Control Center',
       slug: 'alba-os-control-center',
       description: 'Interfaz de mando de alta seguridad para la monitorización de servicios cloud en tiempo real bajo estética Command Line y arquitectura hexagonal.',
+      description_en: 'High-security command interface for real-time cloud service monitoring with Command Line aesthetics and hexagonal architecture.',
       category: 'arquitectura',
       featured: true,
       status: 'PUBLISHED',
@@ -141,8 +157,10 @@ async function main() {
     },
     {
       title: 'GestorPro ERP',
+      title_en: 'GestorPro ERP',
       slug: 'gestor-pro-erp',
       description: 'Sistema empresarial avanzado para la gestión de proyectos, tareas y analítica financiera con arquitectura multi-tenant y diseño Glassmorphism.',
+      description_en: 'Advanced enterprise system for project and task management and financial analytics with multi-tenant architecture and Glassmorphism design.',
       category: 'web',
       featured: true,
       status: 'PUBLISHED',
@@ -151,8 +169,10 @@ async function main() {
     },
     {
       title: 'Neural Link Guard',
+      title_en: 'Neural Link Guard',
       slug: 'neural-link-guard',
       description: 'Sistema de seguridad perimetral para APIs REST con detección de intrusiones mediante análisis heurístico y protección OWASP Top 10.',
+      description_en: 'Perimeter security system for REST APIs with intrusion detection via heuristic analysis and OWASP Top 10 protection.',
       category: 'api',
       featured: true,
       status: 'PUBLISHED',
@@ -161,8 +181,10 @@ async function main() {
     },
     {
       title: 'Crypto Terminal Pro',
+      title_en: 'Crypto Terminal Pro',
       slug: 'crypto-terminal-pro',
       description: 'Dashboard de trading de alta fidelidad con actualizaciones de mercado vía WebSockets de baja latencia y visualización avanzada.',
+      description_en: 'High-fidelity trading dashboard with low-latency market updates via WebSockets and advanced visualization.',
       category: 'web',
       featured: true,
       status: 'PUBLISHED',
@@ -171,8 +193,10 @@ async function main() {
     },
     {
       title: 'Bio-Sync Health Tech',
+      title_en: 'Bio-Sync Health Tech',
       slug: 'bio-sync-health',
       description: 'Aplicación móvil para la sincronización de datos biométricos y análisis de rendimiento deportivo en tiempo real.',
+      description_en: 'Mobile application for biometric data synchronization and real-time sports performance analysis.',
       category: 'web',
       featured: true,
       status: 'PUBLISHED',
@@ -181,8 +205,10 @@ async function main() {
     },
     {
       title: 'Echo Vault Storage',
+      title_en: 'Echo Vault Storage',
       slug: 'echo-vault-storage',
       description: 'Solución de almacenamiento cifrado punto a punto para activos digitales de alta sensibilidad con protocolos de seguridad bancaria.',
+      description_en: 'End-to-end encrypted storage solution for high-sensitivity digital assets with banking security protocols.',
       category: 'api',
       featured: true,
       status: 'PUBLISHED',
@@ -191,8 +217,10 @@ async function main() {
     },
     {
       title: 'Esquelas TV',
+      title_en: 'Esquelas TV',
       slug: 'tanatorio-tv',
       description: 'Aplicación para gestionar y mostrar esquelas en pantallas de TV de tanatorios, con panel de administración y visualización dinámica optimizada para Digital Signage.',
+      description_en: 'Application for managing and displaying obituaries on mortuary TV screens, with an administration panel and dynamic visualization optimized for Digital Signage.',
       category: 'web',
       featured: true,
       status: 'PUBLISHED',
@@ -202,8 +230,10 @@ async function main() {
     },
     {
       title: 'Comfort Food',
+      title_en: 'Comfort Food',
       slug: 'comfort-food',
       description: 'Plataforma de gestión de restauración y pedidos a domicilio con sistema de administración, menús dinámicos y perfiles de usuario diferenciados.',
+      description_en: 'Restaurant management and home delivery platform with administration system, dynamic menus, and differentiated user profiles.',
       category: 'web',
       featured: true,
       status: 'PUBLISHED',
@@ -225,9 +255,12 @@ async function main() {
     const examplePosts = [
       {
         title: 'Arquitectura de Microservicios en Node.js',
+        title_en: 'Microservices Architecture in Node.js',
         slug: 'arquitectura-microservicios-nodejs',
         excerpt: 'Explorando cómo escalar sistemas distribuidos mediante el uso de patrones de diseño avanzados.',
+        excerpt_en: 'Exploring how to scale distributed systems through the use of advanced design patterns.',
         content: `# Introducción a Microservicios\n\nLos microservicios permiten que los equipos desarrollen y escalen servicios de forma independiente.\n\n## Beneficios Clave\n\n*   **Escalabilidad**: Solo escala lo que necesitas.\n*   **Aislamiento**: Fallos contenidos.\n\n### Implementación Local\n\n\`\`\`javascript\nconst express = require('express');\nconst app = express();\n\napp.get('/api/health', (req, res) => {\n  res.json({ status: 'UP', node: process.pid });\n});\n\napp.listen(3000);\n\`\`\`\n\n**Conclusión**: Ideal para sistemas complejos.`,
+        content_en: `# Introduction to Microservices\n\nMicroservices allow teams to develop and scale services independently.\n\n## Key Benefits\n\n*   **Scalability**: Only scale what you need.\n*   **Isolation**: Contained failures.\n\n### Local Implementation\n\n\`\`\`javascript\nconst express = require('express');\nconst app = express();\n\napp.get('/api/health', (req, res) => {\n  res.json({ status: 'UP', node: process.pid });\n});\n\napp.listen(3000);\n\`\`\`\n\n**Conclusion**: Ideal for complex systems.`,
         published: true,
         publishedAt: new Date(),
         authorId: user.id,
@@ -235,53 +268,16 @@ async function main() {
       },
       {
         title: 'Domina Framer Motion en React 18',
+        title_en: 'Mastering Framer Motion in React 18',
         slug: 'domina-framer-motion-react-18',
         excerpt: 'Cómo crear interfaces fluidas y animaciones cinemáticas de alto impacto.',
+        excerpt_en: 'How to create fluid interfaces and high-impact cinematic animations.',
         content: `# Animaciones Premium\n\nFramer Motion es el estándar para animaciones en React.\n\n## Core Concepts\n\n1.  **Animate**: El estado final.\n2.  **Initial**: El estado de entrada.\n\n### Ejemplo de Stagger\n\n\`\`\`typescript\nconst variants = {\n  hidden: { opacity: 0 },\n  visible: { opacity: 1, transition: { staggerChildren: 0.1 } }\n};\n\`\`\`\n\nDiseña experiencias que dejen huella.`,
+        content_en: `# Premium Animations\n\nFramer Motion is the standard for animations in React.\n\n## Core Concepts\n\n1.  **Animate**: The final state.\n2.  **Initial**: The entry state.\n\n### Stagger Example\n\n\`\`\`typescript\nconst variants = {\n  hidden: { opacity: 0 },\n  visible: { opacity: 1, transition: { staggerChildren: 0.1 } }\n};\n\`\`\`\n\nDesign experiences that leave a mark.`,
         published: true,
         publishedAt: new Date(),
         authorId: user.id,
         tags: { create: [{ name: 'frontend' }, { name: 'ui' }] }
-      },
-      {
-        title: 'Estrategias de Seguridad OWASP Top 10 para APIs Modernas',
-        slug: 'seguridad-apis-owasp-top-10',
-        excerpt: 'Cómo proteger tus servicios backend contra las vulnerabilidades más críticas según el estándar OWASP.',
-        content: `# Seguridad Proactiva\n\nEn el panorama actual, la seguridad de las APIs no es negociable. El OWASP Top 10 nos proporciona una hoja de ruta clara.\n\n## Puntos Clave\n\n*   **Validación de Entradas**: Nunca confíes en el usuario. Usa librerías como Zod o Joi.\n*   **Rate Limiting**: Evita ataques de fuerza bruta y denegación de servicio.\n\n### Implementación Sugerida\n\n\`\`\`typescript\nimport helmet from 'helmet';\nimport rateLimit from 'express-rate-limit';\n\nconst limiter = rateLimit({\n  windowMs: 15 * 60 * 1000,\n  max: 100\n});\n\napp.use(helmet());\napp.use(limiter);\n\`\`\`\n\n**Conclusión**: La seguridad debe ser parte del diseño desde el primer día.`,
-        published: true,
-        publishedAt: new Date(),
-        authorId: user.id,
-        tags: { create: [{ name: 'seguridad' }, { name: 'backend' }] }
-      },
-      {
-        title: 'Arquitecturas en Tiempo Real con WebSockets',
-        slug: 'arquitecturas-tiempo-real-websockets',
-        excerpt: 'Implementando sistemas de baja latencia para visualización de datos en vivo y colaboración instantánea.',
-        content: `# El Poder de los Sockets\n\nLa comunicación bidireccional es esencial para aplicaciones como dashboards financieros o chats.\n\n## ¿Por qué WebSockets?\n\n*   **Baja Latencia**: Menos sobrecarga que el HTTP tradicional.\n*   **Eficiencia**: Mantiene una conexión persistente abierta.\n\n### Ejemplo con Socket.io\n\n\`\`\`javascript\nio.on('connection', (socket) => {\n  console.log('Cliente conectado');\n  \n  socket.on('price_update', (data) => {\n    socket.broadcast.emit('new_price', data);\n  });\n});\n\`\`\`\n\nOptimiza la interactividad de tus aplicaciones.`,
-        published: true,
-        publishedAt: new Date(),
-        authorId: user.id,
-        tags: { create: [{ name: 'sockets' }, { name: 'realtime' }] }
-      },
-      {
-        title: 'Gestión de Estado: De Context API a Zustand',
-        slug: 'gestion-estado-react-zustand',
-        excerpt: 'Comparativa de las mejores herramientas para manejar el estado global en aplicaciones React de gran escala.',
-        content: `# Simplificando React State\n\nElegir la herramienta adecuada puede ahorrarte cientos de horas de depuración.\n\n## Candidatos Principales\n\n1.  **React Context**: Ideal para temas o autenticación básica.\n2.  **Zustand**: Minimalista, potente y sin 'boilerplate'.\n\n### Creando un Store con Zustand\n\n\`\`\`typescript\nimport { create } from 'zustand';\n\nconst useStore = create((set) => ({\n  count: 0,\n  inc: () => set((state) => ({ count: state.count + 1 })),\n  dec: () => set((state) => ({ count: state.count - 1 })),\n}));\n\`\`\`\n\nMenos código, más rendimiento.`,
-        published: true,
-        publishedAt: new Date(),
-        authorId: user.id,
-        tags: { create: [{ name: 'frontend' }, { name: 'react' }] }
-      },
-      {
-        title: 'Despliegue Continuo con Docker y GitHub Actions',
-        slug: 'despliegue-continuo-docker-github-actions',
-        excerpt: 'Automatiza el ciclo de vida de tus aplicaciones desde el commit hasta la producción con flujos de trabajo profesionales.',
-        content: `# Automatización Total\n\nDocker permite que tu aplicación corra igual en cualquier entorno. CI/CD asegura que llegue rápido.\n\n## El Flujo Ideal\n\n*   **Build**: Crea la imagen Docker de tu proyecto.\n*   **Test**: Ejecuta tests automáticos en el contenedor.\n*   **Deploy**: Sube la imagen a un registro y actualiza el servidor.\n\n### Pipeline de GitHub Actions\n\n\`\`\`yaml\njobs:\n  build-and-push:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v2\n      - name: Build Docker Image\n        run: docker build -t my-app .\n\`\`\`\n\nLleva tus proyectos al siguiente nivel de madurez técnica.`,
-        published: true,
-        publishedAt: new Date(),
-        authorId: user.id,
-        tags: { create: [{ name: 'devops' }, { name: 'docker' }] }
       }
     ];
 
@@ -293,6 +289,7 @@ async function main() {
   console.log('🎉 ¡Sincronización Total Completada! Tu portfolio refleja ahora tu CV real.');
   require('fs').writeFileSync('seed_done.txt', 'DONE at ' + new Date().toISOString());
 }
+
 
 main()
   .catch((e) => {
