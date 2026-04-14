@@ -6,6 +6,7 @@
 
 import { Router } from 'express';
 import { authMiddleware, authorize } from '../middleware/auth.middleware';
+import { upload } from '../middleware/upload.middleware';
 import { validate } from '../middleware/validate.middleware';
 import { UserRole } from '../../domain/entities';
 import {
@@ -146,5 +147,14 @@ contactRouter.patch('/:id/read', authMiddleware, authorize(UserRole.ADMIN), cont
 contactRouter.patch('/:id/replied', authMiddleware, authorize(UserRole.ADMIN), contactCtrl.markAsReplied);
 contactRouter.delete('/:id', authMiddleware, authorize(UserRole.ADMIN), contactCtrl.delete);
 router.use('/contact', contactRouter);
+
+// ---- Rutas de Upload ----
+router.post('/upload', authMiddleware, upload.single('file'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ success: false, message: 'No se subió ningún archivo' });
+  }
+  const fileUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+  res.json({ success: true, data: { url: fileUrl } });
+});
 
 export { router as apiRouter };

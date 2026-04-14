@@ -38,6 +38,29 @@ export const ProjectsManager = () => {
     technologies: []
   });
   const [techInput, setTechInput] = useState('');
+  const [uploading, setUploading] = useState(false);
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const formDataLocal = new FormData();
+    formDataLocal.append('file', file);
+
+    try {
+      setUploading(true);
+      const { data } = await api.post('/upload', formDataLocal, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      setFormData({ ...formData, imageUrl: data.data.url });
+      showNotification('Imagen subida con éxito', 'success');
+    } catch (err) {
+      console.error('Error uploading:', err);
+      showNotification('Error al subir la imagen', 'error');
+    } finally {
+      setUploading(false);
+    }
+  };
 
   const fetchProjects = async () => {
     try {
@@ -227,18 +250,36 @@ export const ProjectsManager = () => {
                       </div>
                    </div>
 
-                   <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase tracking-widest text-foreground/85 ml-1">Imagen del Proyecto (URL)</label>
-                      <div className="relative">
-                         <ImageIcon size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground/85" />
-                         <input 
-                           value={formData.imageUrl || ''} 
-                           onChange={e => setFormData({...formData, imageUrl: e.target.value})}
-                           className="w-full bg-foreground/[0.1] border border-border rounded-xl py-4 pl-12 pr-4 outline-none focus:border-blue-500/50 transition-all text-xs font-bold"
-                           placeholder="https://images.unsplash.com/..."
-                         />
+                    <div className="space-y-4">
+                      <label className="text-[10px] font-black uppercase tracking-widest text-foreground ml-1">Imagen del Proyecto</label>
+                      <div className="flex flex-col md:flex-row gap-6">
+                         {/* Vista Previa */}
+                         <div className="w-full md:w-48 h-32 rounded-2xl bg-foreground/[0.05] border border-border flex items-center justify-center overflow-hidden">
+                            {formData.imageUrl ? (
+                              <img src={formData.imageUrl} alt="Preview" className="w-full h-full object-cover" />
+                            ) : (
+                              <ImageIcon size={32} className="opacity-20" />
+                            )}
+                         </div>
+
+                         <div className="flex-grow space-y-4">
+                            <div className="relative">
+                               <ImageIcon size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground/40" />
+                               <input 
+                                 value={formData.imageUrl || ''} 
+                                 onChange={e => setFormData({...formData, imageUrl: e.target.value})}
+                                 className="w-full bg-foreground/[0.05] border border-border rounded-xl py-4 pl-12 pr-4 outline-none focus:border-blue-500/50 transition-all text-xs font-bold"
+                                 placeholder="URL de la imagen o sube un archivo..."
+                               />
+                            </div>
+                            
+                            <label className="flex items-center justify-center gap-3 px-6 py-4 bg-foreground/[0.05] hover:bg-foreground/10 border border-border border-dashed rounded-xl cursor-pointer transition-all active:scale-95 group">
+                               {uploading ? <Loader2 className="animate-spin" size={18} /> : <div className="flex items-center gap-3 font-bold text-[10px] uppercase tracking-widest group-hover:text-blue-400 transition-colors"> <ImageIcon size={18} /> Seleccionar archivo (.png, .jpg) </div>}
+                               <input type="file" className="hidden" accept="image/*" onChange={handleFileUpload} disabled={uploading} />
+                            </label>
+                         </div>
                       </div>
-                   </div>
+                    </div>
 
                    <div className="space-y-2">
                       <label className="text-[10px] font-black uppercase tracking-widest text-foreground ml-1">Descripción Corta (Card)</label>

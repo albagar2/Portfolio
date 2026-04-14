@@ -28,6 +28,29 @@ export const ProfileManager = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+  const [uploading, setUploading] = useState(false);
+
+  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const formDataLocal = new FormData();
+    formDataLocal.append('file', file);
+
+    try {
+      setUploading(true);
+      const { data } = await api.post('/upload', formDataLocal, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      setProfile({ ...profile, avatarUrl: data.data.url });
+      setMessage({ type: 'success', text: 'Imagen subida correctamente' });
+    } catch (err) {
+      console.error('Error uploading:', err);
+      setMessage({ type: 'error', text: 'Error al subir la imagen' });
+    } finally {
+      setUploading(false);
+    }
+  };
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -110,16 +133,39 @@ export const ProfileManager = () => {
             />
           </div>
 
-          <div className="space-y-2 pt-4">
-            <label className="text-[10px] font-black uppercase tracking-widest text-foreground ml-1">Avatar / Imagen de Perfil (URL)</label>
-            <div className="relative">
-              <ImageIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground" size={16} />
-              <input 
-                value={profile.avatarUrl || ''} 
-                onChange={e => setProfile({...profile, avatarUrl: e.target.value})}
-                className="w-full bg-foreground/[0.1] border border-border rounded-xl py-4 pl-12 pr-4 outline-none focus:border-blue-500/50 transition-all text-xs font-bold"
-                placeholder="https://images.unsplash.com/..."
-              />
+          <div className="space-y-4 pt-4 border-t border-border mt-10">
+            <label className="text-[10px] font-black uppercase tracking-widest text-foreground ml-1">Avatar / Imagen de Perfil</label>
+            <div className="flex flex-col md:flex-row gap-8 items-center">
+              {/* Preview Avatar */}
+              <div className="w-32 h-32 rounded-full bg-foreground/[0.05] border-2 border-border overflow-hidden relative group">
+                {profile.avatarUrl ? (
+                  <img src={profile.avatarUrl} alt="Avatar" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                ) : (
+                  <User size={48} className="absolute inset-0 m-auto opacity-20" />
+                )}
+                {uploading && (
+                  <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                    <Loader2 className="animate-spin text-blue-400" />
+                  </div>
+                )}
+              </div>
+
+              <div className="flex-grow space-y-4 w-full">
+                <div className="relative">
+                  <ImageIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground/40" size={16} />
+                  <input 
+                    value={profile.avatarUrl || ''} 
+                    onChange={e => setProfile({...profile, avatarUrl: e.target.value})}
+                    className="w-full bg-foreground/[0.05] border border-border rounded-xl py-4 pl-12 pr-4 outline-none focus:border-blue-500/50 transition-all text-xs font-bold"
+                    placeholder="URL de la imagen o selecciona un archivo..."
+                  />
+                </div>
+                
+                <label className="flex items-center justify-center gap-3 px-6 py-4 bg-foreground/[0.05] hover:bg-foreground/10 border border-border border-dashed rounded-xl cursor-pointer transition-all active:scale-95 text-[10px] font-black uppercase tracking-widest">
+                   {uploading ? 'SUBIENDO...' : 'Subir foto (.png, .jpg)'}
+                   <input type="file" className="hidden" accept="image/*" onChange={handleAvatarUpload} disabled={uploading} />
+                </label>
+              </div>
             </div>
           </div>
         </section>
