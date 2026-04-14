@@ -36,93 +36,86 @@ const InteractiveTerminal = () => {
     }, [history]);
 
     return (
-        <div className="os-window w-full max-w-2xl mx-auto border-white/10 bg-black/40 backdrop-blur-3xl overflow-hidden mt-12 group hover:border-[#00FFF0]/30 transition-all duration-700 shadow-2xl">
-            <div className="os-header bg-white/[0.03] border-b border-white/5 py-3 px-6 flex items-center justify-between">
+        <div className="os-window w-full max-w-2xl mx-auto backdrop-blur-3xl overflow-hidden mt-12 group hover:border-[var(--color-aqua)]/30 transition-all duration-700 shadow-2xl">
+            <div className="os-header bg-foreground/[0.03] border-b border-border py-3 px-6 flex items-center justify-between">
                 <div className="flex gap-2"><div className="w-2 h-2 rounded-full bg-red-500/30" /><div className="w-2 h-2 rounded-full bg-yellow-400/30" /><div className="w-2 h-2 rounded-full bg-green-500/30" /></div>
-                <div className="font-mono text-[8px] text-white/30 uppercase tracking-[0.5em] flex items-center gap-2">
+                <div className="font-mono text-[8px] text-foreground/70 uppercase tracking-[0.5em] flex items-center gap-2">
                    <TerminalIcon size={12} /> SESSION_TTY_01
                 </div>
             </div>
-            <div ref={scrollRef} className="p-8 h-48 overflow-y-auto font-mono text-[10px] space-y-2 custom-scrollbar text-white/60">
+            <div ref={scrollRef} className="p-8 h-48 overflow-y-auto font-mono text-[10px] space-y-2 custom-scrollbar text-foreground">
                 {history.map((line, i) => (
-                    <div key={i} className={line.startsWith('>') ? 'text-[#00FFF0]' : ''}>{line}</div>
+                    <div key={i} className={line.startsWith('>') ? 'text-[var(--color-aqua)]' : ''}>{line}</div>
                 ))}
             </div>
-            <form onSubmit={handleCommand} className="p-4 border-t border-white/5 flex items-center gap-4 bg-white/[0.02]">
-                <span className="text-[#00FFF0] font-mono text-[10px] ml-4 animate-pulse">{'>'}</span>
+            <form onSubmit={handleCommand} className="p-4 border-t border-border flex items-center gap-4 bg-foreground/[0.02]">
+                <span className="text-[var(--color-aqua)] font-mono text-[10px] ml-4 animate-pulse">{'>'}</span>
                 <input 
                    type="text" 
                    value={input}
                    onChange={(e) => setInput(e.target.value)}
-                   className="bg-transparent border-none outline-none font-mono text-[10px] text-white w-full uppercase tracking-widest"
-                   placeholder="COMMAND_INPUT..."
+                   className="bg-transparent border-none outline-none font-mono text-[10px] text-foreground w-full uppercase tracking-widest"
+                   placeholder="COMMAND_INPUT..." className="placeholder:text-foreground/70"
                 />
             </form>
         </div>
     );
 };
 
-export const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, index }) => {
+export const ProjectCard: React.FC<{ project: Project; index: number; onClick?: () => void }> = ({ project, index, onClick }) => {
   return (
     <motion.article
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="group relative h-full"
+      className="group relative h-full cursor-pointer"
+      onClick={onClick}
     >
-      <div className="absolute -inset-0.5 bg-gradient-to-br from-[#D9FF00]/20 to-[#00FFF0]/20 rounded-[3rem] blur-2xl opacity-0 group-hover:opacity-100 transition duration-1000" />
-      <div className="relative os-window overflow-hidden flex flex-col h-full rounded-[2.5rem] border border-white/5 bg-[#010309]/90 backdrop-blur-3xl hover:border-[#D9FF00]/50 transition-all duration-700">
-        <div className="relative h-60 bg-[#0a0f1d] overflow-hidden border-b border-white/5">
-           <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#D9FF00_1px,transparent_1px)] [background-size:16px_16px]" />
-           <div className="absolute inset-0 bg-gradient-to-t from-[#010309] via-transparent to-transparent" />
+      <div className="absolute -inset-0.5 bg-gradient-to-br from-[var(--color-lime)]/20 to-[var(--color-aqua)]/20 rounded-[3rem] blur-2xl opacity-0 group-hover:opacity-100 transition duration-1000" />
+      <div className="relative os-window overflow-hidden flex flex-col h-full rounded-[2.5rem] bg-background/90 backdrop-blur-3xl hover:border-[var(--color-lime)]/50 transition-all duration-700">
+        <div className="relative h-60 bg-foreground/[0.05] overflow-hidden border-b border-border">
+           <div className="absolute inset-0 opacity-10 bg-[radial-gradient(var(--color-lime)_1px,transparent_1px)] [background-size:16px_16px]" />
+           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
            <motion.div whileHover={{ scale: 1.1 }} className="absolute inset-0 flex items-center justify-center">
-              <div className="p-10 rounded-[2.5rem] bg-white/5 border border-white/10 backdrop-blur-3xl shadow-2xl transition-all group-hover:bg-[#D9FF00]/5">
-                 <Code2 size={44} className="text-[#D9FF00] drop-shadow-[0_0_15px_rgba(217,255,0,0.5)]" />
+              <div className="p-10 rounded-[2.5rem] bg-foreground/[0.05] border border-border backdrop-blur-3xl shadow-2xl transition-all group-hover:bg-[var(--color-lime)]/5">
+                 <Code2 size={44} className="text-[var(--color-lime)] drop-shadow-[0_0_15px_rgba(217,255,0,0.5)]" />
               </div>
            </motion.div>
            <div className="absolute top-8 left-8">
-              <div className="glass-badge border-[#D9FF00]/30 text-[#D9FF00] font-black uppercase tracking-[0.4em] italic text-[8px] bg-[#D9FF00]/5">
+              <div className="glass-badge border-[var(--color-lime)]/30 text-[var(--color-lime)] font-black uppercase tracking-[0.4em] italic text-[8px] bg-[var(--color-lime)]/5">
                  MODULE_{project.category}
               </div>
+           </div>
+           
+           <div className="absolute bottom-8 right-8">
+              <motion.div 
+                whileHover={{ scale: 1.1, x: 5 }}
+                className="w-12 h-12 rounded-full bg-[var(--color-lime)] text-black flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 transition-all duration-500"
+              >
+                 <ArrowRight size={20} />
+              </motion.div>
            </div>
         </div>
 
         <div className="p-12 flex flex-col flex-grow">
-          <h3 className="text-4xl font-black mb-4 tracking-tighter uppercase italic leading-none text-white group-hover:text-[#D9FF00] transition-all font-outfit">
+          <h3 className="text-4xl font-black mb-4 tracking-tighter uppercase italic leading-none text-foreground group-hover:text-[var(--color-lime)] transition-all font-outfit">
              {project.title}
           </h3>
-          <p className="text-slate-500 font-mono text-[10px] leading-relaxed mb-10 flex-grow uppercase tracking-widest opacity-60">
+          <p className="text-foreground font-mono text-[10px] leading-relaxed mb-10 flex-grow uppercase tracking-widest opacity-100">
             {project.description}
           </p>
           <div className="flex flex-wrap gap-2.5 mb-10">
             {project.technologies?.slice(0, 4).map((tech, i) => (
-              <span key={i} className="text-[8px] font-mono px-4 py-1.5 bg-white/5 rounded-full border border-white/10 font-black uppercase tracking-[0.2em] text-[#D9FF00]/50">
+              <span key={i} className="text-[8px] font-mono px-4 py-1.5 bg-foreground/[0.05] rounded-full border border-border font-black uppercase tracking-[0.2em] text-foreground">
                  {tech.name}
               </span>
             ))}
           </div>
 
-          <div className="flex items-center gap-10 pt-10 border-t border-white/10">
-            {project.liveUrl && (
-              <a 
-                href={project.liveUrl} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="flex items-center gap-2 text-[10px] font-mono font-black uppercase tracking-[0.4em] text-white hover:text-[#D9FF00] transition-colors cursor-pointer"
-              >
-                <Globe size={14} /> BOOT_PRJ
-              </a>
-            )}
-            {project.githubUrl && (
-              <a 
-                href={project.githubUrl} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="flex items-center gap-2 text-[10px] font-mono font-black uppercase tracking-[0.4em] text-white hover:text-[#D9FF00] transition-colors cursor-pointer"
-              >
-                <Github size={14} /> SRC_CODE
-              </a>
-            )}
+          <div className="flex items-center gap-10 pt-10 border-t border-border">
+            <span className="flex items-center gap-2 text-[10px] font-mono font-black uppercase tracking-[0.4em] text-[var(--color-lime)] hover:underline transition-all">
+                VIEW_SYSTEM_DETAILS_v1.5
+            </span>
           </div>
         </div>
       </div>
@@ -136,10 +129,10 @@ export const EnhancedHero = ({ profile, t }: { profile: any, t: any }) => {
   const opacity = useTransform(scrollY, [0, 400], [0.3, 0]);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-32 pb-12 lg:px-24 bg-[#010309]">
+    <section className="relative min-h-screen flex items-center justify-center pt-32 pb-12 lg:px-24 bg-background">
       <div className="hero-glow pointer-events-none" aria-hidden="true" />
       <motion.div style={{ opacity }} className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
-         <span className="text-[20rem] md:text-[35rem] font-black text-white uppercase tracking-tighter italic leading-none opacity-20 select-none blur-2xl">ALBA</span>
+         <span className="text-[20rem] md:text-[35rem] font-black text-foreground uppercase tracking-tighter italic leading-none opacity-[0.03] select-none blur-2xl">ALBA</span>
       </motion.div>
 
       <div className="container-custom relative z-10 w-full text-center">
@@ -148,21 +141,21 @@ export const EnhancedHero = ({ profile, t }: { profile: any, t: any }) => {
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="inline-flex items-center gap-4 px-10 py-3 rounded-full bg-[#00FFF0]/5 border border-[#00FFF0]/30 backdrop-blur-3xl text-[#00FFF0] font-mono text-[9px] font-black uppercase tracking-[0.6em] mb-4 shadow-2xl"
+            className="inline-flex items-center gap-4 px-10 py-3 rounded-full bg-[var(--color-aqua)]/5 border border-[var(--color-aqua)]/30 backdrop-blur-3xl text-[var(--color-aqua)] font-mono text-[9px] font-black uppercase tracking-[0.6em] mb-4 shadow-2xl"
           >
              <Zap size={14} className="fill-current animate-pulse" /> {t.hero.system_loaded}
           </motion.div>
           
           <div className="relative group perspective-2000 py-32 overflow-visible flex flex-col items-center justify-center">
             {/* Capa de Distorsión de Fondo (Mesh) */}
-            <div className="absolute inset-x-[-20vw] h-64 bg-gradient-to-r from-transparent via-[#00FFF0]/5 to-transparent blur-[120px] -z-10 animate-pulse" />
+            <div className="absolute inset-x-[-20vw] h-64 hero-mesh animate-pulse" />
             
             <div className="relative">
                {/* Metadata de Sistema Flotante (Órbita del Título) */}
                <motion.div 
                   animate={{ y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }}
                   transition={{ duration: 4, repeat: Infinity }}
-                  className="absolute -top-16 -left-32 font-mono text-[8px] text-[#00FFF0] tracking-[0.5em] hidden lg:block border-l border-[#00FFF0]/30 pl-4 py-2"
+                  className="absolute -top-16 -left-32 font-mono text-[8px] text-[var(--color-aqua)] tracking-[0.5em] hidden lg:block border-l border-[var(--color-aqua)]/30 pl-4 py-2"
                >
                   CORE_LINK: STABLE <br /> 
                   DATA_STREAM: [1011001...] <br />
@@ -172,7 +165,7 @@ export const EnhancedHero = ({ profile, t }: { profile: any, t: any }) => {
                <motion.div 
                   animate={{ y: [0, 20, 0], opacity: [0.2, 0.5, 0.2] }}
                   transition={{ duration: 5, repeat: Infinity }}
-                  className="absolute -bottom-16 -right-32 font-mono text-[8px] text-[#D9FF00] tracking-[0.5em] hidden lg:block border-r border-[#D9FF00]/30 pr-4 py-2 text-right"
+                  className="absolute -bottom-16 -right-32 font-mono text-[8px] text-[var(--color-lime)] tracking-[0.5em] hidden lg:block border-r border-[var(--color-lime)]/30 pr-4 py-2 text-right"
                >
                   COORDS_X: {Math.random().toFixed(4)} <br /> 
                   COORDS_Y: {Math.random().toFixed(4)} <br />
@@ -189,12 +182,12 @@ export const EnhancedHero = ({ profile, t }: { profile: any, t: any }) => {
                      initial={{ opacity: 0, x: -100, rotateY: -90 }}
                      animate={{ opacity: 1, x: 0, rotateY: 0 }}
                      transition={{ duration: 1.2, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                     whileHover={{ scale: 1.1, z: 50, color: '#00FFF0', textShadow: "0 0 50px #00FFF0" }}
-                     className="relative inline-block text-white transition-all cursor-default"
+                     whileHover={{ scale: 1.1, z: 50, color: 'var(--color-aqua)', textShadow: "0 0 50px var(--color-aqua)" }}
+                     className="relative inline-block text-foreground transition-all cursor-default"
                    >
                      {letter}
                      {/* Efecto de Refracción (Sombra de Cristal) */}
-                     <span className="absolute inset-0 text-white/10 blur-[4px] -z-10 translate-x-2 translate-y-2">{letter}</span>
+                     <span className="absolute inset-0 text-foreground/10 blur-[4px] -z-10 translate-x-2 translate-y-2">{letter}</span>
                    </motion.span>
                  ))}
 
@@ -207,25 +200,25 @@ export const EnhancedHero = ({ profile, t }: { profile: any, t: any }) => {
                  >
                     {/* El Punto como LED de Estado */}
                     <div className="relative mr-6">
-                       <div className="w-5 h-5 rounded-full bg-[#00FFF0] shadow-[0_0_20px_#00FFF0]" />
-                       <motion.div animate={{ scale: [1, 2, 1], opacity: [0.5, 0, 0.5] }} transition={{ duration: 1.5, repeat: Infinity }} className="absolute inset-0 bg-[#00FFF0] rounded-full" />
+                       <div className="w-5 h-5 rounded-full bg-[var(--color-aqua)] shadow-[0_0_20px_var(--color-aqua)]" />
+                       <motion.div animate={{ scale: [1, 2, 1], opacity: [0.5, 0, 0.5] }} transition={{ duration: 1.5, repeat: Infinity }} className="absolute inset-0 bg-[var(--color-aqua)] rounded-full" />
                     </div>
 
                     {/* La G dentro de un Marco Técnico 'Elite' */}
                     <div className="relative group/g">
                        {/* Esquinas del Marco (Cantoneras) */}
-                       <div className="absolute -top-4 -left-4 w-6 h-6 border-t-2 border-l-2 border-[#D9FF00]" />
-                       <div className="absolute -bottom-4 -right-4 w-6 h-6 border-b-2 border-r-2 border-[#D9FF00]" />
+                       <div className="absolute -top-4 -left-4 w-6 h-6 border-t-2 border-l-2 border-[var(--color-lime)]" />
+                       <div className="absolute -bottom-4 -right-4 w-6 h-6 border-b-2 border-r-2 border-[var(--color-lime)]" />
                        
-                       <div className="px-10 py-4 bg-white/5 border border-white/10 rounded-xl backdrop-blur-xl group-hover/g:border-[#D9FF00]/50 transition-all duration-700">
-                          <span className="text-10xl md:text-[12rem] font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-[#D9FF00]">
+                       <div className="px-10 py-4 bg-foreground/[0.02] border border-border rounded-xl backdrop-blur-xl group-hover/g:border-[var(--color-lime)]/50 transition-all duration-700">
+                          <span className="text-10xl md:text-[12rem] font-black text-transparent bg-clip-text bg-gradient-to-r from-foreground to-[var(--color-lime)]">
                              G
                           </span>
                        </div>
 
                        {/* Etiquetas de Calibración */}
-                       <div className="absolute -top-12 left-0 font-mono text-[7px] text-[#D9FF00] tracking-[0.4em] opacity-40">CALIBRATING_NODE_v1.5</div>
-                       <div className="absolute -bottom-10 right-0 font-mono text-[7px] text-white/20 tracking-[0.4em]">ADDR: 0xG_LOG</div>
+                       <div className="absolute -top-12 left-0 font-mono text-[7px] text-[var(--color-lime)] tracking-[0.4em] opacity-40">CALIBRATING_NODE_v1.5</div>
+                       <div className="absolute -bottom-10 right-0 font-mono text-[7px] text-muted-foreground/20 tracking-[0.4em]">ADDR: 0xG_LOG</div>
                     </div>
                  </motion.span>
                </motion.h1>
@@ -235,23 +228,23 @@ export const EnhancedHero = ({ profile, t }: { profile: any, t: any }) => {
                   initial={{ width: 0 }}
                   animate={{ width: '100%' }}
                   transition={{ duration: 2, delay: 1 }}
-                  className="absolute -bottom-12 left-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#00FFF0] to-transparent shadow-[0_0_20px_#00FFF0]"
+                  className="absolute -bottom-12 left-0 h-[1.5px] bg-gradient-to-r from-transparent via-[var(--color-aqua)] to-transparent shadow-[0_0_20px_var(--color-aqua)]"
                />
             </div>
           </div>
 
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }} className="space-y-12">
-            <p className="text-slate-400 text-xl md:text-3xl lg:text-4xl max-w-7xl mx-auto font-mono uppercase tracking-[0.2em] font-black px-12 leading-tight border-l-[4px] border-[#00FFF0]/20 inline-block text-left opacity-90">
+            <p className="text-muted-foreground text-xl md:text-3xl lg:text-4xl max-w-7xl mx-auto font-mono uppercase tracking-[0.2em] font-black px-12 leading-tight border-l-[4px] border-[var(--color-aqua)]/20 inline-block text-left opacity-100">
               {t.hero.bio_1} <br /> 
-              <span className="text-[#00FFF0]">{t.hero.bio_highlight}</span> <br />
-              <span className="italic text-white underline decoration-[#D9FF00]/40 underline-offset-8">{t.hero.bio_2}</span>
+              <span className="text-[var(--color-aqua)]">{t.hero.bio_highlight}</span> <br />
+              <span className="italic text-foreground underline decoration-[var(--color-lime)]/40 underline-offset-8">{t.hero.bio_2}</span>
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-8 pt-6">
                <motion.button 
                  whileHover={{ scale: 1.05, boxShadow: "0 0 50px rgba(0, 255, 240, 0.3)" }}
                  whileTap={{ scale: 0.95 }}
-                 className="px-16 py-8 bg-[#00FFF0] text-black rounded-full font-black text-[10px] font-mono uppercase tracking-[0.5em] shadow-3xl transition-all"
+                 className="px-16 py-8 bg-[var(--color-aqua)] text-black rounded-full font-black text-[10px] font-mono uppercase tracking-[0.5em] shadow-3xl transition-all"
                  onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
                >
                   {t.hero.btn_deploy} <Rocket size={20} className="ml-3 inline-block" />
@@ -260,8 +253,8 @@ export const EnhancedHero = ({ profile, t }: { profile: any, t: any }) => {
                <motion.a 
                   href="/downloads/CV-Alba-Garcia-Lopez.pdf"
                   download="CV-Alba-Garcia-Lopez.pdf"
-                  whileHover={{ backgroundColor: 'white', color: 'black', scale: 1.05 }}
-                  className="px-16 py-8 border-2 border-white/20 rounded-full font-black text-[10px] font-mono uppercase tracking-[0.5em] flex items-center gap-4 transition-all text-white"
+                  whileHover={{ backgroundColor: 'hsl(var(--foreground))', color: 'hsl(var(--background))', scale: 1.05 }}
+                  className="px-16 py-8 border-2 border-border rounded-full font-black text-[10px] font-mono uppercase tracking-[0.5em] flex items-center gap-4 transition-all text-foreground"
                >
                   {t.hero.btn_dump} <Download size={20} />
                </motion.a>

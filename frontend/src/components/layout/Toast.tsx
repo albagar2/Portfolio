@@ -21,9 +21,9 @@ export const Toast = ({ message, type = 'info', onClose }: ToastProps) => {
   }, [onClose]);
 
   const colors = {
-    success: { text: '#D9FF00', bg: 'rgba(217, 255, 0, 0.05)', border: 'rgba(217, 255, 0, 0.2)' },
-    error: { text: '#FF007A', bg: 'rgba(255, 0, 122, 0.05)', border: 'rgba(255, 0, 122, 0.2)' },
-    info: { text: '#00FFF0', bg: 'rgba(0, 255, 240, 0.05)', border: 'rgba(0, 255, 240, 0.2)' },
+    success: { text: 'var(--color-lime)', bg: 'hsla(var(--foreground), 0.05)', border: 'hsla(var(--primary), 0.2)' },
+    error: { text: 'var(--color-rose)', bg: 'hsla(var(--foreground), 0.05)', border: 'hsla(var(--color-rose), 0.2)' },
+    info: { text: 'var(--color-aqua)', bg: 'hsla(var(--foreground), 0.05)', border: 'hsla(var(--color-aqua), 0.2)' },
   };
 
   const config = colors[type];
@@ -37,7 +37,7 @@ export const Toast = ({ message, type = 'info', onClose }: ToastProps) => {
       style={{ backgroundColor: config.bg, borderColor: config.border }}
     >
       {/* Indicador de Tipo de Log */}
-      <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-white/5" style={{ color: config.text }}>
+      <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-foreground/[0.05]" style={{ color: config.text }}>
         {type === 'success' ? <CheckCircle2 size={20} /> : type === 'error' ? <AlertCircle size={20} /> : <Terminal size={20} />}
       </div>
 
@@ -45,16 +45,16 @@ export const Toast = ({ message, type = 'info', onClose }: ToastProps) => {
         <span className="text-[8px] font-mono font-black uppercase tracking-[0.4em] mb-1 opacity-40" style={{ color: config.text }}>
           SYSTEM_NOTIFICATION: {type.toUpperCase()}
         </span>
-        <p className="font-mono text-[11px] font-black uppercase tracking-widest text-white">
+        <p className="font-mono text-[11px] font-black uppercase tracking-widest text-foreground">
           {message}
         </p>
       </div>
 
       <button 
         onClick={onClose}
-        className="ml-4 p-2 hover:bg-white/5 rounded-full transition-colors opacity-30 hover:opacity-100"
+        className="ml-4 p-2 hover:bg-foreground/[0.05] rounded-full transition-colors opacity-30 hover:opacity-100"
       >
-        <X size={14} className="text-white" />
+        <X size={14} className="text-foreground" />
       </button>
 
       {/* Barra de Progreso Interna del Toast */}

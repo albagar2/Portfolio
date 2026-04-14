@@ -68,7 +68,7 @@ export const ProfileManager = () => {
     <div className="py-10 space-y-12 max-w-5xl mx-auto">
       <header>
          <h1 className="text-4xl font-black mb-4 flex items-center gap-4">Identity Hub <Sparkles className="text-blue-500" /></h1>
-         <p className="text-slate-500 font-medium tracking-tight">Gestiona tu presencia digital y biografía profesional.</p>
+         <p className="text-foreground/85 font-medium tracking-tight">Gestiona tu presencia digital y biografía profesional.</p>
       </header>
 
       <form onSubmit={handleSave} className="space-y-8">
@@ -81,33 +81,46 @@ export const ProfileManager = () => {
           
           <div className="grid md:grid-cols-2 gap-8">
             <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">Nombre Completo</label>
+              <label className="text-[10px] font-black uppercase tracking-widest text-foreground/85 ml-1">Nombre Completo</label>
               <input 
                 value={profile.name || ''} 
                 onChange={e => setProfile({...profile, name: e.target.value})}
-                className="w-full bg-white/5 border border-white/10 rounded-xl p-4 outline-none focus:border-blue-500/50 transition-all font-bold"
+                className="w-full bg-foreground/[0.05] border border-border rounded-xl p-4 outline-none focus:border-blue-500/50 transition-all font-bold"
                 placeholder="Alba García López"
               />
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">Título Profesional</label>
+              <label className="text-[10px] font-black uppercase tracking-widest text-foreground/85 ml-1">Título Profesional</label>
               <input 
                 value={profile.title || ''} 
                 onChange={e => setProfile({...profile, title: e.target.value})}
-                className="w-full bg-white/5 border border-white/10 rounded-xl p-4 outline-none focus:border-blue-500/50 transition-all font-bold"
+                className="w-full bg-foreground/[0.05] border border-border rounded-xl p-4 outline-none focus:border-blue-500/50 transition-all font-bold"
                 placeholder="Full-Stack Developer"
               />
             </div>
           </div>
 
           <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">Biografía Breve</label>
+            <label className="text-[10px] font-black uppercase tracking-widest text-foreground/85 ml-1">Biografía Breve</label>
             <textarea 
               value={profile.bio || ''} 
               onChange={e => setProfile({...profile, bio: e.target.value})}
-              className="w-full bg-white/5 border border-white/10 rounded-xl p-4 outline-none focus:border-blue-500/50 transition-all min-h-[120px]"
+              className="w-full bg-foreground/[0.05] border border-border rounded-xl p-4 outline-none focus:border-blue-500/50 transition-all min-h-[120px]"
               placeholder="Cuéntale al mundo quién eres..."
             />
+          </div>
+
+          <div className="space-y-2 pt-4">
+            <label className="text-[10px] font-black uppercase tracking-widest text-foreground ml-1">Avatar / Imagen de Perfil (URL)</label>
+            <div className="relative">
+              <ImageIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground" size={16} />
+              <input 
+                value={profile.avatarUrl || ''} 
+                onChange={e => setProfile({...profile, avatarUrl: e.target.value})}
+                className="w-full bg-foreground/[0.1] border border-border rounded-xl py-4 pl-12 pr-4 outline-none focus:border-blue-500/50 transition-all text-xs font-bold"
+                placeholder="https://images.unsplash.com/..."
+              />
+            </div>
           </div>
         </section>
 
@@ -120,24 +133,24 @@ export const ProfileManager = () => {
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">Email Público</label>
+              <label className="text-[10px] font-black uppercase tracking-widest text-foreground/85 ml-1">Email Público</label>
               <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
-                <input value={profile.email || ''} onChange={e => setProfile({...profile, email: e.target.value})} className="w-full bg-white/5 border border-white/10 rounded-xl py-4 pl-12 pr-4 outline-none focus:border-purple-500/50 text-sm font-medium" />
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground/85" size={16} />
+                <input value={profile.email || ''} onChange={e => setProfile({...profile, email: e.target.value})} className="w-full bg-foreground/[0.05] border border-border rounded-xl py-4 pl-12 pr-4 outline-none focus:border-purple-500/50 text-sm font-medium" />
               </div>
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">Teléfono (Opcional)</label>
+              <label className="text-[10px] font-black uppercase tracking-widest text-foreground/85 ml-1">Teléfono (Opcional)</label>
               <div className="relative">
-                <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
-                <input value={profile.phone || ''} onChange={e => setProfile({...profile, phone: e.target.value})} className="w-full bg-white/5 border border-white/10 rounded-xl py-4 pl-12 pr-4 outline-none focus:border-purple-500/50 text-sm font-medium" />
+                <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground/85" size={16} />
+                <input value={profile.phone || ''} onChange={e => setProfile({...profile, phone: e.target.value})} className="w-full bg-foreground/[0.05] border border-border rounded-xl py-4 pl-12 pr-4 outline-none focus:border-purple-500/50 text-sm font-medium" />
               </div>
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">Ubicación</label>
+              <label className="text-[10px] font-black uppercase tracking-widest text-foreground/85 ml-1">Ubicación</label>
               <div className="relative">
-                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
-                <input value={profile.location || ''} onChange={e => setProfile({...profile, location: e.target.value})} className="w-full bg-white/5 border border-white/10 rounded-xl py-4 pl-12 pr-4 outline-none focus:border-purple-500/50 text-sm font-medium" placeholder="Estepona, España" />
+                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground/85" size={16} />
+                <input value={profile.location || ''} onChange={e => setProfile({...profile, location: e.target.value})} className="w-full bg-foreground/[0.05] border border-border rounded-xl py-4 pl-12 pr-4 outline-none focus:border-purple-500/50 text-sm font-medium" placeholder="Estepona, España" />
               </div>
             </div>
           </div>
@@ -152,31 +165,31 @@ export const ProfileManager = () => {
           
           <div className="grid md:grid-cols-2 gap-8">
             <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">GitHub URL</label>
+              <label className="text-[10px] font-black uppercase tracking-widest text-foreground/85 ml-1">GitHub URL</label>
               <div className="relative">
-                <Github className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
-                <input value={profile.githubUrl || ''} onChange={e => setProfile({...profile, githubUrl: e.target.value})} className="w-full bg-white/5 border border-white/10 rounded-xl py-4 pl-12 pr-4 outline-none focus:border-indigo-500/50 text-xs" placeholder="https://github.com/..." />
+                <Github className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground/85" size={16} />
+                <input value={profile.githubUrl || ''} onChange={e => setProfile({...profile, githubUrl: e.target.value})} className="w-full bg-foreground/[0.05] border border-border rounded-xl py-4 pl-12 pr-4 outline-none focus:border-indigo-500/50 text-xs" placeholder="https://github.com/..." />
               </div>
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">LinkedIn URL</label>
+              <label className="text-[10px] font-black uppercase tracking-widest text-foreground/85 ml-1">LinkedIn URL</label>
               <div className="relative">
-                <Linkedin className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
-                <input value={profile.linkedinUrl || ''} onChange={e => setProfile({...profile, linkedinUrl: e.target.value})} className="w-full bg-white/5 border border-white/10 rounded-xl py-4 pl-12 pr-4 outline-none focus:border-indigo-500/50 text-xs" placeholder="https://linkedin.com/in/..." />
+                <Linkedin className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground/85" size={16} />
+                <input value={profile.linkedinUrl || ''} onChange={e => setProfile({...profile, linkedinUrl: e.target.value})} className="w-full bg-foreground/[0.05] border border-border rounded-xl py-4 pl-12 pr-4 outline-none focus:border-indigo-500/50 text-xs" placeholder="https://linkedin.com/in/..." />
               </div>
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">Twitter URL</label>
+              <label className="text-[10px] font-black uppercase tracking-widest text-foreground/85 ml-1">Twitter URL</label>
               <div className="relative">
-                <Twitter className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
-                <input value={profile.twitterUrl || ''} onChange={e => setProfile({...profile, twitterUrl: e.target.value})} className="w-full bg-white/5 border border-white/10 rounded-xl py-4 pl-12 pr-4 outline-none focus:border-indigo-500/50 text-xs" placeholder="https://twitter.com/..." />
+                <Twitter className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground/85" size={16} />
+                <input value={profile.twitterUrl || ''} onChange={e => setProfile({...profile, twitterUrl: e.target.value})} className="w-full bg-foreground/[0.05] border border-border rounded-xl py-4 pl-12 pr-4 outline-none focus:border-indigo-500/50 text-xs" placeholder="https://twitter.com/..." />
               </div>
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">Personal Website</label>
+              <label className="text-[10px] font-black uppercase tracking-widest text-foreground/85 ml-1">Personal Website</label>
               <div className="relative">
-                <Globe className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
-                <input value={profile.websiteUrl || ''} onChange={e => setProfile({...profile, websiteUrl: e.target.value})} className="w-full bg-white/5 border border-white/10 rounded-xl py-4 pl-12 pr-4 outline-none focus:border-indigo-500/50 text-xs" placeholder="https://..." />
+                <Globe className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground/85" size={16} />
+                <input value={profile.websiteUrl || ''} onChange={e => setProfile({...profile, websiteUrl: e.target.value})} className="w-full bg-foreground/[0.05] border border-border rounded-xl py-4 pl-12 pr-4 outline-none focus:border-indigo-500/50 text-xs" placeholder="https://..." />
               </div>
             </div>
           </div>
@@ -192,7 +205,7 @@ export const ProfileManager = () => {
            )}
            <button 
              disabled={saving}
-             className="w-full md:w-auto px-12 py-5 bg-white text-slate-950 rounded-2xl font-black flex items-center justify-center gap-4 transition-all hover:scale-105 active:scale-95 disabled:opacity-50 shadow-2xl shadow-white/10"
+             className="w-full md:w-auto px-12 py-5 bg-foreground text-slate-950 rounded-2xl font-black flex items-center justify-center gap-4 transition-all hover:scale-105 active:scale-95 disabled:opacity-50 shadow-2xl shadow-white/10"
            >
               {saving ? <Loader2 className="animate-spin" /> : <Save size={20} />}
               GUARDAR CAMBIOS

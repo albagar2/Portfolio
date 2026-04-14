@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Zap, Cpu, Database, Activity, User, Layers, GraduationCap, Newspaper, TerminalSquare } from 'lucide-react';
+import { Zap, Cpu, Database, Activity, User, Layers, GraduationCap, Newspaper, TerminalSquare, Sun, Moon } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 interface NavbarProps {
   onOpenContact: () => void;
   lang: string;
   setLang: (l: string) => void;
+  isDark: boolean;
+  setIsDark: (d: boolean) => void;
   t: any;
 }
 
@@ -14,7 +16,7 @@ interface NavbarProps {
  * COMPONENTE: Navbar (Sistema de Control de Navegación)
  * Navegación dinámica con scroll suave inteligente y soporte para múltiples idiomas.
  */
-export const Navbar = ({ onOpenContact, lang, setLang, t }: NavbarProps) => {
+export const Navbar = ({ onOpenContact, lang, setLang, isDark, setIsDark, t }: NavbarProps) => {
   const [scrolled, setScrolled] = useState(false);
   const [activeTab, setActiveTab] = useState('hero');
   const navigate = useNavigate();
@@ -33,18 +35,21 @@ export const Navbar = ({ onOpenContact, lang, setLang, t }: NavbarProps) => {
 
   // Lógica de Scroll Suave con Redirección a Home si es necesario
   const scrollToSection = (id: string) => {
-    if (id === 'contact') { onOpenContact(); return; }
-    
     if (location.pathname !== '/') {
       navigate('/');
       setTimeout(() => {
-        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+        setActiveTab(id);
+      }, 150);
       return;
     }
 
-    setActiveTab(id);
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+      setActiveTab(id);
+    }
   };
 
   // Observador de Intersección para detectar la sección activa
@@ -65,21 +70,21 @@ export const Navbar = ({ onOpenContact, lang, setLang, t }: NavbarProps) => {
     window.addEventListener('scroll', handleScroll);
     
     return () => { 
-      observer.disconnect(); 
+      if (observer) observer.disconnect(); 
       window.removeEventListener('scroll', handleScroll); 
     };
-  }, [lang]);
+  }, [lang, location.pathname]);
 
   // Colores Temáticos del Sistema según la sección
   const getThemeColor = () => {
     switch (activeTab) {
-      case 'skills': return '#00FFF0';
-      case 'projects': return '#D9FF00';
+      case 'skills': return 'var(--color-aqua)';
+      case 'projects': return 'var(--color-lime)';
       case 'experience': return '#FF007A';
       case 'education': return '#A855F7';
       case 'posts': return '#6366F1';
       case 'contact': return '#FFB800';
-      default: return '#00FFF0';
+      default: return 'var(--color-aqua)';
     }
   };
 
@@ -90,20 +95,20 @@ export const Navbar = ({ onOpenContact, lang, setLang, t }: NavbarProps) => {
        <div className="container-custom flex flex-col items-center justify-center font-terminal px-4">
           <motion.div 
             layout
-            className={`relative p-2 flex items-center justify-between border border-white/10 backdrop-blur-4xl transition-all duration-1000 ${
+            className={`relative p-2 flex items-center justify-between border border-border backdrop-blur-4xl transition-all duration-1000 ${
                scrolled 
-               ? 'rounded-full px-4 lg:px-8 shadow-2xl bg-black/85' 
-               : 'rounded-[1.5rem] lg:rounded-[4rem] px-6 lg:px-12 bg-white/5 shadow-2xl'
+               ? 'rounded-full px-4 lg:px-8 shadow-2xl bg-background/95' 
+               : 'rounded-[1.5rem] lg:rounded-[4rem] px-6 lg:px-12 bg-background/60 shadow-2xl'
             }`}
             style={{ 
-              boxShadow: `0 0 100px -30px ${getThemeColor()}20`,
-              borderColor: `${getThemeColor()}30`,
+              boxShadow: scrolled ? `0 0 100px -30px ${getThemeColor()}20` : 'none',
+              borderColor: `${getThemeColor()}60`,
               maxWidth: '98vw',
               width: '100%'
             }}
           >
              {/* Bloque Izquierdo: Logo (Compacto) */}
-             <button onClick={() => scrollToSection('hero')} className="flex items-center gap-2 lg:gap-4 pr-3 lg:pr-6 border-r border-white/10 group shrink-0">
+             <button onClick={() => scrollToSection('hero')} className="flex items-center gap-2 lg:gap-4 pr-3 lg:pr-6 border-r border-foreground/10 group shrink-0">
                 <motion.div 
                   transition={{ duration: 30, repeat: Infinity, ease: "linear" }} 
                   animate={{ rotate: 360 }}
@@ -113,7 +118,7 @@ export const Navbar = ({ onOpenContact, lang, setLang, t }: NavbarProps) => {
                    <Zap size={20} className="fill-current" />
                 </motion.div>
                 {!scrolled && (
-                   <span className="font-mono text-[10px] lg:text-[11px] font-black uppercase tracking-[0.3em] lg:tracking-[0.6em] hidden md:block text-white">
+                   <span className="font-mono text-[10px] lg:text-[11px] font-black uppercase tracking-[0.3em] lg:tracking-[0.6em] hidden md:block text-foreground transition-colors duration-500">
                       ALBA<span style={{ color: getThemeColor() }}>.SYS</span>
                    </span>
                 )}
@@ -126,19 +131,27 @@ export const Navbar = ({ onOpenContact, lang, setLang, t }: NavbarProps) => {
                     key={link.id} 
                     onClick={() => scrollToSection(link.id)}
                     className="relative px-2 lg:px-5 py-3 rounded-xl flex items-center gap-2 text-[9px] lg:text-[10px] font-mono uppercase tracking-[0.1em] lg:tracking-[0.3em] transition-all duration-500 group"
-                    style={{ color: activeTab === link.id ? 'white' : 'rgba(255,255,255,0.2)' }}
+                    style={{ color: activeTab === link.id ? 'hsl(var(--foreground))' : 'hsl(var(--foreground) / 0.65)' }}
                    >
-                      <link.icon size={16} className={`transition-all duration-500 ${activeTab === link.id ? 'scale-110' : 'opacity-20 group-hover:opacity-100'}`} style={{ color: activeTab === link.id ? getThemeColor() : '' }} />
+                      <link.icon size={16} className={`transition-all duration-500 ${activeTab === link.id ? 'scale-110' : 'opacity-45 group-hover:opacity-100'}`} style={{ color: activeTab === link.id ? getThemeColor() : '' }} />
                       <span className="hidden xl:block">{link.label}</span>
                       {activeTab === link.id && (
-                         <motion.div layoutId="nav-bg" className="absolute inset-0 -z-10 rounded-xl bg-white/[0.06]" />
+                         <motion.div layoutId="nav-bg" className="absolute inset-0 -z-10 rounded-xl bg-foreground/[0.05]" />
                       )}
                    </button>
                 ))}
              </div>
              
              {/* Bloque Derecho: Acciones (Compacto) */}
-             <div className="flex items-center gap-2 lg:gap-4 pl-3 lg:pl-6 border-l border-white/10 shrink-0">
+             <div className="flex items-center gap-2 lg:gap-4 pl-3 lg:pl-6 border-l border-border shrink-0">
+                {/* Theme Toggle */}
+                <button 
+                  onClick={() => setIsDark(!isDark)}
+                  className="w-9 h-9 lg:w-11 lg:h-11 rounded-lg bg-foreground/[0.03] border border-border flex items-center justify-center text-foreground hover:border-cyber-blue transition-all"
+                >
+                   {isDark ? <Sun size={18} /> : <Moon size={18} />}
+                </button>
+
                 <a 
                   href="/PORTAL_DEMOS.html" 
                   target="_blank" 
@@ -150,26 +163,15 @@ export const Navbar = ({ onOpenContact, lang, setLang, t }: NavbarProps) => {
 
                 <button 
                   onClick={() => setLang(lang === 'es' ? 'en' : 'es')}
-                  className="w-9 h-9 lg:w-11 lg:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center font-mono text-[10px] font-black text-white hover:border-cyber-blue transition-all"
+                  className="w-9 h-9 lg:w-11 lg:h-11 rounded-lg bg-foreground/[0.03] border border-border flex items-center justify-center font-mono text-[10px] font-black text-foreground hover:border-cyber-blue transition-all"
                 >
                    {lang.toUpperCase()}
                 </button>
                 
-                <Link to="/admin/dashboard" className="w-9 h-9 lg:w-11 lg:h-11 bg-white/5 border border-white/10 rounded-full flex items-center justify-center transition-all group overflow-hidden">
-                   <User size={16} className="group-hover:text-cyber-blue transition-colors text-white" />
+                <Link to="/admin/dashboard" className="w-9 h-9 lg:w-11 lg:h-11 bg-foreground/[0.03] border border-border rounded-full flex items-center justify-center transition-all group overflow-hidden">
+                   <User size={16} className="group-hover:text-cyber-blue transition-colors text-foreground" />
                 </Link>
              </div>
-          </motion.div>
-
-          <motion.div 
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: scrolled ? 0 : 1, y: scrolled ? -10 : 0 }}
-            className="mt-4 flex items-center gap-3 px-6 py-1.5 rounded-full border border-cyber-blue/20 bg-black/40 backdrop-blur-md pointer-events-none"
-          >
-             <Zap size={10} className="text-cyber-blue animate-pulse" />
-             <span className="text-[8px] font-mono text-cyber-blue uppercase tracking-[0.5em] font-bold">
-                ALBA_OS_CORE_V1.5_READY
-             </span>
           </motion.div>
        </div>
     </nav>

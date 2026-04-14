@@ -42,11 +42,11 @@ export const Register = () => {
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-blue-600" />
           
           <div className="text-center mb-10">
-            <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-6 border border-white/10 group-hover:scale-110 transition-transform">
+            <div className="w-16 h-16 bg-foreground/[0.05] rounded-full flex items-center justify-center mx-auto mb-6 border border-border group-hover:scale-110 transition-transform">
                <ShieldCheck size={32} className="text-blue-400" />
             </div>
             <h1 className="text-3xl font-black mb-2 tracking-tight">Create Account</h1>
-            <p className="text-slate-500 text-sm font-medium">Únete a la plataforma de gestión de portfolios.</p>
+            <p className="text-foreground/85 text-sm font-medium">Únete a la plataforma de gestión de portfolios.</p>
           </div>
 
           {success ? (
@@ -55,19 +55,19 @@ export const Register = () => {
                   <Sparkles className="text-green-400" size={32} />
                </div>
                <h3 className="text-xl font-bold text-green-400">¡Registro Exitoso!</h3>
-               <p className="text-slate-500 text-sm">Redirigiendo al login...</p>
+               <p className="text-foreground/85 text-sm">Redirigiendo al login...</p>
             </motion.div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 block ml-1">Full Name</label>
+                <label className="text-[10px] font-black uppercase tracking-widest text-foreground/85 block ml-1">Full Name</label>
                 <div className="relative">
-                  <User className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
+                  <User className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground/85" size={18} />
                   <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 outline-none focus:border-blue-500/50 transition-all font-medium"
+                    className="w-full bg-foreground/[0.05] border border-border rounded-2xl py-4 pl-12 pr-4 outline-none focus:border-blue-500/50 transition-all font-medium"
                     placeholder="Tu Nombre"
                     required
                   />
@@ -75,14 +75,14 @@ export const Register = () => {
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 block ml-1">Email Address</label>
+                <label className="text-[10px] font-black uppercase tracking-widest text-foreground/85 block ml-1">Email Address</label>
                 <div className="relative">
-                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
+                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground/85" size={18} />
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 outline-none focus:border-blue-500/50 transition-all font-medium"
+                    className="w-full bg-foreground/[0.05] border border-border rounded-2xl py-4 pl-12 pr-4 outline-none focus:border-blue-500/50 transition-all font-medium"
                     placeholder="name@example.com"
                     required
                   />
@@ -90,14 +90,14 @@ export const Register = () => {
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 block ml-1">Password</label>
+                <label className="text-[10px] font-black uppercase tracking-widest text-foreground/85 block ml-1">Password</label>
                 <div className="relative">
-                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
+                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground/85" size={18} />
                   <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 outline-none focus:border-blue-500/50 transition-all font-medium"
+                    className="w-full bg-foreground/[0.05] border border-border rounded-2xl py-4 pl-12 pr-4 outline-none focus:border-blue-500/50 transition-all font-medium"
                     placeholder="••••••••"
                     required
                   />
@@ -112,13 +112,13 @@ export const Register = () => {
 
               <button
                 disabled={loading}
-                className="w-full bg-white text-slate-950 py-4 rounded-2xl font-black flex items-center justify-center gap-3 transition-all active:scale-95 disabled:opacity-50 shadow-xl"
+                className="w-full bg-foreground text-slate-950 py-4 rounded-2xl font-black flex items-center justify-center gap-3 transition-all active:scale-95 disabled:opacity-50 shadow-xl"
               >
                 {loading ? <Loader2 className="animate-spin text-slate-900" /> : <>Registrarme <ArrowRight size={18} /></>}
               </button>
 
               <div className="text-center pt-4">
-                 <Link to="/admin/login" className="text-xs font-bold text-slate-500 hover:text-blue-400 transition-colors">
+                 <Link to="/admin/login" className="text-xs font-bold text-foreground/85 hover:text-blue-400 transition-colors">
                     ¿Ya tienes cuenta? Inicia sesión aquí
                  </Link>
               </div>

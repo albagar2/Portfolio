@@ -22,13 +22,26 @@ export const translations: any = {
         btn_deploy: 'DESPLEGAR_SISTEMA', 
         btn_dump: 'VOLCAR_REGISTRO' 
       },
+      about: {
+        title: 'ESTADO_SISTEMA: SOBRE_MI.bin',
+        subtitle: 'CONTEXTO_PROFESIONAL_V1.5',
+        bio: 'Desarrolladora Web Junior con pasión por crear ecosistemas digitales de alto rendimiento. Mi enfoque combina la precisión técnica con una visión creativa para resolver problemas complejos a través del código.',
+        education_title: 'NODOS_FORMATIVOS',
+        experience_title: 'TRAYECTORIA_LOG'
+      },
       skills: { 
         title: 'DASHBOARD: TECH_STACK_MATRIX.bin', 
         frontend: 'ESTRUCTURA_FRONT', 
         backend: 'LÓGICA_NÚCLEO', 
         tools: 'HERRAMIENTAS_SOPORTE' 
       },
-      projects: { module_title: 'MÓDULO: CORE_SYSTEMS_v1.5' },
+      projects: { 
+        module_title: 'MÓDULO: CORE_SYSTEMS_v1.5',
+        view_details: 'VER_DETALLES',
+        tech_used: 'STACK_APLICADO',
+        github_link: 'REPOSITORIO_SRC',
+        live_link: 'BOOT_LIVE_PRJ'
+      },
       experience: { 
         module_title: 'REGISTRO: TIMELINE_CORE.log', 
         data_core: 'DATA CORE', 
@@ -72,13 +85,26 @@ export const translations: any = {
         btn_deploy: 'DEPLOY_SYSTEM', 
         btn_dump: 'DUMP_REGISTRY' 
       },
+      about: {
+        title: 'SYSTEM_STATUS: ABOUT_ME.bin',
+        subtitle: 'PROFESSIONAL_CONTEXT_V1.5',
+        bio: 'Junior Web Developer passionate about building high-performance digital ecosystems. My approach combines technical precision with a creative vision to solve complex problems through code.',
+        education_title: 'ACADEMIC_NODES',
+        experience_title: 'CAREER_LOGS'
+      },
       skills: { 
         title: 'DASHBOARD: TECH_STACK_MATRIX.bin', 
         frontend: 'FRONTEND_LAYER', 
         backend: 'CORE_LOGIC', 
         tools: 'SUPPORT_TOOLS' 
       },
-      projects: { module_title: 'MODULE: CORE_SYSTEMS_v1.5' },
+      projects: { 
+        module_title: 'MODULE: CORE_SYSTEMS_v1.5',
+        view_details: 'VIEW_DETAILS',
+        tech_used: 'STACK_APPLIED',
+        github_link: 'SRC_REPOSITORY',
+        live_link: 'BOOT_LIVE_PRJ'
+      },
       experience: { 
         module_title: 'REGISTRY: TIMELINE_CORE.log', 
         data_core: 'DATA CORE', 

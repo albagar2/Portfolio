@@ -40,11 +40,11 @@ export const AdminLayout = () => {
   if (!isAuthenticated || user?.role !== 'ADMIN') return <Navigate to="/admin/login" replace />;
 
   return (
-    <div className="flex min-h-screen bg-slate-950 text-slate-100 selection:bg-blue-500/20">
+    <div className="dark flex min-h-screen bg-slate-950 text-slate-100 transition-colors duration-500">
       {/* Sidebar */}
-      <aside className="w-72 border-r border-white/5 bg-slate-900/40 backdrop-blur-xl p-8 flex flex-col fixed h-screen">
+      <aside className="w-72 border-r border-border bg-foreground/[0.02] backdrop-blur-xl p-8 flex flex-col fixed h-screen z-50">
         <Link to="/" className="flex items-center gap-3 mb-16 pl-4">
-           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white">
+           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-foreground">
               <Sparkles size={24} />
            </div>
            <span className="font-black text-2xl tracking-tight">Admin.</span>
@@ -58,13 +58,13 @@ export const AdminLayout = () => {
                   key={link.to} 
                   to={link.to}
                   className={`flex items-center gap-4 px-6 py-4 rounded-2xl font-bold transition-all relative ${
-                    isActive ? 'bg-primary/10 text-primary border border-primary/20 shadow-lg shadow-blue-500/10' : 'text-slate-500 hover:text-white hover:bg-white/5'
+                    isActive ? 'bg-primary/10 text-primary border border-primary/20 shadow-lg shadow-blue-500/10' : 'text-foreground/85 hover:text-foreground hover:bg-foreground/[0.05]'
                   }`}
                 >
                   <link.icon size={20} />
                   {link.label}
                   {link.to === '/admin/messages' && unreadCount > 0 && (
-                    <span className="absolute top-4 left-9 w-4 h-4 bg-red-500 text-[10px] text-white rounded-full flex items-center justify-center border-2 border-slate-900 shadow-lg animate-bounce">
+                    <span className="absolute top-4 left-9 w-4 h-4 bg-red-500 text-[10px] text-foreground rounded-full flex items-center justify-center border-2 border-slate-900 shadow-lg animate-bounce">
                       {unreadCount > 9 ? '9+' : unreadCount}
                     </span>
                   )}
@@ -79,14 +79,14 @@ export const AdminLayout = () => {
           })}
         </nav>
 
-        <div className="pt-8 border-t border-white/5 flex flex-col gap-4">
+        <div className="pt-8 border-t border-border flex flex-col gap-4">
            <div className="flex items-center gap-4 px-4 mb-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-slate-800 to-slate-900 rounded-full flex items-center justify-center border border-white/10 shadow-xl overflow-hidden">
-                 <User size={20} className="text-slate-400" />
+              <div className="w-10 h-10 bg-foreground/[0.05] rounded-full flex items-center justify-center border border-border shadow-xl overflow-hidden">
+                 <User size={20} className="text-foreground/80" />
               </div>
               <div className="flex flex-col overflow-hidden">
                  <span className="text-sm font-bold truncate">{user?.name}</span>
-                 <span className="text-xs text-slate-500 font-bold uppercase tracking-widest">{user?.role}</span>
+                 <span className="text-xs text-foreground/85 font-bold uppercase tracking-widest">{user?.role}</span>
               </div>
            </div>
 

@@ -7,7 +7,11 @@
 @layer base {
   html {
   scroll-behavior: smooth;
-  scroll-padding-top: 100px;
+  scroll-padding-top: 150px;
+}
+
+section {
+  scroll-margin-top: 150px;
 }
 
 /* Custom Scrollbar */
@@ -16,7 +20,7 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #010310;
+  background: hsl(var(--background));
 }
 
 ::-webkit-scrollbar-thumb {
@@ -31,6 +35,10 @@
 :root {
     --background: 230 40% 4%;
     --foreground: 210 40% 98%;
+    --card: 0 0% 0%;
+    --card-foreground: 210 40% 98%;
+    --primary: 180 100% 50%;
+    --primary-foreground: 0 0% 0%;
     --color-aqua: #00FFF0;
     --color-lime: #D9FF00;
     --color-rose: #FF007A;
@@ -38,18 +46,49 @@
     --font-mono: 'JetBrains Mono', monospace;
     --font-outfit: 'Outfit', sans-serif;
   }
+
+  /* SISTEMA DE FORZADO DE MODO OSCURO (Control Center) */
+  .dark {
+    --background: 230 40% 4%;
+    --foreground: 0 0% 100%;
+    --card: 230 40% 2%;
+    --card-foreground: 0 0% 100%;
+    --primary: 180 100% 50%;
+    --primary-foreground: 230 40% 4%;
+    --color-aqua: #00FFF0;
+    --color-lime: #D9FF00;
+  }
+
+  .light {
+    --background: 0 0% 100%;
+    --foreground: 230 40% 8%;
+    --card: 0 0% 100%;
+    --card-foreground: 230 40% 8%;
+    --primary: 180 100% 30%;
+    --primary-foreground: 0 0% 100%;
+    --color-aqua: #008080;
+    --color-lime: #647500;
+    --color-rose: #A3004C;
+    --color-amber: #A36D00;
+    --border: 230 10% 92%;
+  }
 }
 
 @layer base {
   * {
-    @apply border-white/5;
+    border-color: hsl(var(--border, 230 10% 15%));
   }
   body {
-    @apply bg-[#010309] text-foreground antialiased selection:bg-[#D9FF00] selection:text-black;
+    @apply text-foreground antialiased selection:bg-[#D9FF00] selection:text-black transition-colors duration-500;
+    background-color: hsl(var(--background));
     font-family: var(--font-outfit);
     margin: 0;
     overflow-x: hidden;
-    cursor: none; /* Vamos a crear nuestro propio cursor-mira */
+    cursor: none; 
+  }
+  
+  .light body {
+    @apply selection:bg-[#00FFF0] selection:text-black;
   }
 }
 
@@ -64,13 +103,17 @@
   font-family: var(--font-mono);
   font-size: 15rem;
   font-weight: 900;
-  color: white;
+  color: currentColor;
   opacity: 0.015;
   pointer-events: none;
   z-index: 0;
   overflow: hidden;
   line-height: 0.8;
   letter-spacing: -0.1em;
+}
+
+.light .bg-data-feed::before {
+  opacity: 0.03;
 }
 
 /* --- HUD DE DIAGNÓSTICO --- */
@@ -81,12 +124,22 @@
 
 /* --- GLASSMORPHISM 4.0 (OS CORE) --- */
 .os-window {
-  @apply backdrop-blur-[100px] bg-black/40 border-[1px] border-white/10 shadow-[0_0_80px_rgba(0,0,0,0.8)] ;
+  @apply backdrop-blur-[100px] shadow-[0_0_80px_rgba(0,0,0,0.8)] ;
   @apply rounded-[3rem] transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)];
+  background-color: hsla(var(--background), 0.4);
+  border: 1px solid hsl(var(--border, 230 10% 15%));
+}
+
+.light .os-window {
+  @apply shadow-[0_40px_120px_rgba(0,0,0,0.12)];
+  background-color: hsla(var(--background), 0.95);
+  border: 1px solid hsla(var(--foreground), 0.1);
 }
 
 .os-header {
-  @apply flex items-center gap-2 px-10 py-6 border-b border-white/5;
+  @apply flex items-center gap-2 px-10 py-6 border-b;
+  border-color: hsla(var(--foreground), 0.05);
+  background-color: hsla(var(--foreground), 0.02);
 }
 
 .os-dot {
@@ -104,10 +157,15 @@
   left: 0;
   width: 100%;
   height: 2px;
-  background: linear-gradient(to right, transparent, rgba(0, 255, 240, 0.2), transparent);
+  background: linear-gradient(to right, transparent, var(--color-aqua), transparent);
+  opacity: 0.3;
   animation: scan 8s linear infinite;
   z-index: 250;
   pointer-events: none;
+}
+
+.light .scan-line {
+  opacity: 0.15;
 }
 
 @keyframes scan {
@@ -117,7 +175,19 @@
 
 /* --- UTILS --- */
 .glow-text {
-  text-shadow: 0 0 20px currentColor;
+  text-shadow: 0 0 20px hsla(var(--primary), 0.5);
+}
+
+.light .glow-text {
+  text-shadow: 0 0 10px hsla(var(--primary), 0.2);
+}
+
+.glass-card {
+  @apply bg-foreground/[0.02] backdrop-blur-3xl border border-border rounded-[2.5rem] shadow-2xl transition-all duration-700;
+}
+
+.light .glass-card {
+  @apply bg-foreground/[0.01] shadow-[0_30px_100px_rgba(0,0,0,0.05)];
 }
 
 .btn-os {
@@ -140,4 +210,24 @@
 
 .animate-gradient-slow {
   animation: gradient-flow 12s ease infinite;
+}
+
+.hero-mesh {
+  @apply absolute inset-x-[-20vw] h-64 blur-[120px] -z-10 opacity-30;
+  background: linear-gradient(to right, transparent, var(--color-aqua), transparent);
+}
+
+.light .hero-mesh {
+  @apply opacity-20;
+  background: linear-gradient(to right, transparent, var(--color-aqua), transparent);
+}
+
+.hero-glow {
+  @apply absolute inset-0 -z-20 opacity-40;
+  background: radial-gradient(circle at 50% 50%, hsla(var(--primary), 0.1), transparent 70%);
+}
+
+.light .hero-glow {
+  @apply opacity-20;
+  background: radial-gradient(circle at 50% 50%, hsla(var(--primary), 0.2), transparent 70%);
 }

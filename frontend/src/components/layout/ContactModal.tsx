@@ -53,13 +53,13 @@ export const ContactModal = ({ isOpen, onClose, t }: ContactModalProps) => {
   if (!isOpen) return null;
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[500] flex items-center justify-center p-6 bg-black/80 backdrop-blur-3xl">
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[500] flex items-center justify-center p-6 bg-background/80 backdrop-blur-3xl">
       <motion.div initial={{ scale: 0.9, y: 30 }} animate={{ scale: 1, y: 0 }} className="os-window w-full max-w-2xl border-[#FFB800]/40 overflow-hidden shadow-[0_0_100px_rgba(255,184,0,0.1)]">
         {/* Cabecera del Gateway */}
         <div className="os-header bg-[#FFB800]/10 border-[#FFB800]/20">
           <div className="flex gap-2 mr-6"><div className="os-dot bg-red-500" /><div className="os-dot bg-yellow-400" /><div className="os-dot bg-green-500" /></div>
           <span className="font-mono text-[9px] font-black uppercase tracking-[0.6em] text-[#FFB800]">SIGNAL_GATEWAY.bin</span>
-          <button onClick={onClose} className="ml-auto p-3 opacity-40 hover:opacity-100 transition-opacity text-white"><X size={20} /></button>
+          <button onClick={onClose} className="ml-auto p-3 opacity-40 hover:opacity-100 transition-opacity text-foreground"><X size={20} /></button>
         </div>
         
         <div className="p-16 relative">
@@ -68,10 +68,10 @@ export const ContactModal = ({ isOpen, onClose, t }: ContactModalProps) => {
               <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, scale: 0.95 }} className="space-y-12">
                  {/* Mensaje de Bienvenida al Nodo */}
                  <div className="space-y-4">
-                    <h2 className="text-6xl font-black italic uppercase italic tracking-tighter text-white">
+                    <h2 className="text-6xl font-black italic uppercase italic tracking-tighter text-foreground">
                       {t.contact.access_node.split(' ')[0]} <br /> <span className="text-[#FFB800]">{t.contact.access_node.split(' ')[1]}.</span>
                     </h2>
-                    <p className="font-mono text-[9px] text-slate-500 uppercase tracking-widest leading-relaxed border-l-[3px] border-[#FFB800]/30 pl-8">
+                    <p className="font-mono text-[9px] text-foreground/85 uppercase tracking-widest leading-relaxed border-l-[3px] border-[#FFB800]/30 pl-8">
                       {t.contact.signal_desc}
                     </p>
                  </div>
@@ -82,7 +82,7 @@ export const ContactModal = ({ isOpen, onClose, t }: ContactModalProps) => {
                       <ShieldAlert className="text-red-500 shrink-0 mt-1" size={20} />
                       <div className="space-y-2">
                          <div className="text-[10px] font-black uppercase tracking-[0.3em] text-red-500">Transmisión Fallida</div>
-                         <p className="text-[9px] font-mono text-white/60 leading-relaxed uppercase tracking-widest">{errorDetails}</p>
+                         <p className="text-[9px] font-mono text-foreground/85 leading-relaxed uppercase tracking-widest">{errorDetails}</p>
                       </div>
                    </motion.div>
                  )}
@@ -90,14 +90,14 @@ export const ContactModal = ({ isOpen, onClose, t }: ContactModalProps) => {
                  {/* Formulario de Transmisión */}
                  <form className="space-y-8" onSubmit={handleSubmit}>
                     <div className="grid md:grid-cols-2 gap-8">
-                       <input required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} type="text" placeholder={t.contact.user_id} className="w-full bg-white/5 border border-white/10 p-8 rounded-3xl font-mono text-[10px] uppercase tracking-widest focus:border-[#FFB800]/50 outline-none transition-all text-white" />
-                       <input required value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} type="email" placeholder={t.contact.signal_email} className="w-full bg-white/5 border border-white/10 p-8 rounded-3xl font-mono text-[10px] uppercase tracking-widest focus:border-[#FFB800]/50 outline-none transition-all text-white" />
+                       <input required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} type="text" placeholder={t.contact.user_id} className="w-full bg-foreground/[0.05] border border-border p-8 rounded-3xl font-mono text-[10px] uppercase tracking-widest focus:border-[#FFB800]/50 outline-none transition-all text-foreground" />
+                       <input required value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} type="email" placeholder={t.contact.signal_email} className="w-full bg-foreground/[0.05] border border-border p-8 rounded-3xl font-mono text-[10px] uppercase tracking-widest focus:border-[#FFB800]/50 outline-none transition-all text-foreground" />
                     </div>
-                    <input required value={formData.subject} onChange={e => setFormData({...formData, subject: e.target.value})} type="text" placeholder="SUBJECT // ASUNTO" className="w-full bg-white/5 border border-white/10 p-8 rounded-3xl font-mono text-[10px] uppercase tracking-widest focus:border-[#FFB800]/50 outline-none transition-all text-white" />
+                    <input required value={formData.subject} onChange={e => setFormData({...formData, subject: e.target.value})} type="text" placeholder="SUBJECT // ASUNTO" className="w-full bg-foreground/[0.05] border border-border p-8 rounded-3xl font-mono text-[10px] uppercase tracking-widest focus:border-[#FFB800]/50 outline-none transition-all text-foreground" />
                     
                     <div className="relative">
-                       <textarea required value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})} placeholder={t.contact.data_packet} rows={6} className="w-full bg-white/5 border border-white/10 p-8 rounded-3xl font-mono text-[10px] uppercase tracking-widest focus:border-[#FFB800]/50 outline-none transition-all resize-none text-white" />
-                       <div className={`absolute bottom-6 right-8 font-mono text-[9px] font-black uppercase tracking-tighter ${formData.message.length < 10 ? 'text-red-500 animate-pulse' : 'text-slate-500'}`}>
+                       <textarea required value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})} placeholder={t.contact.data_packet} rows={6} className="w-full bg-foreground/[0.05] border border-border p-8 rounded-3xl font-mono text-[10px] uppercase tracking-widest focus:border-[#FFB800]/50 outline-none transition-all resize-none text-foreground" />
+                       <div className={`absolute bottom-6 right-8 font-mono text-[9px] font-black uppercase tracking-tighter ${formData.message.length < 10 ? 'text-red-500 animate-pulse' : 'text-foreground/85'}`}>
                           Len: {formData.message.length} / MIN: 10
                        </div>
                     </div>
@@ -115,7 +115,7 @@ export const ContactModal = ({ isOpen, onClose, t }: ContactModalProps) => {
                     <CheckCircle2 size={60} strokeWidth={3} />
                  </div>
                  <div className="space-y-4">
-                    <h4 className="text-4xl font-black italic uppercase text-white tracking-widest">
+                    <h4 className="text-4xl font-black italic uppercase text-foreground tracking-widest">
                        {t.contact.success_title.split(' ')[0]} <br /> {t.contact.success_title.split(' ')[1]}.
                     </h4>
                     <p className="font-mono text-xs text-[#FFB800] uppercase tracking-[0.4em]">

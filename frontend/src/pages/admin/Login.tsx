@@ -47,19 +47,19 @@ export const Login = () => {
                <Sparkles size={32} className="text-blue-400" />
             </div>
             <h1 className="text-3xl font-black mb-2 tracking-tight">Admin Access</h1>
-            <p className="text-slate-500 text-sm font-medium">Inicia sesión para gestionar tu imperio.</p>
+            <p className="text-foreground/85 text-sm font-medium">Inicia sesión para gestionar tu imperio.</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-widest text-slate-400 block ml-1">Email Address</label>
+              <label className="text-xs font-bold uppercase tracking-widest text-foreground/80 block ml-1">Email Address</label>
               <div className="relative group">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-blue-400 transition-colors" size={18} />
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground/85 group-focus-within:text-blue-400 transition-colors" size={18} />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 outline-none focus:border-blue-500/50 focus:bg-white/[0.08] transition-all"
+                  className="w-full bg-foreground/[0.05] border border-border rounded-2xl py-4 pl-12 pr-4 outline-none focus:border-blue-500/50 focus:bg-foreground/[0.08] transition-all"
                   placeholder="name@example.com"
                   required
                 />
@@ -67,14 +67,14 @@ export const Login = () => {
             </div>
 
             <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-widest text-slate-400 block ml-1">Password</label>
+              <label className="text-xs font-bold uppercase tracking-widest text-foreground/80 block ml-1">Password</label>
               <div className="relative group">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-blue-400 transition-colors" size={18} />
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground/85 group-focus-within:text-blue-400 transition-colors" size={18} />
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 outline-none focus:border-blue-500/50 focus:bg-white/[0.08] transition-all"
+                  className="w-full bg-foreground/[0.05] border border-border rounded-2xl py-4 pl-12 pr-4 outline-none focus:border-blue-500/50 focus:bg-foreground/[0.08] transition-all"
                   placeholder="••••••••"
                   required
                 />
