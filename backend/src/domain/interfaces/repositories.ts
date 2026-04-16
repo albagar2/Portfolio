@@ -35,6 +35,7 @@ export interface IProjectRepository {
   create(data: Omit<ProjectEntity, 'id' | 'createdAt' | 'updatedAt'>): Promise<ProjectEntity>;
   update(id: string, data: Partial<ProjectEntity>): Promise<ProjectEntity>;
   delete(id: string): Promise<void>;
+  reorder(ids: string[]): Promise<void>;
 }
 
 // ---- Repositorio de Experiencia ----

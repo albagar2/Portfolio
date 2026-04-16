@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Plus, Search, Edit2, Trash2, ExternalLink, 
   Github, LayoutGrid, List, X, Loader2, Save,
-  Image as ImageIcon, Tag, Hash, Globe
+  Image as ImageIcon, Tag, Hash, Globe,
+  ArrowUp, ArrowDown, MoveVertical, Check
 } from 'lucide-react';
 import { api } from '../../services/api';
 import { useNotification } from '../../context/NotificationContext';
@@ -28,6 +29,7 @@ export const ProjectsManager = () => {
   const [loading, setLoading] = useState(true);
   const { showNotification } = useNotification();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isReordering, setIsReordering] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [formData, setFormData] = useState<Partial<Project>>({
     title: '',
@@ -136,6 +138,32 @@ export const ProjectsManager = () => {
     }
   };
 
+  const moveProject = (index: number, direction: 'up' | 'down') => {
+    const newProjects = [...projects];
+    const targetIndex = direction === 'up' ? index - 1 : index + 1;
+    
+    if (targetIndex < 0 || targetIndex >= newProjects.length) return;
+    
+    [newProjects[index], newProjects[targetIndex]] = [newProjects[targetIndex], newProjects[index]];
+    setProjects(newProjects);
+  };
+
+  const saveNewOrder = async () => {
+    try {
+      setLoading(true);
+      const ids = projects.map(p => p.id);
+      await api.patch('/projects/reorder', { ids });
+      showNotification('Orden actualizado correctamente', 'success');
+      setIsReordering(false);
+      fetchProjects();
+    } catch (err) {
+      console.error('Error reordering:', err);
+      showNotification('Error al guardar el nuevo orden', 'error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const addTech = () => {
     if (!techInput.trim()) return;
     const currentTechs = formData.technologies || [];
@@ -156,12 +184,35 @@ export const ProjectsManager = () => {
            <h1 className="text-4xl font-black mb-4">Project Engine.</h1>
            <p className="text-foreground/85 font-medium">Gestiona y edita tu galería visual de trabajos.</p>
         </div>
-        <button 
-          onClick={() => openModal()}
-          className="flex items-center gap-4 px-8 py-5 bg-primary rounded-2xl font-bold shadow-2xl shadow-blue-500/20 active:scale-95 transition-all"
-        >
-          Nuevo Proyecto <Plus size={20} />
-        </button>
+        <div className="flex items-center gap-4">
+          <button 
+            onClick={() => {
+              if (isReordering) {
+                saveNewOrder();
+              } else {
+                setIsReordering(true);
+              }
+            }}
+            className={`flex items-center gap-4 px-8 py-5 rounded-2xl font-bold transition-all active:scale-95 ${
+              isReordering 
+                ? 'bg-green-500 text-white shadow-lg shadow-green-500/20' 
+                : 'bg-foreground/[0.05] hover:bg-foreground/10 border border-border'
+            }`}
+          >
+            {isReordering ? (
+              <>Guardar Orden <Check size={20} /></>
+            ) : (
+              <>Reordenar <MoveVertical size={20} /></>
+            )}
+          </button>
+
+          <button 
+            onClick={() => openModal()}
+            className="flex items-center gap-4 px-8 py-5 bg-primary rounded-2xl font-bold shadow-2xl shadow-blue-500/20 active:scale-95 transition-all text-white"
+          >
+            Nuevo Proyecto <Plus size={20} />
+          </button>
+        </div>
       </header>
 
       {/* Grid de Proyectos */}
@@ -174,15 +225,50 @@ export const ProjectsManager = () => {
              <p className="font-bold uppercase tracking-widest text-xs text-foreground/95">No hay proyectos activos</p>
           </div>
         ) : (
-          projects.map((project) => (
-            <div key={project.id} className="glass-card group flex flex-col">
+          projects.map((project, index) => (
+            <motion.div 
+              key={project.id} 
+              layout
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className={`glass-card group flex flex-col ${isReordering ? 'border-primary/50 bg-primary/5 shadow-xl shadow-primary/10' : ''}`}
+            >
                <div className="h-40 bg-foreground/[0.05] overflow-hidden relative border-b border-border">
                   <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:16px_16px]" />
                   <div className="absolute inset-0 flex items-center justify-center opacity-20"><ImageIcon size={48} /></div>
                   <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                     <button onClick={() => openModal(project)} className="p-2 bg-foreground/10 hover:bg-blue-500/20 rounded-lg backdrop-blur-md border border-border"><Edit2 size={16} /></button>
-                     <button onClick={() => deleteProject(project.id)} className="p-2 bg-foreground/10 hover:bg-red-500/20 rounded-lg backdrop-blur-md border border-border"><Trash2 size={16} /></button>
+                      {isReordering ? (
+                        <>
+                          <button 
+                            disabled={index === 0}
+                            onClick={() => moveProject(index, 'up')} 
+                            className="p-2 bg-primary/20 hover:bg-primary/40 rounded-lg backdrop-blur-md border border-primary/30 disabled:opacity-30"
+                          >
+                            <ArrowUp size={16} />
+                          </button>
+                          <button 
+                            disabled={index === projects.length - 1}
+                            onClick={() => moveProject(index, 'down')} 
+                            className="p-2 bg-primary/20 hover:bg-primary/40 rounded-lg backdrop-blur-md border border-primary/30 disabled:opacity-30"
+                          >
+                            <ArrowDown size={16} />
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <button onClick={() => openModal(project)} className="p-2 bg-foreground/10 hover:bg-blue-500/20 rounded-lg backdrop-blur-md border border-border"><Edit2 size={16} /></button>
+                          <button onClick={() => deleteProject(project.id)} className="p-2 bg-foreground/10 hover:bg-red-500/20 rounded-lg backdrop-blur-md border border-border"><Trash2 size={16} /></button>
+                        </>
+                      )}
                   </div>
+                  {isReordering && (
+                    <div className="absolute top-4 left-4">
+                      <div className="bg-primary text-white text-[10px] font-black w-6 h-6 rounded-full flex items-center justify-center shadow-lg">
+                        {index + 1}
+                      </div>
+                    </div>
+                  )}
                </div>
                <div className="p-6">
                   <div className="flex items-center gap-2 mb-2">
@@ -201,7 +287,7 @@ export const ProjectsManager = () => {
                      ))}
                   </div>
                </div>
-            </div>
+            </motion.div>
           ))
         )}
       </div>

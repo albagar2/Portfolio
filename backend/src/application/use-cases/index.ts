@@ -206,6 +206,11 @@ export class ProjectUseCase {
     await this.projectRepo.delete(id);
     logger.info('Proyecto eliminado', { projectId: id });
   }
+
+  async reorder(ids: string[]): Promise<void> {
+    await this.projectRepo.reorder(ids);
+    logger.info('Proyectos reordenados');
+  }
 }
 
 // ============================================================

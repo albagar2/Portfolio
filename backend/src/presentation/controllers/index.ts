@@ -124,6 +124,16 @@ export class ProjectController {
     await this.projectUC.delete((req.params.id as string));
     res.json({ success: true, message: 'Proyecto eliminado' });
   });
+
+  reorder = asyncHandler(async (req: Request, res: Response) => {
+    const { ids } = req.body;
+    if (!ids || !Array.isArray(ids)) {
+      res.status(400).json({ success: false, message: 'Se requiere un array de IDs' });
+      return;
+    }
+    await this.projectUC.reorder(ids);
+    res.json({ success: true, message: 'Proyectos reordenados correctamente' });
+  });
 }
 
 // ============================================================

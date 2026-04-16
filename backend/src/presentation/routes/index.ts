@@ -97,6 +97,7 @@ projectRouter.get('/slug/:slug', projectCtrl.getBySlug); // Público
 projectRouter.get('/:id', projectCtrl.getById); // Público
 projectRouter.post('/', authMiddleware, authorize(UserRole.ADMIN, UserRole.EDITOR), validate(CreateProjectSchema), projectCtrl.create);
 projectRouter.put('/:id', authMiddleware, authorize(UserRole.ADMIN, UserRole.EDITOR), validate(UpdateProjectSchema), projectCtrl.update);
+projectRouter.patch('/reorder', authMiddleware, authorize(UserRole.ADMIN), projectCtrl.reorder);
 projectRouter.delete('/:id', authMiddleware, authorize(UserRole.ADMIN), projectCtrl.delete);
 router.use('/projects', projectRouter);
 

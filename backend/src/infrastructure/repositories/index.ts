@@ -132,6 +132,17 @@ export class ProjectRepository implements IProjectRepository {
   async delete(id: string): Promise<void> {
     await prisma.project.delete({ where: { id } });
   }
+
+  async reorder(ids: string[]): Promise<void> {
+    await prisma.$transaction(
+      ids.map((id, index) => 
+        prisma.project.update({
+          where: { id },
+          data: { order: index }
+        })
+      )
+    );
+  }
 }
 
 // ---- Repositorio de Experiencia ----
