@@ -26,11 +26,12 @@ export const Home = ({ data, scaleX, onOpenContact, t, lang }: HomeProps) => {
 
   // Helper para obtener el campo traducido o el original de respaldo
   const getT = (obj: any, field: string) => {
+    if (!obj) return '';
     if (lang === 'en') {
       const enField = `${field}_en`;
-      return obj[enField] || obj[field];
+      return obj[enField] || obj[field] || '';
     }
-    return obj[field];
+    return obj[field] || '';
   };
 
   return (

@@ -133,7 +133,7 @@ export const App = () => {
 
         setData({ 
           projects: backendProjects.length > 0 ? backendProjects : fallbackProjects, 
-          profile: prof.data.data || { title: 'Junior Web Developer', bio: 'Desarrolladora enfocada en la excelencia técnica.' }, 
+          profile: prof.data?.data || { title: 'Software Architect', bio: 'Especialista en arquitecturas de alto rendimiento y ecosistemas digitales modernos.' }, 
           exp: backendExp.length > 0 ? backendExp : fallbackExp, 
           edu: backendEdu.length > 0 ? backendEdu : fallbackEdu,
           posts: backendPosts.length > 0 ? backendPosts : fallbackPosts
@@ -146,6 +146,18 @@ export const App = () => {
     fetchData();
     return () => window.removeEventListener('mousemove', handleMove);
   }, []);
+
+  // Evitar renderizado con datos incompletos (especialmente profile)
+  if (!data.profile && location.pathname === '/') {
+    return (
+      <div className="h-screen flex flex-col items-center justify-center bg-[#010309] space-y-8">
+        <div className="w-20 h-20 border-t-2 border-[var(--color-aqua)] rounded-full animate-spin shadow-[0_0_20px_var(--color-aqua)]" />
+        <div className="font-mono text-[10px] tracking-[0.8em] font-black text-[var(--color-aqua)] animate-pulse uppercase">
+          Initializing_System_Core...
+        </div>
+      </div>
+    );
+  }
 
   return (
     <NotificationProvider>

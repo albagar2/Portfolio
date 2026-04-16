@@ -45,6 +45,9 @@ services:
       RATE_LIMIT_WINDOW_MS: ${RATE_LIMIT_WINDOW_MS:-900000}
       RATE_LIMIT_MAX_REQUESTS: ${RATE_LIMIT_MAX_REQUESTS:-100}
       LOG_LEVEL: ${LOG_LEVEL:-info}
+    command: >
+      sh -c "npx prisma db push && 
+             node dist/index.js"
     ports:
       - "${BACKEND_PORT:-4000}:4000"
     volumes:
