@@ -67,7 +67,7 @@ export class ProjectRepository implements IProjectRepository {
     if (filters?.category) where.category = filters.category;
     if (filters?.featured !== undefined) where.featured = filters.featured;
     if (filters?.status) where.status = filters.status;
-    else where.status = 'PUBLISHED'; // Solo publicados por defecto
+    // No filtramos por defecto para que el admin pueda ver todo si no se especifica
 
     return prisma.project.findMany({
       where,
@@ -227,7 +227,7 @@ export class PostRepository implements IPostRepository {
   async findAll(filters?: { published?: boolean; tag?: string }): Promise<PostEntity[]> {
     const where: Record<string, unknown> = {};
     if (filters?.published !== undefined) where.published = filters.published;
-    if (filters?.tag) where.tags = { has: filters.tag };
+    if (filters?.tag) where.tags = { some: { name: filters.tag } };
 
     return prisma.post.findMany({
       where,

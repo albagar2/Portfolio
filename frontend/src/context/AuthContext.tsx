@@ -26,7 +26,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     setUser(null);
-    window.location.href = '/login';
+    window.location.href = '/admin/login';
   }, []);
 
   const login = useCallback((accessToken: string, refreshToken: string, userData: User) => {

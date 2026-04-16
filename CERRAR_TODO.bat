@@ -7,8 +7,8 @@ echo =====================================================================
 echo                ALBA-OS: SEÑAL DE APAGADO INICIADA
 echo =====================================================================
 echo.
-echo [1/3] Interrumpiendo contenedores Docker (Portfolio)...
-docker-compose down
+echo [1/3] Limpiando contenedores Docker residuales (si los hay)...
+docker-compose down 2>nul
 
 echo.
 echo [2/3] Interrumpiendo contenedores Docker (Gestor de Proyectos)...

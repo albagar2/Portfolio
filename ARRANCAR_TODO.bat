@@ -12,16 +12,11 @@ echo.
 echo [0/3] Ejecutando diagnostico de dependencias...
 call VERIFICAR_SISTEMA.bat
 
-echo.
-echo [1/3] Iniciando los microservicios principales del Portfolio...
-docker-compose up -d --build
-if errorlevel 1 (
-    echo [ERROR] Fallo al iniciar servicios Docker del Portfolio.
-    color 0C
-    pause
-    exit /b
-)
-echo [OK] Portfolio Core iniciado.
+echo [1/3] Iniciando los microservicios principales del Portfolio (Nativo)...
+start "Portfolio-Backend" cmd /c "cd backend && npm run dev"
+start "Portfolio-Frontend" cmd /c "cd frontend && npm run dev"
+timeout /t 5 > nul
+echo [OK] Portfolio Core iniciado nativamente.
 
 echo.
 echo [2/3] Arrancando Proyectos Satelites en sus respectivos puertos...
@@ -74,7 +69,7 @@ echo [3/3] Abriendo Portfolio Principal...
 echo Se abrira http://localhost:3000 en su navegador.
 echo (El Portal de Demos sigue disponible en PORTAL_DEMOS.html)
 timeout /t 5 /nobreak > nul
-start http://localhost:3000
+start http://localhost:5173
 
 
 echo.
