@@ -40,7 +40,11 @@ export const translations: any = {
         view_details: 'VER_DETALLES',
         tech_used: 'STACK_APLICADO',
         github_link: 'REPOSITORIO_SRC',
-        live_link: 'BOOT_LIVE_PRJ'
+        live_link: 'BOOT_LIVE_PRJ',
+        solved_problems: 'PROBLEMAS_RESUELTOS',
+        technical_challenges: 'RETOS_TÉCNICOS',
+        evolution: 'EVOLUCIÓN_LOG',
+        limitations: 'LIMITACIONES_SISTEMA'
       },
       experience: { 
         module_title: 'REGISTRO: TIMELINE_CORE.log', 
@@ -108,7 +112,11 @@ export const translations: any = {
         view_details: 'VIEW_DETAILS',
         tech_used: 'STACK_APPLIED',
         github_link: 'SRC_REPOSITORY',
-        live_link: 'BOOT_LIVE_PRJ'
+        live_link: 'BOOT_LIVE_PRJ',
+        solved_problems: 'SOLVED_PROBLEMS',
+        technical_challenges: 'TECHNICAL_CHALLENGES',
+        evolution: 'EVOLUTION_LOG',
+        limitations: 'SYSTEM_LIMITATIONS'
       },
       experience: { 
         module_title: 'REGISTRY: TIMELINE_CORE.log', 

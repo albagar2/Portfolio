@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ExternalLink, Github, Code2, Cpu, Globe, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { X, ExternalLink, Github, Code2, Cpu, Globe, ArrowRight, CheckCircle2, Brain, Activity, Zap } from 'lucide-react';
 
 interface ProjectModalProps {
   project: any;
@@ -80,14 +80,14 @@ export const ProjectModal = ({ project, isOpen, onClose, t }: ProjectModalProps)
                  </div>
               </div>
 
-              <div className="flex items-center gap-8 pt-10 border-t border-border">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-10 border-t border-border">
                  {project.liveUrl && (
-                    <a href={project.liveUrl} target="_blank" className="btn-os bg-[var(--color-lime)] text-black px-12 py-5 flex items-center gap-3">
+                    <a href={project.liveUrl} target="_blank" className="btn-os bg-[var(--color-lime)] text-black px-8 py-5 flex items-center justify-center gap-3 text-[10px] font-black uppercase tracking-widest">
                        {t.projects.live_link} <Globe size={16} />
                     </a>
                  )}
                  {project.githubUrl && (
-                    <a href={project.githubUrl} target="_blank" className="btn-os border-2 border-border text-foreground px-12 py-5 flex items-center gap-3 hover:bg-foreground hover:text-black">
+                    <a href={project.githubUrl} target="_blank" className="btn-os border-2 border-border text-foreground px-8 py-5 flex items-center justify-center gap-3 hover:bg-foreground hover:text-black text-[10px] font-black uppercase tracking-widest">
                        {t.projects.github_link} <Github size={16} />
                     </a>
                  )}
@@ -103,8 +103,60 @@ export const ProjectModal = ({ project, isOpen, onClose, t }: ProjectModalProps)
                  <p className="text-xl lg:text-2xl text-foreground/80 font-mono uppercase tracking-[0.2em] leading-relaxed border-l-4 border-[var(--color-lime)] pl-10 mb-12 italic">
                     {project.description}
                  </p>
-                 <div className="prose prose-invert max-w-none text-foreground/85 font-mono text-sm leading-relaxed space-y-6 uppercase tracking-widest opacity-80">
-                    {project.longDescription || 'Detailed system documentation currently in decryption process. Core architecture validated for production deployment.'}
+                 
+                  <div className="prose prose-invert max-w-none text-foreground/85 font-mono text-sm leading-relaxed space-y-8 uppercase tracking-[0.15em] opacity-90">
+                    <div>
+                       <h4 className="flex items-center gap-3 text-[var(--color-lime)] mb-4 font-black">
+                          <Globe size={16} /> WHAT_SYSTEM_DOES
+                       </h4>
+                       <p className="bg-foreground/[0.02] p-6 border-l-2 border-border/30 italic">
+                          {project.longDescription || 'System documentation currently in decryption process.'}
+                       </p>
+                    </div>
+
+                    {project.evolution && (
+                       <div>
+                          <h4 className="flex items-center gap-3 text-purple-400 mb-4 font-black">
+                             <Activity size={16} /> {t.projects.evolution}
+                          </h4>
+                          <p className="bg-foreground/[0.02] p-6 border-l-2 border-border/30">
+                             {project.evolution}
+                          </p>
+                       </div>
+                    )}
+
+                    {project.solved && (
+                       <div>
+                          <h4 className="flex items-center gap-3 text-[var(--color-aqua)] mb-4 font-black">
+                             <CheckCircle2 size={16} /> {t.projects.solved_problems}
+                          </h4>
+                          <p className="bg-foreground/[0.02] p-6 border-l-2 border-border/30">
+                             {project.solved}
+                          </p>
+                       </div>
+                    )}
+
+                    {project.challenges && (
+                       <div>
+                          <h4 className="flex items-center gap-3 text-red-500 mb-4 font-black">
+                             <Brain size={16} /> {t.projects.technical_challenges}
+                          </h4>
+                          <p className="bg-foreground/[0.02] p-6 border-l-2 border-border/30">
+                             {project.challenges}
+                          </p>
+                       </div>
+                    )}
+
+                    {project.limitations && (
+                       <div>
+                          <h4 className="flex items-center gap-3 text-yellow-500 mb-4 font-black">
+                             <Zap size={16} /> {t.projects.limitations}
+                          </h4>
+                          <div className="bg-yellow-500/5 p-6 border-l-2 border-yellow-500/30 font-bold italic text-foreground/80">
+                             {project.limitations}
+                          </div>
+                       </div>
+                    )}
                  </div>
               </div>
 

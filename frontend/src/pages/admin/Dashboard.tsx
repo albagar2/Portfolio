@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { api } from '../../services/api';
+import { useAuth } from '../../context/AuthContext';
 
 const StatCard = ({ title, value, icon: Icon, color, delay = 0 }: any) => (
   <motion.div 
@@ -27,6 +28,8 @@ const StatCard = ({ title, value, icon: Icon, color, delay = 0 }: any) => (
 );
 
 export const Dashboard = () => {
+  const { user } = useAuth();
+  const isGuest = user?.email === 'guest@example.com';
   const [data, setData] = useState({
     projects: [],
     messages: [],
@@ -57,6 +60,32 @@ export const Dashboard = () => {
 
   return (
     <div className="space-y-12 py-6">
+      {isGuest && (
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-blue-500/10 border border-blue-500/20 p-6 rounded-[2rem] flex items-center justify-between mb-10 overflow-hidden relative group"
+        >
+          <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none rotate-12">
+             <Sparkles size={80} />
+          </div>
+          <div className="flex items-center gap-6">
+             <div className="w-12 h-12 rounded-2xl bg-blue-500/20 flex items-center justify-center text-blue-400">
+                <Sparkles size={24} />
+             </div>
+             <div>
+                <h2 className="text-sm font-black uppercase tracking-widest text-blue-400 mb-1 italic">Modo Demostración Activado</h2>
+                <p className="text-[10px] text-foreground font-mono uppercase tracking-[0.2em]">Estás explorando el panel como invitado. Las acciones de escritura están habilitadas para la demo.</p>
+             </div>
+          </div>
+          <div className="hidden md:block">
+             <div className="px-6 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full text-[9px] font-black uppercase tracking-[0.3em] text-blue-400 italic">
+                GUEST_ACCESS_v1.5
+             </div>
+          </div>
+        </motion.div>
+      )}
+
       <header className="flex flex-col md:flex-row md:items-end justify-between gap-8">
         <div>
            <motion.div 

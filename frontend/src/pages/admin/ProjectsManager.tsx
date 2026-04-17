@@ -4,7 +4,7 @@ import {
   Plus, Search, Edit2, Trash2, ExternalLink, 
   Github, LayoutGrid, List, X, Loader2, Save,
   Image as ImageIcon, Tag, Hash, Globe,
-  ArrowUp, ArrowDown, MoveVertical, Check
+  ArrowUp, ArrowDown, MoveVertical, Check, CheckCircle2, Brain, Activity, Zap
 } from 'lucide-react';
 import { api } from '../../services/api';
 import { useNotification } from '../../context/NotificationContext';
@@ -22,6 +22,10 @@ interface Project {
   featured: boolean;
   status: 'PUBLISHED' | 'DRAFT';
   technologies: { name: string }[];
+  challenges?: string;
+  solved?: string;
+  evolution?: string;
+  limitations?: string;
 }
 
 export const ProjectsManager = () => {
@@ -37,7 +41,11 @@ export const ProjectsManager = () => {
     category: 'web',
     status: 'PUBLISHED',
     featured: false,
-    technologies: []
+    technologies: [],
+    challenges: '',
+    solved: '',
+    evolution: '',
+    limitations: ''
   });
   const [techInput, setTechInput] = useState('');
   const [uploading, setUploading] = useState(false);
@@ -92,7 +100,11 @@ export const ProjectsManager = () => {
         category: 'web',
         status: 'PUBLISHED',
         featured: false,
-        technologies: []
+        technologies: [],
+        challenges: '',
+        solved: '',
+        evolution: '',
+        limitations: ''
       });
     }
     setIsModalOpen(true);
@@ -372,9 +384,59 @@ export const ProjectsManager = () => {
                       <textarea 
                         value={formData.description} 
                         onChange={e => setFormData({...formData, description: e.target.value})}
-                        className="w-full bg-foreground/[0.05] border border-border rounded-xl p-4 outline-none focus:border-blue-500/50 transition-all min-h-[100px] text-sm"
+                        className="w-full bg-foreground/[0.05] border border-border rounded-xl p-4 outline-none focus:border-blue-500/50 transition-all min-h-[80px] text-sm"
                         placeholder="Breve resumen para la tarjeta principal..."
                         required
+                      />
+                   </div>
+
+                   <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase tracking-widest text-[var(--color-lime)] ml-1 flex items-center gap-2"> <Globe size={12} /> Explicación Detallada (Qué hace)</label>
+                      <textarea 
+                        value={formData.longDescription} 
+                        onChange={e => setFormData({...formData, longDescription: e.target.value})}
+                        className="w-full bg-foreground/[0.05] border border-border rounded-xl p-4 outline-none focus:border-blue-500/50 transition-all min-h-[120px] text-sm"
+                        placeholder="Documentación completa del sistema..."
+                      />
+                   </div>
+
+                   <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase tracking-widest text-[var(--color-aqua)] ml-1 flex items-center gap-2"> <CheckCircle2 size={12} /> Problemas Resueltos</label>
+                      <textarea 
+                        value={formData.solved} 
+                        onChange={e => setFormData({...formData, solved: e.target.value})}
+                        className="w-full bg-foreground/[0.05] border border-border rounded-xl p-4 outline-none focus:border-blue-500/50 transition-all min-h-[100px] text-sm"
+                        placeholder="¿Qué problemas específicos resolvió este sistema?"
+                      />
+                   </div>
+
+                   <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase tracking-widest text-red-400 ml-1 flex items-center gap-2"> <Brain size={12} /> Retos Técnicos</label>
+                      <textarea 
+                        value={formData.challenges} 
+                        onChange={e => setFormData({...formData, challenges: e.target.value})}
+                        className="w-full bg-foreground/[0.05] border border-border rounded-xl p-4 outline-none focus:border-blue-500/50 transition-all min-h-[100px] text-sm"
+                        placeholder="¿Cuáles fueron los mayores desafíos de ingeniería?"
+                      />
+                   </div>
+
+                   <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase tracking-widest text-purple-400 ml-1 flex items-center gap-2"> <Activity size={12} /> Evolución del Proyecto</label>
+                      <textarea 
+                        value={formData.evolution} 
+                        onChange={e => setFormData({...formData, evolution: e.target.value})}
+                        className="w-full bg-foreground/[0.05] border border-border rounded-xl p-4 outline-none focus:border-blue-500/50 transition-all min-h-[100px] text-sm"
+                        placeholder="¿Cómo ha evolucionado el proyecto desde su inicio?"
+                      />
+                   </div>
+
+                   <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase tracking-widest text-yellow-500 ml-1 flex items-center gap-2"> <Zap size={12} /> Limitaciones del Sistema</label>
+                      <textarea 
+                        value={formData.limitations} 
+                        onChange={e => setFormData({...formData, limitations: e.target.value})}
+                        className="w-full bg-foreground/[0.05] border border-border rounded-xl p-4 outline-none focus:border-blue-500/50 transition-all min-h-[100px] text-sm"
+                        placeholder="Sé honesto: ¿qué limitaciones tiene actualmente?"
                       />
                    </div>
 

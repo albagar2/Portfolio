@@ -53,9 +53,12 @@ export interface ProfileEntity {
 export interface ProjectEntity {
   id: string;
   title: string;
+  title_en?: string | null;
   slug: string;
   description: string;
+  description_en?: string | null;
   longDescription?: string | null;
+  longDescription_en?: string | null;
   imageUrl?: string | null;
   liveUrl?: string | null;
   githubUrl?: string | null;
@@ -64,8 +67,14 @@ export interface ProjectEntity {
   featured: boolean;
   order: number;
   status: ProjectStatus;
-  startDate?: Date | null;
-  endDate?: Date | null;
+  challenges?: string | null;
+  challenges_en?: string | null;
+  solved?: string | null;
+  solved_en?: string | null;
+  evolution?: string | null;
+  evolution_en?: string | null;
+  limitations?: string | null;
+  limitations_en?: string | null;
   createdAt: Date;
   updatedAt: Date;
 }

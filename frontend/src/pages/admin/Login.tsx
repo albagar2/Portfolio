@@ -101,6 +101,38 @@ export const Login = () => {
             >
               {loading ? <Loader2 className="animate-spin" /> : <>Entrar <ArrowRight size={18} /></>}
             </button>
+
+            <div className="relative py-4">
+              <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-border"></div></div>
+              <div className="relative flex justify-center text-[10px] uppercase font-bold tracking-[0.3em]"><span className="bg-[#010309] px-4 text-foreground/40 italic">O prueba el sistema</span></div>
+            </div>
+
+            <button
+              type="button"
+              disabled={loading}
+              onClick={() => {
+                setEmail('guest@example.com');
+                setPassword('guest1234');
+                // Opcional: Auto-submit después de un breve delay
+                setTimeout(() => {
+                   const form = document.querySelector('form');
+                   form?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+                }, 100);
+              }}
+              className="w-full bg-foreground/[0.05] hover:bg-foreground/[0.1] text-foreground py-4 rounded-2xl font-bold flex items-center justify-center gap-3 border border-border transition-all active:scale-95 disabled:opacity-50"
+            >
+               Acceder como Invitado <Sparkles size={18} className="text-[var(--color-aqua)]" />
+            </button>
+
+            <div className="mt-8 p-4 bg-blue-500/5 border border-blue-500/10 rounded-xl space-y-2">
+               <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-blue-400/80">
+                  <div className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" /> Demo_Credentials:
+               </div>
+               <div className="grid grid-cols-2 gap-4">
+                  <div className="text-[10px] font-mono text-foreground/60">USER: <span className="text-foreground/90">guest@example.com</span></div>
+                  <div className="text-[10px] font-mono text-foreground/60">PASS: <span className="text-foreground/90">guest1234</span></div>
+               </div>
+            </div>
           </form>
         </div>
       </motion.div>

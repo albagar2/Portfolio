@@ -68,8 +68,14 @@ model Project {
   featured     Boolean  @default(false)
   order        Int      @default(0)
   status       String   @default("PUBLISHED") 
-  startDate    DateTime? 
-  endDate      DateTime? 
+  challenges   String? 
+  challenges_en String?
+  solved       String? 
+  solved_en    String?
+  evolution    String?
+  evolution_en String?
+  limitations  String?
+  limitations_en String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 

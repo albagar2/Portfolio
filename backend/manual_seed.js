@@ -11,6 +11,8 @@ async function main() {
         featured: true,
         status: 'PUBLISHED',
         githubUrl: 'https://github.com/matildejb/ProyectoFinal2DAW',
+        challenges: 'Uno de los mayores retos fue la sincronización en tiempo real del estado de los pedidos entre la cocina y los repartidores, además de gestionar la persistencia de carritos abandonados.',
+        solved: 'Implementé un sistema de WebSockets para notificaciones instantáneas y utilicé Redis para el almacenamiento temporal persistente de carritos de compra.'
       },
       create: {
         title: 'Comfort Food',
@@ -20,6 +22,8 @@ async function main() {
         featured: true,
         status: 'PUBLISHED',
         githubUrl: 'https://github.com/matildejb/ProyectoFinal2DAW',
+        challenges: 'Uno de los mayores retos fue la sincronización en tiempo real del estado de los pedidos entre la cocina y los repartidores, además de gestionar la persistencia de carritos abandonados.',
+        solved: 'Implementé un sistema de WebSockets para notificaciones instantáneas y utilicé Redis para el almacenamiento temporal persistente de carritos de compra.'
       }
     });
     console.log('RE-SEED SUCCESS:', p.slug);

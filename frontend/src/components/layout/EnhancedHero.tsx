@@ -162,11 +162,39 @@ export const ProjectCard: React.FC<{ project: Project; index: number; onClick?: 
             ))}
           </div>
 
-          <div className="flex items-center justify-between pt-8 border-t border-white/5">
-             <span className="text-[9px] font-mono font-black uppercase tracking-[0.4em] text-white/30 group-hover:text-[var(--color-aqua)] transition-all">
-                INIT_PROTOCOL
-             </span>
-             <ArrowRight size={16} className="text-white/20 group-hover:text-[var(--color-aqua)] group-hover:translate-x-2 transition-all" />
+          <div className="flex items-center gap-4 pt-8 border-t border-white/5">
+             {project.liveUrl && (
+                <a 
+                  href={project.liveUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="flex-grow flex items-center justify-center gap-3 px-6 py-3 bg-[var(--color-aqua)]/10 hover:bg-[var(--color-aqua)] text-[var(--color-aqua)] hover:text-black rounded-xl border border-[var(--color-aqua)]/30 transition-all duration-300 group/btn"
+                >
+                   <span className="text-[9px] font-black uppercase tracking-[0.2em]">BOOT_LIVE</span>
+                   <Globe size={14} className="group-hover/btn:rotate-12 transition-transform" />
+                </a>
+             )}
+             {project.githubUrl && (
+                <a 
+                  href={project.githubUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="p-3 bg-white/5 hover:bg-white text-white/50 hover:text-black rounded-xl border border-white/10 transition-all duration-300"
+                  title="Source Code"
+                >
+                   <Github size={14} />
+                </a>
+             )}
+             {!project.liveUrl && !project.githubUrl && (
+                <div className="flex items-center justify-between w-full">
+                   <span className="text-[9px] font-mono font-black uppercase tracking-[0.4em] text-white/30 group-hover:text-[var(--color-aqua)] transition-all">
+                      INIT_PROTOCOL
+                   </span>
+                   <ArrowRight size={16} className="text-white/20 group-hover:text-[var(--color-aqua)] group-hover:translate-x-2 transition-all" />
+                </div>
+             )}
           </div>
         </div>
       </div>
