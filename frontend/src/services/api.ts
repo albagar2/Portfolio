@@ -88,7 +88,8 @@ api.interceptors.response.use(
           // Refresh token failed -> Logout
           localStorage.removeItem('accessToken');
           localStorage.removeItem('refreshToken');
-          window.location.href = '/admin/login';
+          // No redirigir automáticamente aquí para no romper la navegación pública
+          // El AuthGuard se encargará de redirigir si la ruta es protegida
         } finally {
           isRefreshing = false;
         }
