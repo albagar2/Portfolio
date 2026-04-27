@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  familyId  String?
+  family    Family?  @relation(fields: [familyId], references: [id])
+  role      String   @default("MEMBER")
+  expenses  Expense[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Family {
+  id         String          @id @default(uuid())
+  name       String
+  members    User[]
+  expenses   Expense[]
+  properties Property[]
+  paymentMethods PaymentMethod[]
+  createdAt  DateTime        @default(now())
+}
+
+model Property {
+  id        String    @id @default(uuid())
+  name      String
+  address   String?
+  familyId  String
+  family    Family    @relation(fields: [familyId], references: [id])
+  expenses  Expense[]
+  createdAt DateTime  @default(now())
+}
+
+model PaymentMethod {
+  id        String    @id @default(uuid())
+  name      String    // e.g., "Visa Oro", "Mastercard", "Efectivo"
+  type      String    @default("CARD") // CARD, CASH, TRANSFER
+  lastDigits String?  // e.g., "1234"
+  familyId  String
+  family    Family    @relation(fields: [familyId], references: [id])
+  expenses  Expense[]
+  createdAt DateTime  @default(now())
+}
+
+model Expense {
+  id          String    @id @default(uuid())
+  amount      Float
+  description String
+  category    String
+  date        DateTime  @default(now())
+  dueDate     DateTime? 
+  receiptUrl  String?   
+  isRecurring Boolean   @default(false) 
+  interval    String?   
+
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  familyId    String
+  family      Family    @relation(fields: [familyId], references: [id])
+  propertyId  String?
+  property    Property? @relation(fields: [propertyId], references: [id])
+  
+  paymentMethodId String?
+  paymentMethod   PaymentMethod? @relation(fields: [paymentMethodId], references: [id])
+
+  createdAt   DateTime  @default(now())
+}
