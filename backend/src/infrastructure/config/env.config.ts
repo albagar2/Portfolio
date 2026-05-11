@@ -15,8 +15,8 @@ const envSchema = z.object({
   PORT: z.string().transform(Number).default('4000'),
 
   // Base de datos
-  // En SQLite la URL puede ser local (file:./dev.db), omitimos validación estricta de URL externa
-  DATABASE_URL: z.string().min(1, 'DATABASE_URL es requerida'),
+  // En SQLite la URL puede ser local (file:./dev.db)
+  DATABASE_URL: z.string().default('file:./portfolio.db'),
 
   // Admin inicial (Personalización única)
   ADMIN_NAME: z.string().default('Admin'),
