@@ -6,6 +6,7 @@
 
 import { Router } from 'express';
 import { authMiddleware, authorize } from '../middleware/auth.middleware';
+import { restrictToAdmin } from '../middleware/rbac.middleware';
 import { upload } from '../middleware/upload.middleware';
 import { validate } from '../middleware/validate.middleware';
 import { UserRole } from '../../domain/entities';
@@ -86,8 +87,8 @@ router.use('/auth', authRouter);
 // ---- Rutas de Perfil ----
 const profileRouter = Router();
 profileRouter.get('/', profileCtrl.getProfile); // Público
-profileRouter.post('/', authMiddleware, authorize(UserRole.ADMIN), validate(CreateProfileSchema), profileCtrl.createProfile);
-profileRouter.put('/:id', authMiddleware, authorize(UserRole.ADMIN), validate(UpdateProfileSchema), profileCtrl.updateProfile);
+profileRouter.post('/', authMiddleware, authorize(UserRole.ADMIN), restrictToAdmin, validate(CreateProfileSchema), profileCtrl.createProfile);
+profileRouter.put('/:id', authMiddleware, authorize(UserRole.ADMIN), restrictToAdmin, validate(UpdateProfileSchema), profileCtrl.updateProfile);
 router.use('/profile', profileRouter);
 
 // ---- Rutas de Proyectos ----
@@ -95,37 +96,37 @@ const projectRouter = Router();
 projectRouter.get('/', projectCtrl.getAll); // Público
 projectRouter.get('/slug/:slug', projectCtrl.getBySlug); // Público
 projectRouter.get('/:id', projectCtrl.getById); // Público
-projectRouter.post('/', authMiddleware, authorize(UserRole.ADMIN, UserRole.EDITOR), validate(CreateProjectSchema), projectCtrl.create);
-projectRouter.put('/:id', authMiddleware, authorize(UserRole.ADMIN, UserRole.EDITOR), validate(UpdateProjectSchema), projectCtrl.update);
-projectRouter.patch('/reorder', authMiddleware, authorize(UserRole.ADMIN), projectCtrl.reorder);
-projectRouter.delete('/:id', authMiddleware, authorize(UserRole.ADMIN), projectCtrl.delete);
+projectRouter.post('/', authMiddleware, authorize(UserRole.ADMIN, UserRole.EDITOR), restrictToAdmin, validate(CreateProjectSchema), projectCtrl.create);
+projectRouter.put('/:id', authMiddleware, authorize(UserRole.ADMIN, UserRole.EDITOR), restrictToAdmin, validate(UpdateProjectSchema), projectCtrl.update);
+projectRouter.patch('/reorder', authMiddleware, authorize(UserRole.ADMIN), restrictToAdmin, projectCtrl.reorder);
+projectRouter.delete('/:id', authMiddleware, authorize(UserRole.ADMIN), restrictToAdmin, projectCtrl.delete);
 router.use('/projects', projectRouter);
 
 // ---- Rutas de Experiencia ----
 const expRouter = Router();
 expRouter.get('/', expCtrl.getAll); // Público
 expRouter.get('/:id', expCtrl.getById); // Público
-expRouter.post('/', authMiddleware, authorize(UserRole.ADMIN), validate(CreateExperienceSchema), expCtrl.create);
-expRouter.put('/:id', authMiddleware, authorize(UserRole.ADMIN), validate(UpdateExperienceSchema), expCtrl.update);
-expRouter.delete('/:id', authMiddleware, authorize(UserRole.ADMIN), expCtrl.delete);
+expRouter.post('/', authMiddleware, authorize(UserRole.ADMIN), restrictToAdmin, validate(CreateExperienceSchema), expCtrl.create);
+expRouter.put('/:id', authMiddleware, authorize(UserRole.ADMIN), restrictToAdmin, validate(UpdateExperienceSchema), expCtrl.update);
+expRouter.delete('/:id', authMiddleware, authorize(UserRole.ADMIN), restrictToAdmin, expCtrl.delete);
 router.use('/experience', expRouter);
 
 // ---- Rutas de Skills ----
 const skillRouter = Router();
 skillRouter.get('/', skillCtrl.getAll); // Público
 skillRouter.get('/:id', skillCtrl.getById); // Público
-skillRouter.post('/', authMiddleware, authorize(UserRole.ADMIN), validate(CreateSkillSchema), skillCtrl.create);
-skillRouter.put('/:id', authMiddleware, authorize(UserRole.ADMIN), validate(UpdateSkillSchema), skillCtrl.update);
-skillRouter.delete('/:id', authMiddleware, authorize(UserRole.ADMIN), skillCtrl.delete);
+skillRouter.post('/', authMiddleware, authorize(UserRole.ADMIN), restrictToAdmin, validate(CreateSkillSchema), skillCtrl.create);
+skillRouter.put('/:id', authMiddleware, authorize(UserRole.ADMIN), restrictToAdmin, validate(UpdateSkillSchema), skillCtrl.update);
+skillRouter.delete('/:id', authMiddleware, authorize(UserRole.ADMIN), restrictToAdmin, skillCtrl.delete);
 router.use('/skills', skillRouter);
 
 // ---- Rutas de Educación ----
 const eduRouter = Router();
 eduRouter.get('/', eduCtrl.getAll); // Público
 eduRouter.get('/:id', eduCtrl.getById); // Público
-eduRouter.post('/', authMiddleware, authorize(UserRole.ADMIN), validate(CreateEducationSchema), eduCtrl.create);
-eduRouter.put('/:id', authMiddleware, authorize(UserRole.ADMIN), validate(UpdateEducationSchema), eduCtrl.update);
-eduRouter.delete('/:id', authMiddleware, authorize(UserRole.ADMIN), eduCtrl.delete);
+eduRouter.post('/', authMiddleware, authorize(UserRole.ADMIN), restrictToAdmin, validate(CreateEducationSchema), eduCtrl.create);
+eduRouter.put('/:id', authMiddleware, authorize(UserRole.ADMIN), restrictToAdmin, validate(UpdateEducationSchema), eduCtrl.update);
+eduRouter.delete('/:id', authMiddleware, authorize(UserRole.ADMIN), restrictToAdmin, eduCtrl.delete);
 router.use('/education', eduRouter);
 
 // ---- Rutas de Blog ----
@@ -133,9 +134,9 @@ const postRouter = Router();
 postRouter.get('/', postCtrl.getAll); // Público (filtra por published)
 postRouter.get('/slug/:slug', postCtrl.getBySlug); // Público
 postRouter.get('/:id', postCtrl.getById); // Público
-postRouter.post('/', authMiddleware, authorize(UserRole.ADMIN, UserRole.EDITOR), validate(CreatePostSchema), postCtrl.create);
-postRouter.put('/:id', authMiddleware, authorize(UserRole.ADMIN, UserRole.EDITOR), validate(UpdatePostSchema), postCtrl.update);
-postRouter.delete('/:id', authMiddleware, authorize(UserRole.ADMIN), postCtrl.delete);
+postRouter.post('/', authMiddleware, authorize(UserRole.ADMIN, UserRole.EDITOR), restrictToAdmin, validate(CreatePostSchema), postCtrl.create);
+postRouter.put('/:id', authMiddleware, authorize(UserRole.ADMIN, UserRole.EDITOR), restrictToAdmin, validate(UpdatePostSchema), postCtrl.update);
+postRouter.delete('/:id', authMiddleware, authorize(UserRole.ADMIN), restrictToAdmin, postCtrl.delete);
 router.use('/posts', postRouter);
 
 // ---- Rutas de Contacto ----
@@ -144,13 +145,13 @@ contactRouter.post('/', validate(CreateContactMessageSchema), contactCtrl.create
 contactRouter.get('/', authMiddleware, authorize(UserRole.ADMIN), contactCtrl.getAll); // Solo admin
 contactRouter.get('/unread-count', authMiddleware, authorize(UserRole.ADMIN), contactCtrl.getUnreadCount);
 contactRouter.get('/:id', authMiddleware, authorize(UserRole.ADMIN), contactCtrl.getById);
-contactRouter.patch('/:id/read', authMiddleware, authorize(UserRole.ADMIN), contactCtrl.markAsRead);
-contactRouter.patch('/:id/replied', authMiddleware, authorize(UserRole.ADMIN), contactCtrl.markAsReplied);
-contactRouter.delete('/:id', authMiddleware, authorize(UserRole.ADMIN), contactCtrl.delete);
+contactRouter.patch('/:id/read', authMiddleware, authorize(UserRole.ADMIN), restrictToAdmin, contactCtrl.markAsRead);
+contactRouter.patch('/:id/replied', authMiddleware, authorize(UserRole.ADMIN), restrictToAdmin, contactCtrl.markAsReplied);
+contactRouter.delete('/:id', authMiddleware, authorize(UserRole.ADMIN), restrictToAdmin, contactCtrl.delete);
 router.use('/contact', contactRouter);
 
 // ---- Rutas de Upload ----
-router.post('/upload', authMiddleware, upload.single('file'), (req, res) => {
+router.post('/upload', authMiddleware, restrictToAdmin, upload.single('file'), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ success: false, message: 'No se subió ningún archivo' });
   }

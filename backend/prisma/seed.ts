@@ -32,12 +32,20 @@ async function main() {
     return;
   }
 
-  // 2. Usuario Core
+  // 2. Usuarios Core
   const hashedPassword = await bcrypt.hash(ADMIN_PASSWORD, 12);
   await prisma.user.upsert({
     where: { email: ADMIN_EMAIL },
     update: { name: ADMIN_NAME, password: hashedPassword },
     create: { email: ADMIN_EMAIL, password: hashedPassword, name: ADMIN_NAME, role: 'ADMIN' },
+  });
+
+  // Usuario Invitado (GUEST) para la Demo
+  const guestPassword = await bcrypt.hash('guest1234', 12);
+  await prisma.user.upsert({
+    where: { email: 'guest@portfolio.demo' },
+    update: { password: guestPassword },
+    create: { email: 'guest@portfolio.demo', password: guestPassword, name: 'Guest User', role: 'GUEST' },
   });
 
   // 3. Perfil Auténtico

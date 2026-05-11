@@ -111,7 +111,7 @@ export const Login = () => {
               type="button"
               disabled={loading}
               onClick={() => {
-                setEmail('guest@example.com');
+                setEmail('guest@portfolio.demo');
                 setPassword('guest1234');
                 // Opcional: Auto-submit después de un breve delay
                 setTimeout(() => {
@@ -129,7 +129,7 @@ export const Login = () => {
                   <div className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" /> Demo_Credentials:
                </div>
                <div className="grid grid-cols-2 gap-4">
-                  <div className="text-[10px] font-mono text-foreground/60">USER: <span className="text-foreground/90">guest@example.com</span></div>
+                  <div className="text-[10px] font-mono text-foreground/60">USER: <span className="text-foreground/90">guest@portfolio.demo</span></div>
                   <div className="text-[10px] font-mono text-foreground/60">PASS: <span className="text-foreground/90">guest1234</span></div>
                </div>
             </div>
