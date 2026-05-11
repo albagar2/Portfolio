@@ -104,48 +104,36 @@ export const App = () => {
           api.get('/posts').catch(() => ({ data: { data: [] } }))
         ]);
 
-        // Datasets de Respaldo por si la base de datos está vacía
-        const fallbackProjects = [
-          { id: '1', title: 'AgriOS Core', category: 'WEB', description: 'Sistema de gestión agrícola inteligente.', status: 'PUBLISHED', technologies: [{name: 'React'}, {name: 'Node.js'}] },
-          { id: '2', title: 'CyberGuard Node', category: 'SECURITY', description: 'Dashboard de monitoreo de red.', status: 'PUBLISHED', technologies: [{name: 'TypeScript'}, {name: 'Express'}] }
-        ];
-
-        const fallbackExp = [
-          { id: '1', position: 'Fullstack Developer', startDate: '2023-01-01', description: 'Desarrollo de infraestructuras escalables y APIs críticas.' },
-          { id: '2', position: 'Frontend Engineer', startDate: '2022-01-01', description: 'Creación de interfaces reactivas de alto rendimiento.' }
-        ];
-
-        const fallbackEdu = [
-          { id: '1', degree: 'Ingeniería de Software', institution: 'Universidad Tech', field: 'Desarrollo de Sistemas', startDate: '2019-01-01' },
-          { id: '2', degree: 'Fullstack Bootcamp', institution: 'Cyber Academy', field: 'Web Development', startDate: '2022-01-01' }
-        ];
-
-        const fallbackPosts = [
-          { id: '1', title: 'Arquitectura de Microservicios 2024', slug: 'microservicios-2024', excerpt: 'Exploración profunda de la escalabilidad y resiliencia en sistemas modernos.', publishedAt: new Date().toISOString(), published: true, tags: [{name: 'System'}] },
-          { id: '2', title: 'Deep Dive: Vite + Framer Motion', slug: 'vite-framer-motion', excerpt: 'Cómo crear interfaces ultra-fluidas con el motor de renderizado de nueva generación.', publishedAt: new Date().toISOString(), published: true, tags: [{name: 'Frontend'}] }
-        ];
-
         const backendProjects = (proj.data.data || []).filter((p: any) => p.status === 'PUBLISHED');
         const backendExp = exp.data.data || [];
         const backendEdu = edu.data.data || [];
-
         const backendPosts = (posts.data.data || []).filter((p: any) => p.published);
 
         setData({ 
-          projects: backendProjects.length > 0 ? backendProjects : fallbackProjects, 
-          profile: prof.data?.data || { title: 'Software Architect', bio: 'Especialista en arquitecturas de alto rendimiento y ecosistemas digitales modernos.' }, 
-          exp: backendExp.length > 0 ? backendExp : fallbackExp, 
-          edu: backendEdu.length > 0 ? backendEdu : fallbackEdu,
-          posts: backendPosts.length > 0 ? backendPosts : fallbackPosts
+          projects: backendProjects.length > 0 ? backendProjects : [], 
+          profile: prof.data?.data || { title: 'Software Architect', bio: 'Especialista en arquitecturas de alto rendimiento.' }, 
+          exp: backendExp.length > 0 ? backendExp : [], 
+          edu: backendEdu.length > 0 ? backendEdu : [],
+          posts: backendPosts.length > 0 ? backendPosts : []
         });
       } catch (err) { 
         console.error('CRITICAL_SYSTEM_ERROR (Data Fetch):', err); 
       }
     };
 
-    fetchData();
+    // Recargar datos al entrar en la página principal o cambiar de ruta principal
+    if (location.pathname === '/' || location.pathname.startsWith('/admin')) {
+      fetchData();
+    }
+
+    const handleMove = (e: MouseEvent) => {
+      document.body.style.setProperty('--mouse-x', `${e.clientX}px`);
+      document.body.style.setProperty('--mouse-y', `${e.clientY}px`);
+    };
+    window.addEventListener('mousemove', handleMove);
+
     return () => window.removeEventListener('mousemove', handleMove);
-  }, []);
+  }, [location.pathname]); // Escuchar cambios de ruta para refrescar datos
 
   // Evitar renderizado con datos incompletos (especialmente profile)
   if (!data.profile && location.pathname === '/') {
