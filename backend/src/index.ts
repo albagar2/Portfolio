@@ -13,6 +13,16 @@ import { logger } from './infrastructure/config/logger';
 import { apiRouter } from './presentation/routes';
 import { errorHandler, notFoundHandler } from './presentation/middleware/error.middleware';
 import { Database } from './infrastructure/database/prisma';
+import fs from 'fs';
+import path from 'path';
+
+// Asegurar que las carpetas de datos existan (para SQLite y Uploads)
+const dataDir = path.join(process.cwd(), 'data');
+const uploadsDir = path.join(dataDir, 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+  console.log('✅ Carpetas de datos creadas automáticamente:', uploadsDir);
+}
 
 const app = express();
 
