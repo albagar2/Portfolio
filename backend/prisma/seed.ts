@@ -284,6 +284,32 @@ async function main() {
         publishedAt: new Date(),
         authorId: user.id,
         tags: { create: [{ name: 'frontend' }, { name: 'ui' }] }
+      },
+      {
+        title: 'Clean Architecture en Node.js',
+        title_en: 'Clean Architecture in Node.js',
+        slug: 'clean-architecture-nodejs',
+        excerpt: 'Descubre cómo organizar tus proyectos para que sean escalables, mantenibles y fáciles de testear.',
+        excerpt_en: 'Discover how to organize your projects to be scalable, maintainable, and easy to test.',
+        content: `# Arquitectura Limpia\n\nLa Clean Architecture separa las reglas de negocio del framework y los detalles técnicos.\n\n## Capas Principales\n\n1. **Entidades**: Lógica de negocio pura.\n2. **Casos de Uso**: Orquestación de la lógica.\n3. **Adaptadores**: Puentes con el mundo exterior (API, DB).\n\nOrganiza tu código hoy para el éxito del mañana.`,
+        content_en: `# Clean Architecture\n\nClean Architecture separates business rules from frameworks and technical details.\n\n## Main Layers\n\n1. **Entities**: Pure business logic.\n2. **Use Cases**: Orchestration of logic.\n3. **Adapters**: Bridges to the outside world (API, DB).\n\nOrganize your code today for tomorrow's success.`,
+        published: true,
+        publishedAt: new Date(),
+        authorId: user.id,
+        tags: { create: [{ name: 'arquitectura' }, { name: 'backend' }] }
+      },
+      {
+        title: 'El Futuro del Desarrollo con IA',
+        title_en: 'The Future of Development with AI',
+        slug: 'futuro-desarrollo-ia',
+        excerpt: '¿Cómo están cambiando las herramientas de IA generativa la forma en que escribimos código?',
+        excerpt_en: 'How are generative AI tools changing the way we write code?',
+        content: `# IA y Desarrollo\n\nLas herramientas como Copilot y agentes autónomos están transformando nuestra profesión.\n\n## Tendencias Clave\n\n* **Pair Programming** aumentado.\n* **Generación de código** repetitivo.\n* **Refactorización automática**.\n\nNo es el fin del programador, es el inicio de un super-programador.`,
+        content_en: `# AI and Development\n\nTools like Copilot and autonomous agents are transforming our profession.\n\n## Key Trends\n\n* Augmented **Pair Programming**.\n* Repetitive **code generation**.\n* **Automatic refactoring**.\n\nIt's not the end of the programmer, it's the start of a super-programmer.`,
+        published: true,
+        publishedAt: new Date(),
+        authorId: user.id,
+        tags: { create: [{ name: 'ia' }, { name: 'productividad' }] }
       }
     ];
 
