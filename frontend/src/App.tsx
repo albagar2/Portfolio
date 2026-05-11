@@ -126,12 +126,6 @@ export const App = () => {
       fetchData();
     }
 
-    const handleMove = (e: MouseEvent) => {
-      document.body.style.setProperty('--mouse-x', `${e.clientX}px`);
-      document.body.style.setProperty('--mouse-y', `${e.clientY}px`);
-    };
-    window.addEventListener('mousemove', handleMove);
-
     return () => window.removeEventListener('mousemove', handleMove);
   }, [location.pathname]); // Escuchar cambios de ruta para refrescar datos
 
