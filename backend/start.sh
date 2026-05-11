@@ -3,9 +3,9 @@ set -e
 
 echo "🚀 Iniciando Portfolio Backend..."
 
-# Crear directorio de datos si no existe (necesario para el volumen de Railway)
-mkdir -p /app/data/uploads
-echo "✅ Directorios de datos creados en /app/data"
+# Crear directorio de datos local (para uploads y BD si el volumen no está montado)
+mkdir -p ./data/uploads
+echo "✅ Directorio de datos creado"
 
 # Crear/sincronizar tablas de la base de datos
 echo "📦 Sincronizando esquema de la base de datos..."

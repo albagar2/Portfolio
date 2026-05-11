@@ -16,6 +16,9 @@ import { Database } from './infrastructure/database/prisma';
 
 const app = express();
 
+// Necesario para Railway/Vercel (están detrás de un proxy reverso)
+app.set('trust proxy', 1);
+
 // ============================================================
 // Seguridad: Helmet - Headers HTTP seguros
 // ============================================================
