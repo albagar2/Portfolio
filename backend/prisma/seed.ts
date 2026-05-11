@@ -13,6 +13,12 @@ async function main() {
 
   console.log('🌱 Sincronizando Portfolio con el CV de Alba...');
 
+  const existingUser = await prisma.user.findFirst();
+  if (existingUser) {
+    console.log('✅ Base de datos ya poblada. Omitiendo seed inicial.');
+    return;
+  }
+
   // 1. Limpieza de datos genéricos
   await prisma.experience.deleteMany({});
   await prisma.education.deleteMany({});

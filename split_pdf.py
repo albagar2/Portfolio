@@ -1,7 +1,7 @@
 import fitz
 import os
 
-pdf_path = "CV.pdf"
+pdf_path = "frontend/public/downloads/cv con url.pdf"
 en_path = "frontend/public/downloads/CV_en.pdf"
 es_path = "frontend/public/downloads/CV_es.pdf"
 
