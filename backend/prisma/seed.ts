@@ -23,12 +23,14 @@ async function main() {
     });
   }
 
-  // 1. Limpieza de datos genéricos
-  await prisma.experience.deleteMany({});
-  await prisma.education.deleteMany({});
-  await prisma.projectTech.deleteMany({});
-  await prisma.project.deleteMany({});
-  await prisma.skill.deleteMany({});
+  // 1. Comprobación de seguridad: Si ya hay proyectos o experiencias, no tocamos nada
+  const projectCount = await prisma.project.count();
+  const experienceCount = await prisma.experience.count();
+  
+  if (projectCount > 0 || experienceCount > 0) {
+    console.log('✅ La base de datos ya tiene contenido. No se realizarán cambios para no sobreescribir el trabajo del administrador.');
+    return;
+  }
 
   // 2. Usuario Core
   const hashedPassword = await bcrypt.hash(ADMIN_PASSWORD, 12);
