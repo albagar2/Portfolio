@@ -5,8 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "npx tsx watch src/index.ts",
-    "build": "tsc",
-    "start": "npx prisma db push --accept-data-loss && node dist/index.js",
+    "build": "rm -rf dist && tsc",
+    "start": "npx prisma db push --accept-data-loss && npx tsx src/index.ts",
     "test": "jest --config jest.config.ts --passWithNoTests",
     "test:watch": "jest --watch --passWithNoTests",
     "test:coverage": "jest --coverage --passWithNoTests",
