@@ -9,6 +9,7 @@ export enum UserRole {
   ADMIN = 'ADMIN',
   EDITOR = 'EDITOR',
   VIEWER = 'VIEWER',
+  GUEST = 'GUEST',
 }
 
 // ---- Estado de Proyecto ----
