@@ -142,9 +142,9 @@ router.use('/posts', postRouter);
 // ---- Rutas de Contacto ----
 const contactRouter = Router();
 contactRouter.post('/', validate(CreateContactMessageSchema), contactCtrl.create); // Público
-contactRouter.get('/', authMiddleware, authorize(UserRole.ADMIN), contactCtrl.getAll); // Solo admin
-contactRouter.get('/unread-count', authMiddleware, authorize(UserRole.ADMIN), contactCtrl.getUnreadCount);
-contactRouter.get('/:id', authMiddleware, authorize(UserRole.ADMIN), contactCtrl.getById);
+contactRouter.get('/', authMiddleware, authorize(UserRole.ADMIN, 'GUEST'), contactCtrl.getAll); // Permitir GUEST ver
+contactRouter.get('/unread-count', authMiddleware, authorize(UserRole.ADMIN, 'GUEST'), contactCtrl.getUnreadCount);
+contactRouter.get('/:id', authMiddleware, authorize(UserRole.ADMIN, 'GUEST'), contactCtrl.getById);
 contactRouter.patch('/:id/read', authMiddleware, authorize(UserRole.ADMIN), restrictToAdmin, contactCtrl.markAsRead);
 contactRouter.patch('/:id/replied', authMiddleware, authorize(UserRole.ADMIN), restrictToAdmin, contactCtrl.markAsReplied);
 contactRouter.delete('/:id', authMiddleware, authorize(UserRole.ADMIN), restrictToAdmin, contactCtrl.delete);
