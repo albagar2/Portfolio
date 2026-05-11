@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npx tsx watch src/index.ts",
     "build": "tsc",
-    "start": "prisma migrate deploy && node dist/index.js",
+    "start": "npx prisma db push --accept-data-loss && node dist/index.js",
     "test": "jest --config jest.config.ts --passWithNoTests",
     "test:watch": "jest --watch --passWithNoTests",
     "test:coverage": "jest --coverage --passWithNoTests",
