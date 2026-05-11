@@ -44,3 +44,10 @@ Thumbs.db
 # Misc
 uploads/
 backend/uploads/
+
+# Proyectos de backup (sub-repos independientes)
+proyectos/proyectos_backup/
+split_pdf.py
+check_pdf.py
+check_pdf2.py
+seed_done.txt
