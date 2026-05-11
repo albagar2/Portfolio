@@ -4,9 +4,11 @@ import { v4 as uuidv4 } from 'uuid';
 import { Request } from 'express';
 
 // Configuración de almacenamiento
+const storagePath = process.env.STORAGE_PATH || 'uploads/';
+
 const storage = multer.diskStorage({
   destination: (_req, _file, cb) => {
-    cb(null, 'uploads/');
+    cb(null, storagePath);
   },
   filename: (_req, file, cb) => {
     const uniqueSuffix = uuidv4();

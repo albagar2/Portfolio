@@ -105,7 +105,8 @@ app.use('/api', apiRouter);
 // ============================================================
 // Archivos estáticos (para uploads)
 // ============================================================
-app.use('/uploads', express.static('uploads'));
+const storagePath = process.env.STORAGE_PATH || 'uploads';
+app.use('/uploads', express.static(storagePath));
 
 // ============================================================
 // Manejo de errores
