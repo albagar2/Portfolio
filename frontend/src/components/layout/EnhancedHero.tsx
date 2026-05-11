@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, ArrowRight, Code2, Cpu, Rocket, Download, Sparkles, Zap, ShieldCheck, Globe, Activity, Terminal as TerminalIcon, CheckCircle2 } from 'lucide-react';
+import { Github, ArrowRight, Code2, Rocket, Download, Globe, Terminal as TerminalIcon } from 'lucide-react';
 
 interface Project {
   id: string; title: string; description: string; technologies: { name: string }[]; imageUrl?: string; liveUrl?: string; githubUrl?: string; category: string;
@@ -8,44 +8,58 @@ interface Project {
 
 const InteractiveTerminal = ({ lang }: { lang: string }) => {
     const isEn = lang === 'en';
-    const [history, setHistory] = useState<string[]>(
-      isEn 
-      ? ['ALBA_OS_BOOT_SEQUENCE_OK', 'Initializing kernel...', 'Accessing user_profile.bin', 'Type "help" for a list of commands.']
-      : ['ALBA_OS_BOOT_SEQUENCE_OK', 'Inicializando kernel...', 'Accediendo a user_profile.bin', 'Escribe "help" para ver los comandos.']
-    );
+    
+    const terminalTexts = {
+        en: {
+            init: ['ALBA_OS_BOOT_SEQUENCE_OK', 'Initializing kernel...', 'Accessing user_profile.bin', 'Type "help" for a list of commands.'],
+            help: 'AVAILABLE_CMDS: bio, skills, projects, stack, clear, whoami',
+            bio: 'Alba García: Software Architect specializing in high-performance digital ecosystems.',
+            skills: 'CORE_STACK: React 18, TypeScript, Node.js, PostgreSQL, Cloud_Infra.',
+            projects: 'SCANNING: [Gasoil, EsquelasTV, ALBA-OS, NeuralGuard, CryptoPro, BioSync, EchoVault, GestorPro, ComfortFood] Found 9 active nodes.',
+            stack: 'TECH: Next.js, Framer_Motion, Tailwind, Python, SQLite.',
+            whoami: 'USER: Recruiter_Entity // STATUS: Authorized_Access',
+            err: (cmd: string) => `ERR: Command "${cmd}" not found in core database.`
+        },
+        es: {
+            init: ['ALBA_OS_BOOT_SEQUENCE_OK', 'Inicializando kernel...', 'Accediendo a user_profile.bin', 'Escribe "help" para ver los comandos.'],
+            help: 'CMDS_DISPONIBLES: bio, skills, projects, stack, clear, whoami',
+            bio: 'Alba García: Arquitecta de Software especializada en ecosistemas digitales de alto rendimiento.',
+            skills: 'CORE_STACK: React 18, TypeScript, Node.js, PostgreSQL, Cloud_Infra.',
+            projects: 'ESCANEANDO: [Gasoil, EsquelasTV, ALBA-OS, NeuralGuard, CryptoPro, BioSync, EchoVault, GestorPro, ComfortFood] 9 nodos activos.',
+            stack: 'TECH: Next.js, Framer_Motion, Tailwind, Python, SQLite.',
+            whoami: 'USUARIO: Recruiter_Entity // ESTADO: Acceso_Autorizado',
+            err: (cmd: string) => `ERR: Comando "${cmd}" no encontrado en el núcleo.`
+        }
+    };
+
+    const texts = isEn ? terminalTexts.en : terminalTexts.es;
+    
+    const [history, setHistory] = useState<string[]>(texts.init);
     const [input, setInput] = useState('');
     const scrollRef = useRef<HTMLDivElement>(null);
+
+    // Update history when language changes
+    useEffect(() => {
+        setHistory(texts.init);
+    }, [lang]);
 
     const handleCommand = (e: React.FormEvent) => {
         e.preventDefault();
         const cmd = input.toLowerCase().trim();
         let response = '';
         
-        if (isEn) {
-            switch(cmd) {
-                case 'help': response = 'AVAILABLE_CMDS: bio, skills, projects, stack, clear, whoami'; break;
-                case 'bio': response = 'Alba García: Software Architect specializing in high-performance digital ecosystems.'; break;
-                case 'skills': response = 'CORE_STACK: React 18, TypeScript, Node.js, PostgreSQL, Cloud_Infra.'; break;
-                case 'projects': response = 'SCANNING: [Gasoil, EsquelasTV, ALBA-OS, NeuralGuard, CryptoPro, BioSync, EchoVault, GestorPro, ComfortFood] Found 9 active nodes.'; break;
-                case 'stack': response = 'TECH: Next.js, Framer_Motion, Tailwind, Python, SQLite.'; break;
-                case 'whoami': response = 'USER: Recruiter_Entity // STATUS: Authorized_Access'; break;
-                case 'clear': setHistory([]); setInput(''); return;
-                default: response = `ERR: Command "${cmd}" not found in core database.`;
-            }
-        } else {
-            switch(cmd) {
-                case 'help': response = 'CMDS_DISPONIBLES: bio, skills, projects, stack, clear, whoami'; break;
-                case 'bio': response = 'Alba García: Arquitecta de Software especializada en ecosistemas digitales de alto rendimiento.'; break;
-                case 'skills': response = 'CORE_STACK: React 18, TypeScript, Node.js, PostgreSQL, Cloud_Infra.'; break;
-                case 'projects': response = 'ESCANEANDO: [Gasoil, EsquelasTV, ALBA-OS, NeuralGuard, CryptoPro, BioSync, EchoVault, GestorPro, ComfortFood] 9 nodos activos.'; break;
-                case 'stack': response = 'TECH: Next.js, Framer_Motion, Tailwind, Python, SQLite.'; break;
-                case 'whoami': response = 'USUARIO: Recruiter_Entity // ESTADO: Acceso_Autorizado'; break;
-                case 'clear': setHistory([]); setInput(''); return;
-                default: response = `ERR: Comando "${cmd}" no encontrado en el núcleo.`;
-            }
+        switch(cmd) {
+            case 'help': response = texts.help; break;
+            case 'bio': response = texts.bio; break;
+            case 'skills': response = texts.skills; break;
+            case 'projects': response = texts.projects; break;
+            case 'stack': response = texts.stack; break;
+            case 'whoami': response = texts.whoami; break;
+            case 'clear': setHistory([]); setInput(''); return;
+            default: response = texts.err(cmd);
         }
         
-        setHistory([...history, `> ${input}`, response]);
+        setHistory(prev => [...prev, `> ${input}`, response]);
         setInput('');
     };
 
@@ -318,8 +332,8 @@ export const EnhancedHero = ({ profile, t, lang }: { profile: any, t: any, lang:
                </motion.button>
                
                <motion.a 
-                  href="/downloads/CV-Alba-Garcia-Lopez.pdf"
-                  download="CV-Alba-Garcia-Lopez.pdf"
+                  href={lang === 'en' ? "/downloads/CV_en.pdf" : "/downloads/CV_es.pdf"}
+                  download={lang === 'en' ? "CV_Alba_Garcia_EN.pdf" : "CV_Alba_Garcia_ES.pdf"}
                   whileHover={{ backgroundColor: 'rgba(255,255,255,0.05)', scale: 1.05 }}
                   className="px-20 py-10 border-2 border-white/10 rounded-full font-black text-[11px] font-mono uppercase tracking-[0.6em] flex items-center gap-4 text-white/50 hover:text-white transition-all backdrop-blur-md"
                >
