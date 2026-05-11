@@ -154,10 +154,23 @@ app.use(errorHandler);
 // ============================================================
 const PORT = config.PORT;
 
-const server = app.listen(PORT, () => {
+const server = app.listen(PORT, async () => {
   logger.info(`🚀 Servidor Portfolio iniciado en puerto ${PORT}`);
   logger.info(`📝 Entorno: ${config.NODE_ENV}`);
-  logger.info(`🔗 API: http://localhost:${PORT}/api`);
+  
+  // Sincronización automática de BD al arrancar
+  try {
+    const { execSync } = await import('child_process');
+    logger.info('📦 Sincronizando tablas de base de datos...');
+    execSync('npx prisma db push --accept-data-loss', { stdio: 'inherit' });
+    
+    logger.info('🌱 Ejecutando seed de datos...');
+    execSync('npx tsx prisma/seed.ts', { stdio: 'inherit' });
+    
+    logger.info('✅ Base de datos lista y poblada');
+  } catch (dbError: any) {
+    logger.error('❌ Error sincronizando base de datos:', { error: dbError.message });
+  }
 });
 
 // ============================================================
