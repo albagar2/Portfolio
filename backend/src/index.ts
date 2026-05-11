@@ -106,13 +106,29 @@ app.use((req, _res, next) => {
 app.get('/api/health', async (_req, res) => {
   try {
     const { PrismaClient } = await import('@prisma/client');
-    const prisma = new PrismaClient();
+    const prisma = new PrismaClient({
+      datasources: {
+        db: {
+          url: process.env.DATABASE_URL || 'file:./portfolio.db'
+        }
+      }
+    });
     await prisma.$queryRaw`SELECT 1`;
     await prisma.$disconnect();
-    res.json({ status: 'ok', db: 'connected', env: config.NODE_ENV, dbUrl: process.env.DATABASE_URL });
-  } catch (err: unknown) {
-    const error = err as Error;
-    res.status(500).json({ status: 'error', message: error.message, dbUrl: process.env.DATABASE_URL });
+    res.json({ 
+      status: 'ok', 
+      db: 'connected', 
+      cwd: process.cwd(),
+      dbUrl: process.env.DATABASE_URL 
+    });
+  } catch (err: any) {
+    res.status(500).json({ 
+      status: 'error', 
+      message: err.message, 
+      code: err.code,
+      meta: err.meta,
+      dbUrl: process.env.DATABASE_URL 
+    });
   }
 });
 
