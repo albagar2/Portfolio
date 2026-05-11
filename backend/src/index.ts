@@ -12,6 +12,8 @@ import { config } from './infrastructure/config/env.config';
 import { logger } from './infrastructure/config/logger';
 import { apiRouter } from './presentation/routes';
 import { errorHandler, notFoundHandler } from './presentation/middleware/error.middleware';
+import { Database } from './infrastructure/database/prisma';
+
 const app = express();
 
 // Necesario para Railway/Vercel (están detrás de un proxy reverso)
