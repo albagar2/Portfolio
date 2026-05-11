@@ -6,7 +6,7 @@
 
 import { Router } from 'express';
 import { authMiddleware, authorize } from '../middleware/auth.middleware';
-import { restrictToAdmin } from '../middleware/rbac.middleware';
+import { restrictToAdmin } from '../../infrastructure/middleware/rbac.middleware';
 import { upload } from '../middleware/upload.middleware';
 import { validate } from '../middleware/validate.middleware';
 import { UserRole } from '../../domain/entities';
