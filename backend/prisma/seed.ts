@@ -337,7 +337,7 @@ async function main() {
   }
 
   console.log('🎉 ¡Sincronización Total Completada!');
-  require('fs').writeFileSync('seed_done.txt', 'DONE at ' + new Date().toISOString());
+  require('fs').writeFileSync('/tmp/seed_done.txt', 'DONE at ' + new Date().toISOString());
 }
 
 

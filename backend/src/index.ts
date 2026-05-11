@@ -163,7 +163,7 @@ const server = app.listen(PORT, async () => {
   try {
     const { execSync } = await import('child_process');
     logger.info('📦 Sincronizando tablas de base de datos...');
-    execSync('npx prisma db push --accept-data-loss', { stdio: 'inherit' });
+    execSync('npx prisma db push --accept-data-loss --skip-generate', { stdio: 'inherit' });
     
     logger.info('🌱 Ejecutando seed de datos...');
     execSync('npx tsx prisma/seed.ts', { stdio: 'inherit' });
