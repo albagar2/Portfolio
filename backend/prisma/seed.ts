@@ -14,9 +14,13 @@ async function main() {
   console.log('🌱 Sincronizando Portfolio con el CV de Alba...');
 
   const existingUser = await prisma.user.findFirst();
-  if (existingUser) {
-    console.log('✅ Base de datos ya poblada. Omitiendo seed inicial.');
-    return;
+  if (!existingUser) {
+    const hashedPassword = await bcrypt.hash(ADMIN_PASSWORD, 12);
+    await prisma.user.upsert({
+      where: { email: ADMIN_EMAIL },
+      update: { name: ADMIN_NAME, password: hashedPassword },
+      create: { email: ADMIN_EMAIL, password: hashedPassword, name: ADMIN_NAME, role: 'ADMIN' },
+    });
   }
 
   // 1. Limpieza de datos genéricos
@@ -314,11 +318,15 @@ async function main() {
     ];
 
     for (const p of examplePosts) {
-      await prisma.post.create({ data: p });
+      const existingPost = await prisma.post.findUnique({ where: { slug: p.slug } });
+      if (!existingPost) {
+        await prisma.post.create({ data: p });
+        console.log(`📝 Artículo añadido: ${p.title}`);
+      }
     }
   }
 
-  console.log('🎉 ¡Sincronización Total Completada! Tu portfolio refleja ahora tu CV real.');
+  console.log('🎉 ¡Sincronización Total Completada!');
   require('fs').writeFileSync('seed_done.txt', 'DONE at ' + new Date().toISOString());
 }
 
