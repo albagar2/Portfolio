@@ -26,6 +26,7 @@ interface Project {
   solved?: string;
   evolution?: string;
   limitations?: string;
+  manual?: string;
 }
 
 export const ProjectsManager = () => {
@@ -123,7 +124,13 @@ export const ProjectsManager = () => {
       // Preparamos los datos: convertimos tecnologías de [{name: 'React'}] a ['React']
       const payload = {
         ...formData,
-        technologies: formData.technologies?.map((t: any) => typeof t === 'object' ? t.name : t)
+        technologies: formData.technologies?.map((t: any) => typeof t === 'object' ? t.name : t),
+        // Aseguramos que los campos de texto largo se envíen siempre
+        challenges: formData.challenges || '',
+        solved: formData.solved || '',
+        evolution: formData.evolution || '',
+        limitations: formData.limitations || '',
+        manual: formData.manual || ''
       };
 
       if (editingProject) {
@@ -192,13 +199,13 @@ export const ProjectsManager = () => {
   };
 
   return (
-    <div className="py-10 space-y-12">
-      <header className="flex flex-col md:flex-row md:items-end justify-between gap-8">
-        <div>
-           <h1 className="text-4xl font-black mb-4">Project Engine.</h1>
-           <p className="text-foreground/85 font-medium">Gestiona y edita tu galería visual de trabajos.</p>
+    <div className="py-6 md:py-10 space-y-8 md:space-y-12">
+      <header className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8">
+        <div className="space-y-2">
+           <h1 className="text-3xl md:text-4xl font-black mb-2 md:mb-4">Project Engine.</h1>
+           <p className="text-sm md:text-base text-foreground/85 font-medium">Gestiona y edita tu galería visual de trabajos.</p>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-row items-center gap-3 md:gap-4">
           <button 
             onClick={() => {
               if (isReordering) {
@@ -207,24 +214,24 @@ export const ProjectsManager = () => {
                 setIsReordering(true);
               }
             }}
-            className={`flex items-center gap-4 px-8 py-5 rounded-2xl font-bold transition-all active:scale-95 ${
+            className={`flex-1 md:flex-none flex items-center justify-center gap-3 md:gap-4 px-4 md:px-8 py-4 md:py-5 rounded-2xl font-bold transition-all active:scale-95 text-xs md:text-sm ${
               isReordering 
                 ? 'bg-green-500 text-white shadow-lg shadow-green-500/20' 
                 : 'bg-foreground/[0.05] hover:bg-foreground/10 border border-border'
             }`}
           >
             {isReordering ? (
-              <>Guardar Orden <Check size={20} /></>
+              <><span className="hidden xs:inline">Guardar Orden</span> <Check size={18} /></>
             ) : (
-              <>Reordenar <MoveVertical size={20} /></>
+              <><span className="hidden xs:inline">Reordenar</span> <MoveVertical size={18} /></>
             )}
           </button>
 
           <button 
             onClick={() => openModal()}
-            className="flex items-center gap-4 px-8 py-5 bg-primary rounded-2xl font-bold shadow-2xl shadow-blue-500/20 active:scale-95 transition-all text-white"
+            className="flex-1 md:flex-none flex items-center justify-center gap-3 md:gap-4 px-4 md:px-8 py-4 md:py-5 bg-primary rounded-2xl font-bold shadow-2xl shadow-blue-500/20 active:scale-95 transition-all text-white text-xs md:text-sm"
           >
-            Nuevo Proyecto <Plus size={20} />
+            <span className="hidden xs:inline">Nuevo Proyecto</span> <Plus size={20} />
           </button>
         </div>
       </header>

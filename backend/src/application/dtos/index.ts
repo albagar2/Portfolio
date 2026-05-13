@@ -78,6 +78,11 @@ export const CreateProjectSchema = z.object({
   featured: z.boolean().default(false),
   order: z.number().int().min(0).default(0),
   status: z.enum(['DRAFT', 'PUBLISHED', 'ARCHIVED']).default('PUBLISHED'),
+  challenges: safeString.optional().nullable(),
+  solved: safeString.optional().nullable(),
+  evolution: safeString.optional().nullable(),
+  limitations: safeString.optional().nullable(),
+  manual: safeString.optional().nullable(),
   startDate: z.string().datetime().optional().nullable(),
   endDate: z.string().datetime().optional().nullable(),
 });

@@ -76,6 +76,8 @@ export interface ProjectEntity {
   evolution_en?: string | null;
   limitations?: string | null;
   limitations_en?: string | null;
+  manual?: string | null;
+  manual_en?: string | null;
   createdAt: Date;
   updatedAt: Date;
 }
