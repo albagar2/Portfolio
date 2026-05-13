@@ -14,9 +14,13 @@ import { apiRouter } from './presentation/routes';
 import { errorHandler, notFoundHandler } from './presentation/middleware/error.middleware';
 import { Database } from './infrastructure/database/prisma';
 import { initializeDatabase } from './init-db';
+import { injectProjectsSafe } from './inject-projects';
 
 // Inicializar Persistencia de DB
 initializeDatabase();
+
+// Inyectar proyectos iniciales de forma segura
+injectProjectsSafe();
 
 const app = express();
 
