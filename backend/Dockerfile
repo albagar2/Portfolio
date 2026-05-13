@@ -39,8 +39,9 @@ COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/prisma ./prisma
 
 # Crear directorios y dar permisos
-RUN mkdir -p logs uploads && \
-    chown -R portfolio:nodejs /app
+RUN mkdir -p logs uploads data && \
+    chown -R portfolio:nodejs /app && \
+    chmod -R 755 /app/data
 
 USER portfolio
 EXPOSE 4000

@@ -18,7 +18,11 @@ export const initializeDatabase = () => {
   // Extraer la ruta del archivo (quitando 'file:')
   const persistentDbPath = dbUrl.replace('file:', '');
   const persistentDir = path.dirname(persistentDbPath);
-  const sourceDbPath = path.join(process.cwd(), 'prisma', 'portfolio.db');
+  
+  // Intentar encontrar la semilla en varias rutas posibles
+  const sourceDbPath = fs.existsSync(path.join(process.cwd(), 'prisma', 'portfolio.db'))
+    ? path.join(process.cwd(), 'prisma', 'portfolio.db')
+    : path.join(__dirname, '..', 'prisma', 'portfolio.db');
 
   logger.info(`Iniciando chequeo de persistencia. Destino: ${persistentDbPath}`);
 
