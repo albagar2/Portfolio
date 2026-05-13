@@ -71,15 +71,20 @@ export const ProfileManager = () => {
     setSaving(true);
     setMessage(null);
     try {
+      // Limpiamos el objeto para enviar solo lo necesario
+      const { createdAt, updatedAt, ...cleanProfile } = profile as any;
+      
       if (profile.id) {
-        await api.put(`/profile/${profile.id}`, profile);
+        await api.put(`/profile/${profile.id}`, cleanProfile);
       } else {
-        const { data } = await api.post('/profile', profile);
+        const { data } = await api.post('/profile', cleanProfile);
         setProfile(data.data);
       }
       setMessage({ type: 'success', text: '¡Perfil actualizado con éxito!' });
-    } catch (err) {
-      setMessage({ type: 'error', text: 'Error al actualizar el perfil.' });
+    } catch (err: any) {
+      const errorMsg = err.response?.data?.message || 'Error al actualizar el perfil.';
+      setMessage({ type: 'error', text: errorMsg });
+      console.error('Save error:', err);
     } finally {
       setSaving(false);
     }
