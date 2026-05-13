@@ -4,7 +4,15 @@ import { v4 as uuidv4 } from 'uuid';
 import { Request } from 'express';
 
 // Configuración de almacenamiento
-const storagePath = process.env.STORAGE_PATH || 'uploads/';
+const storagePath = process.env.STORAGE_PATH || (process.env.NODE_ENV === 'production' ? '/tmp/' : 'uploads/');
+
+// Asegurar que la carpeta existe (en local)
+if (process.env.NODE_ENV !== 'production') {
+  const fs = require('fs');
+  if (!fs.existsSync(storagePath)) {
+    fs.mkdirSync(storagePath, { recursive: true });
+  }
+}
 
 const storage = multer.diskStorage({
   destination: (_req, _file, cb) => {

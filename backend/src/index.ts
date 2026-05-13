@@ -166,9 +166,10 @@ const server = app.listen(PORT, async () => {
     execSync('npx prisma db push --accept-data-loss --skip-generate', { stdio: 'inherit' });
     
     logger.info('🌱 Ejecutando seed de datos...');
+    // Ejecutamos el seed. El propio seed.ts ya tiene lógica para no duplicar datos
     execSync('npx tsx prisma/seed.ts', { stdio: 'inherit' });
     
-    logger.info('✅ Base de datos lista y poblada');
+    logger.info('✅ Sistema de base de datos verificado');
   } catch (dbError: any) {
     logger.error('❌ Error sincronizando base de datos:', { error: dbError.message });
   }
