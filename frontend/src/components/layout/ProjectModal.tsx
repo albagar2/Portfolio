@@ -44,6 +44,7 @@ export const ProjectModal = ({ project, isOpen, onClose, t }: ProjectModalProps)
            </div>
            <button 
              onClick={onClose}
+             aria-label="Cerrar modal"
              className="w-10 h-10 rounded-full bg-foreground/[0.05] flex items-center justify-center hover:bg-red-500/20 hover:text-red-500 transition-all border border-border"
            >
               <X size={20} />
