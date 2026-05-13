@@ -3,7 +3,8 @@ import { Navigate, Link, useLocation, Outlet } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   LayoutDashboard, FolderKanban, MessageSquare, Newspaper,
-  Settings, LogOut, ChevronRight, User, Sparkles, Briefcase
+  Settings, LogOut, ChevronRight, User, Sparkles, Briefcase,
+  Database
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { api } from '../../services/api';
@@ -14,6 +15,7 @@ const SIDEBAR_LINKS = [
   { to: '/admin/experience', label: 'Trayectoria', icon: Briefcase },
   { to: '/admin/posts', label: 'Artículos', icon: Newspaper },
   { to: '/admin/messages', label: 'Mensajes', icon: MessageSquare },
+  { to: '/admin/database', label: 'Base de Datos', icon: Database, adminOnly: true },
   { to: '/admin/settings', label: 'Perfil Boss', icon: User },
 ];
 
@@ -54,6 +56,7 @@ export const AdminLayout = () => {
 
         <nav className="flex flex-col gap-2 flex-grow">
           {SIDEBAR_LINKS.map((link) => {
+            if (link.adminOnly && user?.role !== 'ADMIN') return null;
             const isActive = location.pathname === link.to;
               return (
                 <Link 

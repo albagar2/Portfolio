@@ -26,6 +26,7 @@ import { CvManager } from './pages/admin/CvManager';
 import { ProjectsManager } from './pages/admin/ProjectsManager';
 import { MessagesManager } from './pages/admin/MessagesManager';
 import { BlogPostsManager } from './pages/admin/BlogPostsManager';
+import { DatabaseExplorer } from './pages/admin/DatabaseExplorer';
 
 /**
  * SISTEMA PROTECTOR DE RUTAS (AuthGuard)
@@ -186,6 +187,7 @@ export const App = () => {
                   <Route path="experience" element={<CvManager />} />
                   <Route path="posts" element={<BlogPostsManager />} />
                   <Route path="messages" element={<MessagesManager />} />
+                  <Route path="database" element={<DatabaseExplorer />} />
                   <Route path="settings" element={<ProfileManager />} />
                 </Route>
               </Routes>
