@@ -66,8 +66,8 @@ export class ProjectRepository implements IProjectRepository {
     const where: Record<string, unknown> = {};
     if (filters?.category) where.category = filters.category;
     if (filters?.featured !== undefined) where.featured = filters.featured;
-    if (filters?.status) where.status = filters.status;
-    // No filtramos por defecto para que el admin pueda ver todo si no se especifica
+    // Eliminamos el filtro de status para que el repositorio siempre devuelva todo si no se pide algo específico
+
 
     return prisma.project.findMany({
       where,
