@@ -372,12 +372,24 @@ export class SystemController {
   getBackup = asyncHandler(async (req: Request, res: Response): Promise<void> => {
     try {
       const isProd = process.env.NODE_ENV === 'production';
-      const dbPath = isProd 
-        ? '/app/data/portfolio.db' 
-        : path.join(process.cwd(), 'prisma', 'portfolio.db');
+      const pathsToTry = isProd 
+        ? ['/app/data/portfolio.db', '/tmp/portfolio.db']
+        : [path.join(process.cwd(), 'prisma', 'portfolio.db'), path.join(process.cwd(), 'portfolio.db')];
 
-      if (!fs.existsSync(dbPath)) {
-        res.status(404).json({ success: false, message: 'Archivo de base de datos no encontrado' });
+      let dbPath = '';
+      for (const p of pathsToTry) {
+        if (fs.existsSync(p)) {
+          dbPath = p;
+          break;
+        }
+      }
+
+      if (!dbPath) {
+        res.status(404).json({ 
+          success: false, 
+          message: 'Archivo de base de datos no encontrado',
+          debug: { tried: pathsToTry, cwd: process.cwd() }
+        });
         return;
       }
 
