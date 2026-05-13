@@ -4,6 +4,8 @@
 // ============================================================
 
 import { Request, Response, NextFunction } from 'express';
+import path from 'path';
+import fs from 'fs';
 import {
   AuthUseCase, ProfileUseCase, ProjectUseCase, ExperienceUseCase,
   SkillUseCase, EducationUseCase, PostUseCase, ContactMessageUseCase,
@@ -362,6 +364,25 @@ export class SystemController {
         orderBy: { createdAt: 'desc' }
       });
       res.json({ success: true, data });
+    } catch (error: any) {
+      res.status(500).json({ success: false, message: error.message });
+    }
+  });
+
+  getBackup = asyncHandler(async (req: Request, res: Response): Promise<void> => {
+    try {
+      const isProd = process.env.NODE_ENV === 'production';
+      const dbPath = isProd 
+        ? '/app/data/portfolio.db' 
+        : path.join(process.cwd(), 'prisma', 'portfolio.db');
+
+      if (!fs.existsSync(dbPath)) {
+        res.status(404).json({ success: false, message: 'Archivo de base de datos no encontrado' });
+        return;
+      }
+
+      const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+      res.download(dbPath, `portfolio-backup-${timestamp}.db`);
     } catch (error: any) {
       res.status(500).json({ success: false, message: error.message });
     }

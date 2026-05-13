@@ -162,5 +162,6 @@ router.post('/upload', authMiddleware, restrictToAdmin, upload.single('file'), (
 
 // ---- Rutas de Sistema ----
 router.get('/system/db', authMiddleware, authorize(UserRole.ADMIN), systemCtrl.getDbExplorer);
+router.get('/system/backup', authMiddleware, authorize(UserRole.ADMIN), systemCtrl.getBackup);
 
 export { router as apiRouter };

@@ -173,7 +173,24 @@ export const Dashboard = () => {
                      <span className="font-bold text-foreground">SSL Security</span>
                      <span className="font-black text-green-400 flex items-center gap-2 uppercase tracking-widest text-[10px]">Active <Sparkles size={12} /></span>
                   </div>
-                  <button className="w-full py-4 mt-4 bg-foreground/[0.05] hover:bg-foreground/10 border border-border rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all">
+                  <button 
+                    onClick={async () => {
+                      try {
+                        const response = await api.get('/system/backup', { responseType: 'blob' });
+                        const url = window.URL.createObjectURL(new Blob([response.data]));
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.setAttribute('download', `portfolio-backup-${new Date().getTime()}.db`);
+                        document.body.appendChild(link);
+                        link.click();
+                        link.parentNode?.removeChild(link);
+                      } catch (err) {
+                        alert('Error al realizar el backup');
+                        console.error(err);
+                      }
+                    }}
+                    className="w-full py-4 mt-4 bg-foreground/[0.05] hover:bg-foreground/10 border border-border rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all"
+                  >
                      REALIZAR BACKUP
                   </button>
                </div>
