@@ -19,9 +19,6 @@ import { injectProjectsSafe } from './inject-projects';
 // Inicializar Persistencia de DB
 initializeDatabase();
 
-// Inyectar proyectos iniciales de forma segura
-injectProjectsSafe();
-
 const app = express();
 
 // Necesario para Railway/Vercel (están detrás de un proxy reverso)
