@@ -97,7 +97,7 @@ const InteractiveTerminal = ({ lang }: { lang: string }) => {
     );
 };
 
-export const ProjectCard: React.FC<{ project: Project; index: number; onClick?: () => void }> = ({ project, index, onClick }) => {
+export const ProjectCard: React.FC<{ project: Project; index: number; t: any; onClick?: () => void }> = ({ project, index, t, onClick }) => {
   return (
     <motion.article
       initial={{ opacity: 0, y: 30 }}
@@ -177,18 +177,31 @@ export const ProjectCard: React.FC<{ project: Project; index: number; onClick?: 
           </div>
 
           <div className="flex items-center gap-4 pt-8 border-t border-white/5">
-             {project.liveUrl && (
-                <a 
-                  href={project.liveUrl} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
-                  className="flex-grow flex items-center justify-center gap-3 px-6 py-3 bg-[var(--color-aqua)]/10 hover:bg-[var(--color-aqua)] text-[var(--color-aqua)] hover:text-black rounded-xl border border-[var(--color-aqua)]/30 transition-all duration-300 group/btn"
-                >
-                   <span className="text-[9px] font-black uppercase tracking-[0.2em]">BOOT_LIVE</span>
-                   <Globe size={14} className="group-hover/btn:rotate-12 transition-transform" />
-                </a>
-             )}
+             {project.liveUrl && (() => {
+                const isVideo = /youtube\.com|youtu\.be|vimeo\.com/.test(project.liveUrl);
+                return (
+                  <a 
+                    href={project.liveUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className={`flex-grow flex items-center justify-center gap-3 px-6 py-3 rounded-xl border transition-all duration-300 group/btn ${
+                      isVideo 
+                        ? 'bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white border-red-500/30' 
+                        : 'bg-[var(--color-aqua)]/10 hover:bg-[var(--color-aqua)] text-[var(--color-aqua)] hover:text-black border-[var(--color-aqua)]/30'
+                    }`}
+                  >
+                    <span className="text-[9px] font-black uppercase tracking-[0.2em]">
+                      {isVideo ? t.projects.video_link : t.projects.live_link}
+                    </span>
+                    {isVideo ? (
+                      <Rocket size={14} className="group-hover/btn:scale-110 transition-transform" />
+                    ) : (
+                      <Globe size={14} className="group-hover/btn:rotate-12 transition-transform" />
+                    )}
+                  </a>
+                );
+             })()}
              {project.githubUrl && (
                 <a 
                   href={project.githubUrl} 

@@ -121,7 +121,7 @@ export const Home = ({ data, scaleX, onOpenContact, t, lang }: HomeProps) => {
                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16">
                   {data.projects.map((p: any, idx: number) => (
                     <article key={p.id} className="h-full">
-                       <ProjectCard project={{...p, title: getT(p, 'title'), description: getT(p, 'description')}} index={idx} onClick={() => setSelectedProject(p)} />
+                       <ProjectCard project={{...p, title: getT(p, 'title'), description: getT(p, 'description')}} index={idx} t={t} onClick={() => setSelectedProject(p)} />
                     </article>
                   ))}
                </div>

@@ -44,7 +44,8 @@ export const translations: any = {
         solved_problems: 'PROBLEMAS_RESUELTOS',
         technical_challenges: 'RETOS_TÉCNICOS',
         evolution: 'EVOLUCIÓN_LOG',
-        limitations: 'LIMITACIONES_SISTEMA'
+        limitations: 'LIMITACIONES_SISTEMA',
+        video_link: 'VER_VIDEO_DEMO'
       },
       experience: { 
         module_title: 'REGISTRO: TIMELINE_CORE.log', 
@@ -116,7 +117,8 @@ export const translations: any = {
         solved_problems: 'SOLVED_PROBLEMS',
         technical_challenges: 'TECHNICAL_CHALLENGES',
         evolution: 'EVOLUTION_LOG',
-        limitations: 'SYSTEM_LIMITATIONS'
+        limitations: 'SYSTEM_LIMITATIONS',
+        video_link: 'WATCH_VIDEO_DEMO'
       },
       experience: { 
         module_title: 'REGISTRY: TIMELINE_CORE.log', 

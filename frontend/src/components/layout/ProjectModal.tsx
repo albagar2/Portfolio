@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ExternalLink, Github, Code2, Cpu, Globe, ArrowRight, CheckCircle2, Brain, Activity, Zap, Play } from 'lucide-react';
+import { X, ExternalLink, Github, Code2, Cpu, Globe, ArrowRight, CheckCircle2, Brain, Activity, Zap } from 'lucide-react';
 
 interface ProjectModalProps {
   project: any;
@@ -82,14 +82,24 @@ export const ProjectModal = ({ project, isOpen, onClose, t }: ProjectModalProps)
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-10 border-t border-border">
-                 {project.liveUrl && (
-                    <a href={project.liveUrl} target="_blank" className="btn-os bg-[var(--color-lime)] text-black px-8 py-5 flex items-center justify-center gap-3 text-[10px] font-black uppercase tracking-widest">
-                       {project.liveUrl.includes('youtube.com') || project.liveUrl.includes('youtu.be') || project.liveUrl.includes('vimeo') 
-                         ? <><Play size={16} className="fill-black" /> VER VÍDEO DEMO</>
-                         : <><Globe size={16} /> {t.projects.live_link}</>
-                       }
-                    </a>
-                 )}
+                 {project.liveUrl && (() => {
+                    const isVideo = /youtube\.com|youtu\.be|vimeo\.com/.test(project.liveUrl);
+                    return (
+                      <a 
+                        href={project.liveUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className={`btn-os px-8 py-5 flex items-center justify-center gap-3 text-[10px] font-black uppercase tracking-widest ${
+                          isVideo 
+                            ? 'bg-red-500 text-white shadow-lg shadow-red-500/20' 
+                            : 'bg-[var(--color-lime)] text-black'
+                        }`}
+                      >
+                        {isVideo ? t.projects.video_link : t.projects.live_link}
+                        {isVideo ? <Zap size={16} /> : <Globe size={16} />}
+                      </a>
+                    );
+                 })()}
                  {project.githubUrl && (
                     <a href={project.githubUrl} target="_blank" className="btn-os border-2 border-border text-foreground px-8 py-5 flex items-center justify-center gap-3 hover:bg-foreground hover:text-black text-[10px] font-black uppercase tracking-widest">
                        {t.projects.github_link} <Github size={16} />
