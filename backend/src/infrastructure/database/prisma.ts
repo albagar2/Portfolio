@@ -16,6 +16,11 @@ class Database {
   public static getInstance(): PrismaClient {
     if (!Database.instance) {
       Database.instance = new PrismaClient({
+        datasources: {
+          db: {
+            url: process.env.DATABASE_URL || 'file:./portfolio.db',
+          },
+        },
         log: [
           { emit: 'event', level: 'error' },
           { emit: 'event', level: 'warn' },
