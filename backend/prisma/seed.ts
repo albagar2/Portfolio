@@ -11,33 +11,14 @@ async function main() {
   const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '4lb4-G4rc14';
   const ADMIN_NAME = 'Alba García López';
 
-  console.log('🌱 Sincronizando Portfolio con el CV de Alba...');
+  console.log('🌱 Sincronizando Usuarios Core...');
 
-  const existingUser = await prisma.user.findFirst();
-  if (!existingUser) {
-    const hashedPassword = await bcrypt.hash(ADMIN_PASSWORD, 12);
-    await prisma.user.upsert({
-      where: { email: ADMIN_EMAIL },
-      update: { name: ADMIN_NAME, password: hashedPassword },
-      create: { email: ADMIN_EMAIL, password: hashedPassword, name: ADMIN_NAME, role: 'ADMIN' },
-    });
-  }
-
-  // 1. Comprobación de seguridad: Si ya hay proyectos o experiencias, no tocamos nada
-  const projectCount = await prisma.project.count();
-  const experienceCount = await prisma.experience.count();
-  
-  if (projectCount > 0 || experienceCount > 0) {
-    console.log('✅ La base de datos ya tiene contenido. No se realizarán cambios para no sobreescribir el trabajo del administrador.');
-    return;
-  }
-
-  // 2. Usuarios Core
-  const hashedPassword = await bcrypt.hash(ADMIN_PASSWORD, 12);
+  // 1. Usuarios Core
+  const hashedAdminPassword = await bcrypt.hash(ADMIN_PASSWORD, 12);
   await prisma.user.upsert({
     where: { email: ADMIN_EMAIL },
-    update: { name: ADMIN_NAME, password: hashedPassword },
-    create: { email: ADMIN_EMAIL, password: hashedPassword, name: ADMIN_NAME, role: 'ADMIN' },
+    update: { name: ADMIN_NAME, password: hashedAdminPassword },
+    create: { email: ADMIN_EMAIL, password: hashedAdminPassword, name: ADMIN_NAME, role: 'ADMIN' },
   });
 
   // Usuario Invitado (GUEST) para la Demo
@@ -47,6 +28,17 @@ async function main() {
     update: { password: guestPassword },
     create: { email: 'guest@portfolio.demo', password: guestPassword, name: 'Guest User', role: 'GUEST' },
   });
+
+  console.log('✅ Usuarios sincronizados');
+
+  // 2. Comprobación de seguridad: Si ya hay proyectos o experiencias, no tocamos nada de contenido
+  const projectCount = await prisma.project.count();
+  const experienceCount = await prisma.experience.count();
+  
+  if (projectCount > 0 || experienceCount > 0) {
+    console.log('ℹ️ La base de datos ya tiene contenido. No se regenerará el portfolio, pero los usuarios se han actualizado.');
+    return;
+  }
 
   // 3. Perfil Auténtico
   const profile = await prisma.profile.findFirst();

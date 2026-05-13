@@ -75,10 +75,12 @@ model Project {
   solved_en    String?
   evolution    String?
   evolution_en String?
-  limitations  String?
+  limitations    String?
   limitations_en String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  manual         String? 
+  manual_en      String? 
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
   technologies ProjectTech[]
 

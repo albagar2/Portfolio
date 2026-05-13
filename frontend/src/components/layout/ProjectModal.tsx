@@ -157,6 +157,17 @@ export const ProjectModal = ({ project, isOpen, onClose, t }: ProjectModalProps)
                           </div>
                        </div>
                     )}
+
+                    {project.manual && (
+                       <div className="mt-12">
+                          <h4 className="flex items-center gap-3 text-cyan-400 mb-6 font-black text-lg border-b border-cyan-400/20 pb-4">
+                             <Code2 size={20} /> MANUAL_DE_USUARIO_Y_FUNCIONES
+                          </h4>
+                          <div className="bg-cyan-400/5 p-8 border border-cyan-400/20 rounded-2xl font-mono text-sm leading-relaxed text-foreground/90 whitespace-pre-wrap">
+                             {project.manual}
+                          </div>
+                       </div>
+                    )}
                  </div>
               </div>
 

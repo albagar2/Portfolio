@@ -66,6 +66,11 @@ export class ProfileController {
   });
 
   updateProfile = asyncHandler(async (req: Request, res: Response) => {
+    // Protección extra: El invitado no puede editar el perfil del "Boss"
+    if (req.user?.role === 'GUEST') {
+      res.json({ success: true, message: 'Modo Demo: Cambios simulados con éxito' });
+      return;
+    }
     const profile = await this.profileUC.updateProfile((req.params.id as string), req.body);
     res.json({ success: true, data: profile });
   });
@@ -281,6 +286,15 @@ export class ContactController {
   constructor(private contactUC: ContactMessageUseCase) {}
 
   getAll = asyncHandler(async (req: Request, res: Response) => {
+    // Si es un invitado, devolvemos mensajes de ejemplo ficticios
+    if (req.user?.role === 'GUEST') {
+      const mockMessages = [
+        { id: 'mock-1', name: 'Reclutador Tech', email: 'hr@example.com', subject: 'Propuesta de Colaboración', message: '¡Hola! Nos encanta tu portfolio. ¿Hablamos?', read: true, createdAt: new Date() },
+        { id: 'mock-2', name: 'Sistemas Cloud', email: 'cloud@example.com', subject: 'Configuración Servidor', message: 'Los despliegues en Railway son ultra-rápidos.', read: false, createdAt: new Date() }
+      ];
+      res.json({ success: true, data: mockMessages });
+      return;
+    }
     const read = req.query.read === 'true' ? true : req.query.read === 'false' ? false : undefined;
     const messages = await this.contactUC.getAll({ read });
     res.json({ success: true, data: messages });
@@ -313,7 +327,11 @@ export class ContactController {
     res.json({ success: true, message: 'Mensaje eliminado' });
   });
 
-  getUnreadCount = asyncHandler(async (_req: Request, res: Response) => {
+  getUnreadCount = asyncHandler(async (req: Request, res: Response) => {
+    if (req.user?.role === 'GUEST') {
+      res.json({ success: true, data: { unreadCount: 1 } });
+      return;
+    }
     const count = await this.contactUC.getUnreadCount();
     res.json({ success: true, data: { unreadCount: count } });
   });
