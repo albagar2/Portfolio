@@ -117,7 +117,7 @@ export const Login = () => {
                 setTimeout(() => {
                    const form = document.querySelector('form');
                    form?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
-                }, 100);
+                }, 500);
               }}
               className="w-full bg-foreground/[0.05] hover:bg-foreground/[0.1] text-foreground py-4 rounded-2xl font-bold flex items-center justify-center gap-3 border border-border transition-all active:scale-95 disabled:opacity-50"
             >
