@@ -40,10 +40,10 @@ COPY --from=builder /app/prisma ./prisma
 
 # Crear directorios y dar permisos
 RUN mkdir -p logs uploads data && \
-    chown -R portfolio:nodejs /app && \
-    chmod -R 755 /app/data
+    chmod -R 777 /app/data logs uploads
 
-USER portfolio
+# Comentamos el usuario no-root temporalmente para evitar problemas de permisos con volúmenes de Railway
+# USER portfolio
 EXPOSE 4000
 
 # Iniciar directamente
