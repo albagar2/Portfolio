@@ -1,65 +1,49 @@
 # ============================================================
-# Backend Dockerfile - Multi-stage build
-# Etapa 1: Build con TypeScript
-# Etapa 2: Producción con imagen slim
+# Backend Dockerfile - Optimized for Fast Builds
 # ============================================================
 
-# ---- Stage 1: Build ----
+# ---- Stage 1: Build & Dependencies ----
 FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Copiar archivos de dependencias
+# Copiar archivos de configuración
 COPY package*.json ./
 COPY prisma ./prisma/
 
-# Instalar dependencias
-RUN npm ci
+# Instalar TODAS las dependencias de golpe (builder necesita devDependencies)
+# Usamos --prefer-offline para acelerar instalaciones repetidas
+RUN npm ci --prefer-offline --no-audit
 
 # Generar Prisma Client
 RUN npx prisma generate
 
-# Copiar código fuente
+# Copiar código y compilar
 COPY tsconfig.json ./
 COPY src ./src
-
-# Compilar TypeScript
 RUN npm run build
 
 # ---- Stage 2: Production ----
 FROM node:20-alpine AS production
 
-# Crear usuario no-root para seguridad
+# Crear usuario no-root
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S portfolio -u 1001
 
 WORKDIR /app
 
-# Copiar archivos necesarios
+# Copiar SOLO lo necesario del builder para evitar reinstalar
 COPY package*.json ./
-COPY prisma ./prisma/
-
-# Instalar solo dependencias de producción
-RUN npm ci --only=production
-
-# Generar Prisma Client para producción
-RUN npx prisma generate
-
-# Copiar build
+COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/prisma ./prisma
 
-# Crear directorio de logs y uploads
-RUN mkdir -p logs uploads && chown -R portfolio:nodejs logs uploads
+# Crear directorios y dar permisos
+RUN mkdir -p logs uploads && \
+    chown -R portfolio:nodejs /app
 
-# Cambiar usuario
 USER portfolio
-
-# Exponer puerto
 EXPOSE 4000
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:4000/api/health || exit 1
-
-# Iniciar servidor
+# Iniciar directamente
 CMD ["node", "dist/index.js"]
