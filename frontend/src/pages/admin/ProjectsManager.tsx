@@ -264,6 +264,8 @@ export const ProjectsManager = () => {
                           <button 
                             disabled={index === 0}
                             onClick={() => moveProject(index, 'up')} 
+                            aria-label="Mover proyecto hacia arriba"
+                            title="Subir posición"
                             className="p-2 bg-primary/20 hover:bg-primary/40 rounded-lg backdrop-blur-md border border-primary/30 disabled:opacity-30"
                           >
                             <ArrowUp size={16} />
@@ -271,6 +273,8 @@ export const ProjectsManager = () => {
                           <button 
                             disabled={index === projects.length - 1}
                             onClick={() => moveProject(index, 'down')} 
+                            aria-label="Mover proyecto hacia abajo"
+                            title="Bajar posición"
                             className="p-2 bg-primary/20 hover:bg-primary/40 rounded-lg backdrop-blur-md border border-primary/30 disabled:opacity-30"
                           >
                             <ArrowDown size={16} />
@@ -278,8 +282,8 @@ export const ProjectsManager = () => {
                         </>
                       ) : (
                         <>
-                          <button onClick={() => openModal(project)} className="p-2 bg-foreground/10 hover:bg-blue-500/20 rounded-lg backdrop-blur-md border border-border"><Edit2 size={16} /></button>
-                          <button onClick={() => deleteProject(project.id)} className="p-2 bg-foreground/10 hover:bg-red-500/20 rounded-lg backdrop-blur-md border border-border"><Trash2 size={16} /></button>
+                          <button onClick={() => openModal(project)} aria-label="Editar proyecto" title="Editar" className="p-2 bg-foreground/10 hover:bg-blue-500/20 rounded-lg backdrop-blur-md border border-border"><Edit2 size={16} /></button>
+                          <button onClick={() => deleteProject(project.id)} aria-label="Eliminar proyecto" title="Eliminar" className="p-2 bg-foreground/10 hover:bg-red-500/20 rounded-lg backdrop-blur-md border border-border"><Trash2 size={16} /></button>
                         </>
                       )}
                   </div>
