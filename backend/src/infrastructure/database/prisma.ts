@@ -15,10 +15,15 @@ class Database {
    */
   public static getInstance(): PrismaClient {
     if (!Database.instance) {
+      // Intentamos detectar una ruta persistente en Railway
+      const isProduction = process.env.NODE_ENV === 'production';
+      const defaultUrl = isProduction ? 'file:/app/data/portfolio.db' : 'file:./portfolio.db';
+      const dbUrl = process.env.DATABASE_URL || defaultUrl;
+
       Database.instance = new PrismaClient({
         datasources: {
           db: {
-            url: process.env.DATABASE_URL || 'file:./portfolio.db',
+            url: dbUrl,
           },
         },
         log: [

@@ -8,6 +8,7 @@ import {
   AuthUseCase, ProfileUseCase, ProjectUseCase, ExperienceUseCase,
   SkillUseCase, EducationUseCase, PostUseCase, ContactMessageUseCase,
 } from '../../application/use-cases';
+import { Database } from '../../infrastructure/database/prisma';
 
 // ---- Tipo helper para async handler ----
 type AsyncHandler = (req: Request, res: Response, next: NextFunction) => Promise<void>;
@@ -334,5 +335,35 @@ export class ContactController {
     }
     const count = await this.contactUC.getUnreadCount();
     res.json({ success: true, data: { unreadCount: count } });
+  });
+}
+
+// ============================================================
+// Controlador de Sistema (Explorador de BD)
+// ============================================================
+export class SystemController {
+  getDbExplorer = asyncHandler(async (req: Request, res: Response): Promise<void> => {
+    const table = req.query.table as string;
+    if (!table) {
+      res.status(400).json({ success: false, message: 'Tabla no especificada' });
+      return;
+    }
+
+    const allowedTables = ['user', 'profile', 'project', 'experience', 'skill', 'education', 'post', 'contactMessage'];
+    if (!allowedTables.includes(table)) {
+      res.status(403).json({ success: false, message: 'Acceso a tabla no permitido' });
+      return;
+    }
+
+    try {
+      const db = Database.getInstance();
+      const data = await (db as any)[table].findMany({
+        take: 50,
+        orderBy: { createdAt: 'desc' }
+      });
+      res.json({ success: true, data });
+    } catch (error: any) {
+      res.status(500).json({ success: false, message: error.message });
+    }
   });
 }

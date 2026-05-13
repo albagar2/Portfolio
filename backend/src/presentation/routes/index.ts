@@ -23,7 +23,7 @@ import {
 import {
   AuthController, ProfileController, ProjectController,
   ExperienceController, SkillController, EducationController,
-  PostController, ContactController,
+  PostController, ContactController, SystemController
 } from '../controllers';
 import {
   AuthUseCase, ProfileUseCase, ProjectUseCase, ExperienceUseCase,
@@ -64,6 +64,7 @@ const skillCtrl = new SkillController(skillUC);
 const eduCtrl = new EducationController(eduUC);
 const postCtrl = new PostController(postUC);
 const contactCtrl = new ContactController(contactUC);
+const systemCtrl = new SystemController();
 
 // ============================================================
 // Router Principal
@@ -158,5 +159,8 @@ router.post('/upload', authMiddleware, restrictToAdmin, upload.single('file'), (
   const fileUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
   res.json({ success: true, data: { url: fileUrl } });
 });
+
+// ---- Rutas de Sistema ----
+router.get('/system/db', authMiddleware, authorize(UserRole.ADMIN), systemCtrl.getDbExplorer);
 
 export { router as apiRouter };
