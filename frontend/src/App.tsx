@@ -105,7 +105,7 @@ export const App = () => {
           api.get('/posts').catch(() => ({ data: { data: [] } }))
         ]);
 
-        const backendProjects = (proj.data.data || []).filter((p: any) => p.status === 'PUBLISHED');
+        const backendProjects = proj.data.data || [];
         const backendExp = exp.data.data || [];
         const backendEdu = edu.data.data || [];
         const backendPosts = (posts.data.data || []).filter((p: any) => p.published);
