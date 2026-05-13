@@ -70,9 +70,12 @@ export const CreateProfileSchema = z.object({
 // ---- Project DTOs ----
 export const CreateProjectSchema = z.object({
   title: safeString.pipe(z.string().min(2)),
+  title_en: safeString.optional().nullable(),
   slug: z.string().regex(slugRegex, 'Slug inválido (solo letras minúsculas, números y guiones)'),
   description: safeString.pipe(z.string().min(10)),
+  description_en: safeString.optional().nullable(),
   longDescription: safeString.optional().nullable(),
+  longDescription_en: safeString.optional().nullable(),
   imageUrl: safeUrl.nullable(),
   liveUrl: safeUrl.nullable(),
   githubUrl: safeUrl.nullable(),
@@ -82,10 +85,15 @@ export const CreateProjectSchema = z.object({
   order: z.number().int().min(0).default(0),
   status: z.enum(['DRAFT', 'PUBLISHED', 'ARCHIVED']).default('PUBLISHED'),
   challenges: safeString.optional().nullable(),
+  challenges_en: safeString.optional().nullable(),
   solved: safeString.optional().nullable(),
+  solved_en: safeString.optional().nullable(),
   evolution: safeString.optional().nullable(),
+  evolution_en: safeString.optional().nullable(),
   limitations: safeString.optional().nullable(),
+  limitations_en: safeString.optional().nullable(),
   manual: safeString.optional().nullable(),
+  manual_en: safeString.optional().nullable(),
   startDate: z.string().datetime().optional().nullable(),
   endDate: z.string().datetime().optional().nullable(),
 });
@@ -125,11 +133,14 @@ export const UpdateSkillSchema = CreateSkillSchema.partial();
 export const CreateEducationSchema = z.object({
   institution: safeString.pipe(z.string().min(2)),
   degree: safeString.pipe(z.string().min(2)),
+  degree_en: safeString.optional().nullable(),
   field: safeString.pipe(z.string().min(2)),
-  startDate: z.string().datetime(),
-  endDate: z.string().datetime().optional().nullable(),
+  field_en: safeString.optional().nullable(),
+  startDate: z.string().datetime().or(z.string().regex(/^\d{4}-\d{2}-\d{2}$/)).transform(v => v.includes('T') ? v : `${v}T00:00:00.000Z`),
+  endDate: z.string().datetime().or(z.string().regex(/^\d{4}-\d{2}-\d{2}$/)).transform(v => v.includes('T') ? v : `${v}T00:00:00.000Z`).optional().nullable(),
   current: z.boolean().default(false),
   description: safeString.optional().nullable(),
+  description_en: safeString.optional().nullable(),
   order: z.number().int().min(0).default(0),
 });
 
