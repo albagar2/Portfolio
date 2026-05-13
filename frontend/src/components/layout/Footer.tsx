@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Zap, Database, Github, Cpu, ShieldAlert } from 'lucide-react';
+import { Zap, Database, Github, Cpu, ShieldAlert, Globe } from 'lucide-react';
 
 interface FooterProps {
   data: any;
@@ -62,6 +62,11 @@ export const Footer = ({ data, t, lang }: FooterProps) => {
               {profile.linkedinUrl && (
                  <a href={profile.linkedinUrl} target="_blank" rel="noreferrer" className="text-[10px] font-mono text-foreground/95 hover:text-[var(--color-aqua)] transition-colors uppercase tracking-[0.3em] flex items-center gap-3 group">
                     <Cpu size={14} className="opacity-40 group-hover:opacity-100" /> {lang === 'en' ? 'LINKEDIN_NODE' : 'NODO_LINKEDIN'}
+                 </a>
+              )}
+              {profile.websiteUrl && (
+                 <a href={profile.websiteUrl} target="_blank" rel="noreferrer" className="text-[10px] font-mono text-foreground/95 hover:text-[var(--color-aqua)] transition-colors uppercase tracking-[0.3em] flex items-center gap-3 group">
+                    <Globe size={14} className="opacity-40 group-hover:opacity-100" /> {lang === 'en' ? 'PERSONAL_WEBSITE' : 'WEB_PERSONAL'}
                  </a>
               )}
            </div>

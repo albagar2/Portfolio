@@ -35,9 +35,12 @@ export const RefreshTokenSchema = z.object({
 
 // ---- Profile DTOs ----
 export const UpdateProfileSchema = z.object({
-  name: safeString.pipe(z.string().min(2)).optional(),
+  name: safeString.optional(),
+  name_en: safeString.optional(),
   title: safeString.optional(),
+  title_en: safeString.optional(),
   bio: safeString.optional(),
+  bio_en: safeString.optional(),
   email: safeEmail.optional(),
   phone: safeString.optional().nullable(),
   location: safeString.optional().nullable(),
@@ -93,9 +96,11 @@ export const UpdateProjectSchema = CreateProjectSchema.partial();
 export const CreateExperienceSchema = z.object({
   company: safeString.pipe(z.string().min(2)),
   position: safeString.pipe(z.string().min(2)),
-  description: safeString.pipe(z.string().min(10)),
-  startDate: z.string().datetime(),
-  endDate: z.string().datetime().optional().nullable(),
+  position_en: safeString.optional().nullable(),
+  description: safeString.pipe(z.string().min(5)),
+  description_en: safeString.optional().nullable(),
+  startDate: z.string().datetime().or(z.string().regex(/^\d{4}-\d{2}-\d{2}$/)).transform(v => v.includes('T') ? v : `${v}T00:00:00.000Z`),
+  endDate: z.string().datetime().or(z.string().regex(/^\d{4}-\d{2}-\d{2}$/)).transform(v => v.includes('T') ? v : `${v}T00:00:00.000Z`).optional().nullable(),
   current: z.boolean().default(false),
   location: safeString.optional().nullable(),
   companyUrl: safeUrl.nullable(),
