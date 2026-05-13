@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ExternalLink, Github, Code2, Cpu, Globe, ArrowRight, CheckCircle2, Brain, Activity, Zap } from 'lucide-react';
+import { X, ExternalLink, Github, Code2, Cpu, Globe, ArrowRight, CheckCircle2, Brain, Activity, Zap, Play } from 'lucide-react';
 
 interface ProjectModalProps {
   project: any;
@@ -84,7 +84,10 @@ export const ProjectModal = ({ project, isOpen, onClose, t }: ProjectModalProps)
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-10 border-t border-border">
                  {project.liveUrl && (
                     <a href={project.liveUrl} target="_blank" className="btn-os bg-[var(--color-lime)] text-black px-8 py-5 flex items-center justify-center gap-3 text-[10px] font-black uppercase tracking-widest">
-                       {t.projects.live_link} <Globe size={16} />
+                       {project.liveUrl.includes('youtube.com') || project.liveUrl.includes('youtu.be') || project.liveUrl.includes('vimeo') 
+                         ? <><Play size={16} className="fill-black" /> VER VÍDEO DEMO</>
+                         : <><Globe size={16} /> {t.projects.live_link}</>
+                       }
                     </a>
                  )}
                  {project.githubUrl && (
