@@ -9,32 +9,42 @@ import { logger } from './infrastructure/config/logger';
  */
 export const initializeDatabase = () => {
   const isProd = process.env.NODE_ENV === 'production';
-  
   if (!isProd) return;
 
-  const persistentDir = '/app/data';
-  const persistentDbPath = path.join(persistentDir, 'portfolio.db');
+  // Detectar la ruta real que espera Prisma
+  const defaultUrl = 'file:/app/data/portfolio.db';
+  const dbUrl = process.env.DATABASE_URL || defaultUrl;
+  
+  // Extraer la ruta del archivo (quitando 'file:')
+  const persistentDbPath = dbUrl.replace('file:', '');
+  const persistentDir = path.dirname(persistentDbPath);
   const sourceDbPath = path.join(process.cwd(), 'prisma', 'portfolio.db');
 
+  logger.info(`Iniciando chequeo de persistencia. Destino: ${persistentDbPath}`);
+
   try {
-    // 1. Asegurar que el directorio existe
-    if (!fs.existsSync(persistentDir)) {
-      fs.mkdirSync(persistentDir, { recursive: true });
-      logger.info('Directorio persistente creado en /app/data');
+    // 1. Asegurar que el directorio existe (solo si no es /tmp que ya existe)
+    if (persistentDir !== '/tmp' && !fs.existsSync(persistentDir)) {
+      try {
+        fs.mkdirSync(persistentDir, { recursive: true });
+        logger.info(`Directorio creado: ${persistentDir}`);
+      } catch (e) {
+        logger.error(`No se pudo crear el directorio ${persistentDir}. ¿Has montado el volumen en Railway?`);
+      }
     }
 
-    // 2. Si la DB no existe en el volumen, copiar la de Git
+    // 2. Si la DB no existe en el destino, copiar la de Git
     if (!fs.existsSync(persistentDbPath)) {
       if (fs.existsSync(sourceDbPath)) {
         fs.copyFileSync(sourceDbPath, persistentDbPath);
-        logger.info('Base de datos inicial copiada desde Git a /app/data');
+        logger.info(`Base de datos inicializada: ${sourceDbPath} -> ${persistentDbPath}`);
       } else {
-        logger.warn('No se encontró base de datos inicial en prisma/portfolio.db');
+        logger.error('CRÍTICO: No se encontró portfolio.db en la carpeta prisma/ para inicializar.');
       }
     } else {
-      logger.info('Usando base de datos persistente existente en /app/data');
+      logger.info('Base de datos detectada y lista para usar.');
     }
   } catch (error) {
-    logger.error('Error inicializando base de datos persistente:', error);
+    logger.error('Error en initializeDatabase:', error);
   }
 };
