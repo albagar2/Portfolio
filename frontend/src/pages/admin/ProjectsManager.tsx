@@ -4,7 +4,7 @@ import {
   Plus, Search, Edit2, Trash2, ExternalLink, 
   Github, LayoutGrid, List, X, Loader2, Save,
   Image as ImageIcon, Tag, Hash, Globe,
-  ArrowUp, ArrowDown, MoveVertical, Check, CheckCircle2, Brain, Activity, Zap
+  ArrowUp, ArrowDown, MoveVertical, Check, CheckCircle2, Brain, Activity, Zap, Code2
 } from 'lucide-react';
 import { api } from '../../services/api';
 import { useNotification } from '../../context/NotificationContext';
