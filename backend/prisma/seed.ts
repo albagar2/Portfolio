@@ -153,6 +153,7 @@ async function main() {
       status: 'PUBLISHED',
       githubUrl: 'https://github.com/albagar2/controlGasoilFamiliar',
       liveUrl: 'https://familydrive.onrender.com',
+      manual: '### Manual de Family Drive\n\n1. **Registro de Vehículos**: Añade los vehículos de la familia desde el panel de control.\n2. **Gestión deRepostajes**: Registra cada carga de combustible para calcular el consumo medio automáticamente.\n3. **Mantenimiento**: Configura alertas para cambios de aceite, revisiones e ITV.\n4. **Seguros**: Sube copias digitales de tus pólizas para tenerlas siempre a mano.\n5. **Sincronización**: Todos los datos se respaldan en Google Drive mediante la API oficial.',
       technologies: { create: [{ name: 'Angular' }, { name: 'Node.js' }, { name: 'PostgreSQL' }, { name: 'Google Drive API' }] }
     },
     {
@@ -165,6 +166,7 @@ async function main() {
       featured: true,
       status: 'PUBLISHED',
       githubUrl: 'https://github.com/albagar2/alba-os-control-center',
+      manual: '### Manual de ALBA-OS\n\nEste centro de control permite:\n- **Monitoreo Real-Time**: Visualiza el estado de tus servicios en la consola.\n- **Comandos**: Interactúa con el sistema mediante una interfaz de línea de comandos (CLI) web.\n- **Logs**: Revisa los registros de actividad filtrados por severidad.\n- **Arquitectura**: Basado en arquitectura hexagonal para facilitar el escalado y testing.',
       technologies: { create: [{ name: 'TypeScript' }, { name: 'React' }, { name: 'Framer Motion' }, { name: 'Prisma' }] }
     },
     {
@@ -238,6 +240,7 @@ async function main() {
       status: 'PUBLISHED',
       githubUrl: 'https://github.com/albagar2/tanatorio-tv',
       liveUrl: 'https://esquelastv.up.railway.app',
+      manual: '### Manual de Esquelas TV\n\n1. **Administración**: Accede al panel para crear nuevas esquelas con foto y detalles.\n2. **Asignación de Salas**: Indica en qué sala se velará al difunto.\n3. **Visualización**: La pantalla de TV se actualiza automáticamente (Polling) mostrando la esquela activa.\n4. **Personalización**: Permite elegir temas visuales para las esquelas.',
       technologies: { create: [{ name: 'Node.js' }, { name: 'Express' }, { name: 'SQLite' }, { name: 'Vanilla JS' }] }
     },
     {

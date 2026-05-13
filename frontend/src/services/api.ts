@@ -1,7 +1,11 @@
 import axios from 'axios';
 
 // Base URL from environment variable or default local
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+// Base URL from environment variable or detect production
+const API_URL = import.meta.env.VITE_API_URL || 
+  (window.location.hostname.includes('railway.app') || window.location.hostname.includes('vercel.app') 
+    ? 'https://portfolio-production-93a3.up.railway.app/api' 
+    : 'http://localhost:8080/api');
 
 export const api = axios.create({
   baseURL: API_URL,

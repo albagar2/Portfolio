@@ -37,7 +37,9 @@ export const AdminLayout = () => {
   }, [isAuthenticated, isLoading]);
 
   if (isLoading) return <div className="h-screen flex items-center justify-center"><Sparkles size={48} className="animate-pulse text-blue-400" /></div>;
-  if (!isAuthenticated || user?.role !== 'ADMIN') return <Navigate to="/admin/login" replace />;
+  
+  const hasAccess = user?.role === 'ADMIN' || user?.role === 'GUEST';
+  if (!isAuthenticated || !hasAccess) return <Navigate to="/admin/login" replace />;
 
   return (
     <div className="dark flex min-h-screen bg-slate-950 text-slate-100 transition-colors duration-500">
