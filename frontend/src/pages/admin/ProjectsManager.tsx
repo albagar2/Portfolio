@@ -45,7 +45,8 @@ export const ProjectsManager = () => {
     challenges: '',
     solved: '',
     evolution: '',
-    limitations: ''
+    limitations: '',
+    manual: ''
   });
   const [techInput, setTechInput] = useState('');
   const [uploading, setUploading] = useState(false);
@@ -104,7 +105,8 @@ export const ProjectsManager = () => {
         challenges: '',
         solved: '',
         evolution: '',
-        limitations: ''
+        limitations: '',
+        manual: ''
       });
     }
     setIsModalOpen(true);
@@ -430,15 +432,15 @@ export const ProjectsManager = () => {
                       />
                    </div>
 
-                   <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase tracking-widest text-yellow-500 ml-1 flex items-center gap-2"> <Zap size={12} /> Limitaciones del Sistema</label>
-                      <textarea 
-                        value={formData.limitations} 
-                        onChange={e => setFormData({...formData, limitations: e.target.value})}
-                        className="w-full bg-foreground/[0.05] border border-border rounded-xl p-4 outline-none focus:border-blue-500/50 transition-all min-h-[100px] text-sm"
-                        placeholder="Sé honesto: ¿qué limitaciones tiene actualmente?"
-                      />
-                   </div>
+                    <div className="space-y-2">
+                       <label className="text-[10px] font-black uppercase tracking-widest text-cyan-400 ml-1 flex items-center gap-2"> <Code2 size={12} /> Manual de Usuario y Funciones</label>
+                       <textarea 
+                         value={formData.manual} 
+                         onChange={e => setFormData({...formData, manual: e.target.value})}
+                         className="w-full bg-foreground/[0.05] border border-border rounded-xl p-4 outline-none focus:border-blue-500/50 transition-all min-h-[150px] text-sm font-mono"
+                         placeholder="Escribe aquí el manual paso a paso del proyecto..."
+                       />
+                    </div>
 
                    <div className="grid md:grid-cols-2 gap-8">
                       <div className="space-y-2">
