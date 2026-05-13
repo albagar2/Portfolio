@@ -13,6 +13,10 @@ import { logger } from './infrastructure/config/logger';
 import { apiRouter } from './presentation/routes';
 import { errorHandler, notFoundHandler } from './presentation/middleware/error.middleware';
 import { Database } from './infrastructure/database/prisma';
+import { initializeDatabase } from './init-db';
+
+// Inicializar Persistencia de DB
+initializeDatabase();
 
 const app = express();
 
