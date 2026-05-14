@@ -4,61 +4,60 @@ import { logger } from './infrastructure/config/logger';
 export const injectMissingFour = async () => {
   const prisma = Database.getInstance();
   try {
-    logger.info('Inyectando los 4 proyectos finales para llegar a 13...');
+    logger.info('Inyectando tus proyectos reales (LinguaCore, BulkQuest, etc)...');
 
-    const missingProjects = [
+    const myRealProjects = [
       {
-        title: 'Quantum Stock Analytics',
-        title_en: 'Quantum Stock Analytics',
-        slug: 'quantum-stock-analytics',
-        description: 'Algoritmo de análisis predictivo de mercados financieros con visualización de datos en tiempo real y arquitectura de microservicios.',
-        description_en: 'Predictive financial market analysis algorithm with real-time data visualization and microservices architecture.',
+        title: 'LinguaCore AI',
+        title_en: 'LinguaCore AI',
+        slug: 'linguacore-ai',
+        description: 'Plataforma avanzada de aprendizaje de idiomas con simulaciones de entrevistas C2 y feedback en tiempo real mediante IA.',
+        description_en: 'Advanced language learning platform with C2 interview simulations and real-time AI feedback.',
+        category: 'web',
+        featured: true,
+        status: 'PUBLISHED',
+        githubUrl: 'https://github.com/albagar2/linguacore',
+        technologies: { create: [{ name: 'React' }, { name: 'Node.js' }, { name: 'OpenAI API' }, { name: 'Tailwind' }] }
+      },
+      {
+        title: 'BulkQuest Engine',
+        title_en: 'BulkQuest Engine',
+        slug: 'bulk-quest-engine',
+        description: 'Sistema especializado en la gestión y carga masiva de baterías de preguntas para oposiciones y exámenes técnicos.',
+        description_en: 'Specialized system for bulk management and uploading of question banks for competitive and technical exams.',
         category: 'api',
         featured: false,
         status: 'PUBLISHED',
-        githubUrl: 'https://github.com/albagar2/quantum-stock',
-        technologies: { create: [{ name: 'Python' }, { name: 'FastAPI' }, { name: 'Redis' }, { name: 'D3.js' }] }
+        githubUrl: 'https://github.com/albagar2/bulk-quest',
+        technologies: { create: [{ name: 'Express' }, { name: 'PostgreSQL' }, { name: 'ExcelJS' }, { name: 'Zod' }] }
       },
       {
-        title: 'Sentinel IoT Hub',
-        title_en: 'Sentinel IoT Hub',
-        slug: 'sentinel-iot-hub',
-        description: 'Centro de mando para la gestión de dispositivos inteligentes con protocolos MQTT y panel de monitorización de red.',
-        description_en: 'Command center for smart device management with MQTT protocols and network monitoring panel.',
+        title: 'FamilyGasto Premium',
+        title_en: 'FamilyGasto Premium',
+        slug: 'family-gasto-premium',
+        description: 'Ecosistema de gestión financiera familiar multi-propiedad con seguimiento de gastos de combustible y sincronización en tiempo real.',
+        description_en: 'Multi-property family financial management ecosystem with fuel expense tracking and real-time synchronization.',
+        category: 'web',
+        featured: true,
+        status: 'PUBLISHED',
+        githubUrl: 'https://github.com/albagar2/family-gasto',
+        technologies: { create: [{ name: 'Next.js' }, { name: 'Prisma' }, { name: 'Chart.js' }, { name: 'Auth.js' }] }
+      },
+      {
+        title: 'Tanatorio TV Admin',
+        title_en: 'Tanatorio TV Admin',
+        slug: 'tanatorio-tv-admin',
+        description: 'Panel administrativo para la gestión dinámica de esquelas y anuncios en pantallas digitales de salas de tanatorios.',
+        description_en: 'Administrative panel for dynamic management of obituaries and announcements on digital screens in funeral parlors.',
         category: 'arquitectura',
         featured: false,
         status: 'PUBLISHED',
-        githubUrl: 'https://github.com/albagar2/sentinel-iot',
-        technologies: { create: [{ name: 'Node.js' }, { name: 'MQTT' }, { name: 'InfluxDB' }, { name: 'Grafana' }] }
-      },
-      {
-        title: 'Vortex Video Stream',
-        title_en: 'Vortex Video Stream',
-        slug: 'vortex-video-stream',
-        description: 'Infraestructura de streaming de vídeo de alta definición con transcodificación en la nube y baja latencia.',
-        description_en: 'High-definition video streaming infrastructure with cloud transcoding and low latency.',
-        category: 'web',
-        featured: false,
-        status: 'PUBLISHED',
-        githubUrl: 'https://github.com/albagar2/vortex-stream',
-        technologies: { create: [{ name: 'WebRTC' }, { name: 'FFmpeg' }, { name: 'React' }, { name: 'AWS' }] }
-      },
-      {
-        title: 'Arkham Security API',
-        title_en: 'Arkham Security API',
-        slug: 'arkham-security-api',
-        description: 'Middleware de seguridad avanzada con cifrado AES-256 y sistema de prevención de ataques de fuerza bruta.',
-        description_en: 'Advanced security middleware with AES-256 encryption and brute-force attack prevention system.',
-        category: 'api',
-        featured: false,
-        status: 'PUBLISHED',
-        githubUrl: 'https://github.com/albagar2/arkham-security',
-        technologies: { create: [{ name: 'Go' }, { name: 'JWT' }, { name: 'PostgreSQL' }, { name: 'Docker' }] }
+        githubUrl: 'https://github.com/albagar2/tanatorio-tv',
+        technologies: { create: [{ name: 'Socket.io' }, { name: 'TypeScript' }, { name: 'SQLite' }, { name: 'PM2' }] }
       }
     ];
 
-    for (const proj of missingProjects) {
-      // Usamos upsert para no duplicar si por casualidad ya existen
+    for (const proj of myRealProjects) {
       await prisma.project.upsert({
         where: { slug: proj.slug },
         update: {},
@@ -66,8 +65,8 @@ export const injectMissingFour = async () => {
       });
     }
 
-    logger.info('¡Los 4 proyectos adicionales se han inyectado! Total: 13 proyectos.');
+    logger.info('¡Tus proyectos reales han sido inyectados con éxito!');
   } catch (error) {
-    logger.error('Error inyectando los 4 proyectos:', error);
+    logger.error('Error inyectando tus proyectos:', error);
   }
 };
