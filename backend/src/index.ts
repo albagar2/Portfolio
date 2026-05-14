@@ -14,10 +14,13 @@ import { apiRouter } from './presentation/routes';
 import { errorHandler, notFoundHandler } from './presentation/middleware/error.middleware';
 import { Database } from './infrastructure/database/prisma';
 import { initializeDatabase } from './init-db';
-import { injectProjectsSafe } from './inject-projects';
+import { injectMissingFour } from './inject-final';
 
 // Inicializar Persistencia de DB
 initializeDatabase();
+
+// Inyectar los 4 proyectos finales para completar 13
+injectMissingFour();
 
 const app = express();
 
