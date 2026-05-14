@@ -124,26 +124,32 @@ export const ProjectCard: React.FC<{ project: Project; index: number; t: any; on
 
         {/* Contenedor Visual */}
         <div className="relative h-56 overflow-hidden">
-           {/* Imagen de Fondo (o fallback con patrón técnico) */}
+           {/* Imagen de Fondo */}
            <div className="absolute inset-0 bg-[#000]">
               {project.imageUrl ? (
-                <img src={project.imageUrl} className="w-full h-full object-cover opacity-40 grayscale group-hover:grayscale-0 group-hover:opacity-60 transition-all duration-1000" alt={project.title} />
+                <img 
+                  src={project.imageUrl} 
+                  className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-1000" 
+                  alt={project.title} 
+                />
               ) : (
                 <div className="absolute inset-0 opacity-10 bg-[radial-gradient(var(--color-aqua)_1px,transparent_1px)] [background-size:16px_16px]" />
               )}
            </div>
            
-           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
            
-           <div className="absolute inset-0 flex items-center justify-center">
-              <motion.div 
-                whileHover={{ rotate: 360 }}
-                transition={{ duration: 0.8 }}
-                className="w-20 h-20 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-3xl flex items-center justify-center group-hover:bg-[var(--color-aqua)]/10 group-hover:border-[var(--color-aqua)]/30 transition-all"
-              >
-                 <Code2 size={32} className="text-[var(--color-aqua)] drop-shadow-[0_0_15px_rgba(0,255,240,0.4)]" />
-              </motion.div>
-           </div>
+           {!project.imageUrl && (
+             <div className="absolute inset-0 flex items-center justify-center">
+                <motion.div 
+                  whileHover={{ rotate: 360 }}
+                  transition={{ duration: 0.8 }}
+                  className="w-20 h-20 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-3xl flex items-center justify-center group-hover:bg-[var(--color-aqua)]/10 group-hover:border-[var(--color-aqua)]/30 transition-all"
+                >
+                   <Code2 size={32} className="text-[var(--color-aqua)] drop-shadow-[0_0_15px_rgba(0,255,240,0.4)]" />
+                </motion.div>
+             </div>
+           )}
 
            {/* Badge de Categoría */}
            <div className="absolute top-6 left-6">
