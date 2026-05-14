@@ -10,6 +10,7 @@ import { restrictToAdmin } from '../../infrastructure/middleware/rbac.middleware
 import { upload } from '../middleware/upload.middleware';
 import { validate } from '../middleware/validate.middleware';
 import { UserRole } from '../../domain/entities';
+import { config } from '../../infrastructure/config/env.config';
 import {
   LoginSchema, RegisterSchema, RefreshTokenSchema,
   CreateProfileSchema, UpdateProfileSchema,
