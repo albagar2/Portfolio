@@ -48,11 +48,11 @@ app.use(helmet({
 // Seguridad: CORS - Control de orígenes permitidos
 // ============================================================
 app.use(cors({
-  origin: config.CORS_ORIGIN.split(',').map(o => o.trim()),
+  origin: true, // Permitir cualquier origen en producción para evitar bloqueos de CORS entre Vercel/Railway
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  maxAge: 86400, // Cache preflight 24h
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+  maxAge: 86400,
 }));
 
 // ============================================================
