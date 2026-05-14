@@ -3,8 +3,8 @@ import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { Request } from 'express';
 
-// Configuración de almacenamiento
-const storagePath = process.env.STORAGE_PATH || (process.env.NODE_ENV === 'production' ? '/tmp/' : 'uploads/');
+// Configuración de almacenamiento (SIEMPRE usar una carpeta relativa o la definida en env)
+const storagePath = process.env.STORAGE_PATH || 'uploads/';
 
 // Asegurar que la carpeta existe (en local)
 if (process.env.NODE_ENV !== 'production') {

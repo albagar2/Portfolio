@@ -149,7 +149,13 @@ app.use('/api', apiRouter);
 // ============================================================
 // Archivos estáticos (para uploads)
 // ============================================================
+// Archivos estáticos (para uploads)
+// ============================================================
 const storagePath = process.env.STORAGE_PATH || 'uploads';
+const fs = require('fs');
+if (!fs.existsSync(storagePath)) {
+  fs.mkdirSync(storagePath, { recursive: true });
+}
 app.use('/uploads', express.static(storagePath));
 
 // ============================================================

@@ -156,7 +156,13 @@ router.post('/upload', authMiddleware, restrictToAdmin, upload.single('file'), (
   if (!req.file) {
     return res.status(400).json({ success: false, message: 'No se subió ningún archivo' });
   }
-  const fileUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+  
+  // Usar API_URL si existe, si no, intentar construirla dinámicamente
+  const baseUrl = config.API_URL || `${req.protocol}://${req.get('host')}`;
+  // Asegurarse de que no termine en /
+  const cleanBaseUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+  
+  const fileUrl = `${cleanBaseUrl}/uploads/${req.file.filename}`;
   res.json({ success: true, data: { url: fileUrl } });
 });
 

@@ -43,6 +43,9 @@ const envSchema = z.object({
 
   // Logging
   LOG_LEVEL: z.enum(['error', 'warn', 'info', 'debug']).default('info'),
+
+  // URL base para archivos (opcional, se usará para construir URLs de imágenes)
+  API_URL: z.string().url().optional().or(z.literal('')),
 });
 
 // Tipo derivado del esquema
