@@ -463,9 +463,13 @@ export class SystemController {
 // Demo Controller (Cyber-Portal)
 // ============================================================
 export class DemoController {
+  private get db() {
+    return Database.getInstance();
+  }
+
   async getAll(req: Request, res: Response) {
     try {
-      const demos = await db.demo.findMany({
+      const demos = await this.db.demo.findMany({
         orderBy: { order: 'asc' }
       });
       res.json({ status: 'success', data: demos });
@@ -476,7 +480,7 @@ export class DemoController {
 
   async create(req: Request, res: Response) {
     try {
-      const demo = await db.demo.create({
+      const demo = await this.db.demo.create({
         data: req.body
       });
       res.status(201).json({ status: 'success', data: demo });
@@ -487,7 +491,7 @@ export class DemoController {
 
   async update(req: Request, res: Response) {
     try {
-      const demo = await db.demo.update({
+      const demo = await this.db.demo.update({
         where: { id: req.params.id },
         data: req.body
       });
@@ -499,7 +503,7 @@ export class DemoController {
 
   async delete(req: Request, res: Response) {
     try {
-      await db.demo.delete({
+      await this.db.demo.delete({
         where: { id: req.params.id }
       });
       res.json({ status: 'success', message: 'Demo deleted' });
@@ -516,9 +520,9 @@ export class DemoController {
         return;
       }
 
-      await db.$transaction(
+      await this.db.$transaction(
         ids.map((id, index) => 
-          db.demo.update({
+          this.db.demo.update({
             where: { id },
             data: { order: index }
           })
