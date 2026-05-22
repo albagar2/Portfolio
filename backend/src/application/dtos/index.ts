@@ -79,7 +79,7 @@ export const CreateProjectSchema = z.object({
   imageUrl: safeUrl.nullable(),
   liveUrl: safeUrl.nullable(),
   githubUrl: safeUrl.nullable(),
-  technologies: z.array(z.string()).min(1, 'Al menos una tecnología requerida'),
+  technologies: z.array(z.string()).default([]),
   category: z.string().min(1),
   featured: z.boolean().default(false),
   order: z.number().int().min(0).default(0),
