@@ -154,18 +154,32 @@ export class ProjectController {
       const repos = await response.json() as any[];
       
       const existingProjects = await db.project.findMany();
-      const existingGithubUrls = existingProjects.map(p => p.githubUrl?.toLowerCase()).filter(Boolean);
+      const existingGithubUrls = existingProjects.map(p => 
+        p.githubUrl?.toLowerCase().replace(/\.git$/, '')
+      ).filter(Boolean);
       
       const normalizeStr = (str: string) => str.toLowerCase().replace(/[^a-z0-9]/g, '');
-      const existingNames = existingProjects.map(p => normalizeStr(p.title));
 
       for (const repo of repos) {
         if (!repo.html_url) continue;
         const repoUrl = repo.html_url.toLowerCase();
         const repoNameNorm = normalizeStr(repo.name);
         
-        // Evitar duplicados por URL exacta o por similitud de nombre
-        if (!existingGithubUrls.includes(repoUrl) && !existingNames.includes(repoNameNorm)) {
+        // 1. Check exact URL match (ignoring .git)
+        let isDuplicate = existingGithubUrls.includes(repoUrl);
+
+        // 2. Check name similarity if URL doesn't match
+        if (!isDuplicate) {
+          isDuplicate = existingProjects.some(p => {
+            const pNorm = normalizeStr(p.title);
+            // Matches if one name is fully contained in the other
+            return pNorm === repoNameNorm || 
+                   (pNorm.length > 4 && repoNameNorm.includes(pNorm)) || 
+                   (repoNameNorm.length > 4 && pNorm.includes(repoNameNorm));
+          });
+        }
+        
+        if (!isDuplicate) {
           const slug = repo.name.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
           await db.project.create({
             data: {
