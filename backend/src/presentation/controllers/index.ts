@@ -154,19 +154,26 @@ export class ProjectController {
       const repos = await response.json() as any[];
       
       const existingProjects = await db.project.findMany();
-      const existingGithubUrls = existingProjects.map(p => 
-        p.githubUrl?.toLowerCase().replace(/\.git$/, '')
-      ).filter(Boolean);
+      const existingGithubUrls = existingProjects.map(p => {
+        if (!p.githubUrl) return '';
+        return p.githubUrl.toLowerCase().trim();
+      }).filter(Boolean);
       
       const normalizeStr = (str: string) => str.toLowerCase().replace(/[^a-z0-9]/g, '');
 
       for (const repo of repos) {
         if (!repo.html_url) continue;
-        const repoUrl = repo.html_url.toLowerCase();
+        const repoUrl = repo.html_url.toLowerCase().trim();
         const repoNameNorm = normalizeStr(repo.name);
+        const repoPathName = `/${repo.name.toLowerCase()}`;
         
-        // 1. Check exact URL match (ignoring .git)
-        let isDuplicate = existingGithubUrls.includes(repoUrl);
+        // 1. Check exact URL match OR if the existing URL ends with the repo name (handles trailing slashes and .git)
+        let isDuplicate = existingGithubUrls.some(url => 
+          url === repoUrl || 
+          url === repoUrl + '/' ||
+          url === repoUrl + '.git' ||
+          url.includes(repoPathName)
+        );
 
         // 2. Check name similarity if URL doesn't match
         if (!isDuplicate) {
