@@ -143,14 +143,14 @@ export class ProjectController {
     res.json({ success: true, message: 'Proyectos reordenados correctamente' });
   });
 
-let isSyncingGlobal = false;
+  private isSyncingGlobal = false;
 
   syncGithub = asyncHandler(async (req: Request, res: Response) => {
-    if (isSyncingGlobal) {
+    if (this.isSyncingGlobal) {
       res.status(409).json({ success: false, message: 'Ya hay una sincronización en curso' });
       return;
     }
-    isSyncingGlobal = true;
+    this.isSyncingGlobal = true;
     
     const db = Database.getInstance();
     let addedCount = 0;
@@ -216,7 +216,7 @@ let isSyncingGlobal = false;
     } catch (error: any) {
       res.status(500).json({ success: false, message: error.message });
     } finally {
-      isSyncingGlobal = false;
+      this.isSyncingGlobal = false;
     }
   });
 
