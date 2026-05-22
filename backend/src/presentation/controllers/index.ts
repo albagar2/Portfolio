@@ -151,7 +151,7 @@ export class ProjectController {
         headers: { 'User-Agent': 'Portfolio-Sync' }
       });
       if (!response.ok) throw new Error('Error fetching from GitHub');
-      const repos = await response.json();
+      const repos = await response.json() as any[];
       
       const existingProjects = await db.project.findMany();
       const existingGithubUrls = existingProjects.map(p => p.githubUrl?.toLowerCase());
