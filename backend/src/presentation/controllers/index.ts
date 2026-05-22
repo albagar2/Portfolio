@@ -492,7 +492,7 @@ export class DemoController {
   async update(req: Request, res: Response) {
     try {
       const demo = await this.db.demo.update({
-        where: { id: req.params.id },
+        where: { id: req.params.id as string },
         data: req.body
       });
       res.json({ status: 'success', data: demo });
@@ -504,7 +504,7 @@ export class DemoController {
   async delete(req: Request, res: Response) {
     try {
       await this.db.demo.delete({
-        where: { id: req.params.id }
+        where: { id: req.params.id as string }
       });
       res.json({ status: 'success', message: 'Demo deleted' });
     } catch (error) {
