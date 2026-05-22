@@ -143,7 +143,15 @@ export class ProjectController {
     res.json({ success: true, message: 'Proyectos reordenados correctamente' });
   });
 
+let isSyncingGlobal = false;
+
   syncGithub = asyncHandler(async (req: Request, res: Response) => {
+    if (isSyncingGlobal) {
+      res.status(409).json({ success: false, message: 'Ya hay una sincronización en curso' });
+      return;
+    }
+    isSyncingGlobal = true;
+    
     const db = Database.getInstance();
     let addedCount = 0;
     try {
@@ -154,9 +162,11 @@ export class ProjectController {
       const repos = await response.json() as any[];
       
       const existingProjects = await db.project.findMany();
-      const existingGithubUrls = existingProjects.map(p => {
-        if (!p.githubUrl) return '';
-        return p.githubUrl.toLowerCase().trim();
+      const existingGithubUrls = existingProjects.flatMap(p => {
+        const urls = [];
+        if (p.githubUrl) urls.push(p.githubUrl.toLowerCase().trim());
+        if (p.liveUrl) urls.push(p.liveUrl.toLowerCase().trim()); // Many users paste Github URL in the Live URL field
+        return urls;
       }).filter(Boolean);
       
       const normalizeStr = (str: string) => str.toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -205,6 +215,8 @@ export class ProjectController {
       res.json({ success: true, message: `Sincronización completada. ${addedCount} proyectos añadidos.` });
     } catch (error: any) {
       res.status(500).json({ success: false, message: error.message });
+    } finally {
+      isSyncingGlobal = false;
     }
   });
 
