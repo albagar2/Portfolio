@@ -154,13 +154,18 @@ export class ProjectController {
       const repos = await response.json() as any[];
       
       const existingProjects = await db.project.findMany();
-      const existingGithubUrls = existingProjects.map(p => p.githubUrl?.toLowerCase());
+      const existingGithubUrls = existingProjects.map(p => p.githubUrl?.toLowerCase()).filter(Boolean);
+      
+      const normalizeStr = (str: string) => str.toLowerCase().replace(/[^a-z0-9]/g, '');
+      const existingNames = existingProjects.map(p => normalizeStr(p.title));
 
       for (const repo of repos) {
         if (!repo.html_url) continue;
         const repoUrl = repo.html_url.toLowerCase();
+        const repoNameNorm = normalizeStr(repo.name);
         
-        if (!existingGithubUrls.includes(repoUrl)) {
+        // Evitar duplicados por URL exacta o por similitud de nombre
+        if (!existingGithubUrls.includes(repoUrl) && !existingNames.includes(repoNameNorm)) {
           const slug = repo.name.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
           await db.project.create({
             data: {
