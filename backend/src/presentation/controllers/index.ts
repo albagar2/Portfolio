@@ -142,6 +142,45 @@ export class ProjectController {
     await this.projectUC.reorder(ids);
     res.json({ success: true, message: 'Proyectos reordenados correctamente' });
   });
+
+  syncGithub = asyncHandler(async (req: Request, res: Response) => {
+    const db = Database.getInstance();
+    let addedCount = 0;
+    try {
+      const response = await fetch('https://api.github.com/users/albagar2/repos?per_page=100', {
+        headers: { 'User-Agent': 'Portfolio-Sync' }
+      });
+      if (!response.ok) throw new Error('Error fetching from GitHub');
+      const repos = await response.json();
+      
+      const existingProjects = await db.project.findMany();
+      const existingGithubUrls = existingProjects.map(p => p.githubUrl?.toLowerCase());
+
+      for (const repo of repos) {
+        if (!repo.html_url) continue;
+        const repoUrl = repo.html_url.toLowerCase();
+        
+        if (!existingGithubUrls.includes(repoUrl)) {
+          const slug = repo.name.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
+          await db.project.create({
+            data: {
+              title: repo.name,
+              slug: slug + '-' + Date.now().toString().slice(-4),
+              description: repo.description || 'Sin descripción',
+              category: 'web',
+              status: 'DRAFT',
+              githubUrl: repo.html_url,
+              featured: false,
+            }
+          });
+          addedCount++;
+        }
+      }
+      res.json({ success: true, message: `Sincronización completada. ${addedCount} proyectos añadidos.` });
+    } catch (error: any) {
+      res.status(500).json({ success: false, message: error.message });
+    }
+  });
 }
 
 // ============================================================

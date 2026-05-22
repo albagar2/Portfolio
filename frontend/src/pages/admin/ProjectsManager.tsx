@@ -51,6 +51,7 @@ export const ProjectsManager = () => {
   });
   const [techInput, setTechInput] = useState('');
   const [uploading, setUploading] = useState(false);
+  const [syncing, setSyncing] = useState(false);
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -89,6 +90,20 @@ export const ProjectsManager = () => {
   useEffect(() => {
     fetchProjects();
   }, []);
+
+  const handleSyncGithub = async () => {
+    try {
+      setSyncing(true);
+      const { data } = await api.post('/projects/sync-github');
+      showNotification(data.message || 'Sincronización completada', 'success');
+      fetchProjects();
+    } catch (err) {
+      console.error('Error syncing:', err);
+      showNotification('Error al sincronizar con GitHub', 'error');
+    } finally {
+      setSyncing(false);
+    }
+  };
 
   const openModal = (project?: Project) => {
     if (project) {
@@ -205,7 +220,15 @@ export const ProjectsManager = () => {
            <h1 className="text-3xl md:text-4xl font-black mb-2 md:mb-4">Project Engine.</h1>
            <p className="text-sm md:text-base text-foreground/85 font-medium">Gestiona y edita tu galería visual de trabajos.</p>
         </div>
-        <div className="flex flex-row items-center gap-3 md:gap-4">
+        <div className="flex flex-row items-center gap-3 md:gap-4 flex-wrap">
+          <button 
+            onClick={handleSyncGithub}
+            disabled={syncing}
+            className="flex-1 md:flex-none flex items-center justify-center gap-2 md:gap-3 px-3 md:px-6 py-4 md:py-5 bg-foreground/[0.05] hover:bg-foreground/10 border border-border rounded-2xl font-bold transition-all active:scale-95 text-xs md:text-sm disabled:opacity-50"
+          >
+            {syncing ? <Loader2 className="animate-spin" size={18} /> : <><span className="hidden xs:inline">Sincronizar GitHub</span> <Github size={18} /></>}
+          </button>
+
           <button 
             onClick={() => {
               if (isReordering) {
