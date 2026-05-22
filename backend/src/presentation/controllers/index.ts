@@ -444,3 +444,105 @@ export class SystemController {
     }
   });
 }
+
+// ============================================================
+// Demo Controller (Cyber-Portal)
+// ============================================================
+export class DemoController {
+  async getAll(req: Request, res: Response) {
+    try {
+      const demos = await db.demo.findMany({
+        orderBy: { order: 'asc' }
+      });
+      res.json({ status: 'success', data: demos });
+    } catch (error) {
+      res.status(500).json({ status: 'error', message: 'Error retrieving demos' });
+    }
+  }
+
+  async create(req: Request, res: Response) {
+    try {
+      const demo = await db.demo.create({
+        data: req.body
+      });
+      res.status(201).json({ status: 'success', data: demo });
+    } catch (error) {
+      res.status(500).json({ status: 'error', message: 'Error creating demo' });
+    }
+  }
+
+  async update(req: Request, res: Response) {
+    try {
+      const demo = await db.demo.update({
+        where: { id: req.params.id },
+        data: req.body
+      });
+      res.json({ status: 'success', data: demo });
+    } catch (error) {
+      res.status(500).json({ status: 'error', message: 'Error updating demo' });
+    }
+  }
+
+  async delete(req: Request, res: Response) {
+    try {
+      await db.demo.delete({
+        where: { id: req.params.id }
+      });
+      res.json({ status: 'success', message: 'Demo deleted' });
+    } catch (error) {
+      res.status(500).json({ status: 'error', message: 'Error deleting demo' });
+    }
+  }
+
+  async reorder(req: Request, res: Response) {
+    try {
+      const { ids } = req.body;
+      if (!Array.isArray(ids)) {
+        res.status(400).json({ status: 'error', message: 'Invalid payload' });
+        return;
+      }
+
+      await db.$transaction(
+        ids.map((id, index) => 
+          db.demo.update({
+            where: { id },
+            data: { order: index }
+          })
+        )
+      );
+
+      res.json({ status: 'success', message: 'Order updated successfully' });
+    } catch (error) {
+      res.status(500).json({ status: 'error', message: 'Error reordering demos' });
+    }
+  }
+
+  async checkStatus(req: Request, res: Response) {
+    try {
+      const { url } = req.query;
+      if (!url || typeof url !== 'string') {
+        res.status(400).json({ status: 'error', message: 'URL required' });
+        return;
+      }
+
+      // Proxy request to bypass CORS
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      
+      try {
+        const response = await fetch(url, { 
+          method: 'GET',
+          signal: controller.signal 
+        });
+        clearTimeout(timeoutId);
+        
+        res.json({ status: 'success', isOnline: true });
+      } catch (err) {
+        clearTimeout(timeoutId);
+        res.json({ status: 'success', isOnline: false });
+      }
+    } catch (error) {
+      res.status(500).json({ status: 'error', message: 'Error checking status' });
+    }
+  }
+}

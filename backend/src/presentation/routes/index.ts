@@ -20,11 +20,13 @@ import {
   CreateEducationSchema, UpdateEducationSchema,
   CreatePostSchema, UpdatePostSchema,
   CreateContactMessageSchema,
+  CreateDemoSchema, UpdateDemoSchema,
 } from '../../application/dtos';
 import {
   AuthController, ProfileController, ProjectController,
   ExperienceController, SkillController, EducationController,
-  PostController, ContactController, SystemController
+  PostController, ContactController, SystemController,
+  DemoController
 } from '../controllers';
 import {
   AuthUseCase, ProfileUseCase, ProjectUseCase, ExperienceUseCase,
@@ -66,6 +68,7 @@ const eduCtrl = new EducationController(eduUC);
 const postCtrl = new PostController(postUC);
 const contactCtrl = new ContactController(contactUC);
 const systemCtrl = new SystemController();
+const demoCtrl = new DemoController();
 
 // ============================================================
 // Router Principal
@@ -171,5 +174,15 @@ router.post('/upload', authMiddleware, restrictToAdmin, upload.single('file'), (
 // ---- Rutas de Sistema ----
 router.get('/system/db', authMiddleware, authorize(UserRole.ADMIN), systemCtrl.getDbExplorer);
 router.get('/system/backup', authMiddleware, authorize(UserRole.ADMIN), systemCtrl.getBackup);
+
+// ---- Rutas de Demos (Cyber-Portal) ----
+const demoRouter = Router();
+demoRouter.get('/', demoCtrl.getAll); // Público
+demoRouter.get('/status', demoCtrl.checkStatus); // Público (proxy status)
+demoRouter.post('/', authMiddleware, authorize(UserRole.ADMIN), restrictToAdmin, validate(CreateDemoSchema), demoCtrl.create);
+demoRouter.put('/:id', authMiddleware, authorize(UserRole.ADMIN), restrictToAdmin, validate(UpdateDemoSchema), demoCtrl.update);
+demoRouter.delete('/:id', authMiddleware, authorize(UserRole.ADMIN), restrictToAdmin, demoCtrl.delete);
+demoRouter.patch('/reorder', authMiddleware, authorize(UserRole.ADMIN), restrictToAdmin, demoCtrl.reorder);
+router.use('/demos', demoRouter);
 
 export { router as apiRouter };

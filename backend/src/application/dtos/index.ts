@@ -184,3 +184,20 @@ export type UpdateEducationDto = z.infer<typeof UpdateEducationSchema>;
 export type CreatePostDto = z.infer<typeof CreatePostSchema>;
 export type UpdatePostDto = z.infer<typeof UpdatePostSchema>;
 export type CreateContactMessageDto = z.infer<typeof CreateContactMessageSchema>;
+
+// ---- Demo DTOs ----
+export const CreateDemoSchema = z.object({
+  title: safeString.pipe(z.string().min(2)),
+  codeName: safeString.pipe(z.string().min(2)),
+  description: safeString.pipe(z.string().min(5)),
+  url: z.string().url('URL inválida'),
+  themeColor: z.string().min(2),
+  btnText: safeString.pipe(z.string().min(2)),
+  order: z.number().int().min(0).default(0),
+  status: z.enum(['ACTIVE', 'INACTIVE']).default('ACTIVE'),
+});
+
+export const UpdateDemoSchema = CreateDemoSchema.partial();
+
+export type CreateDemoDto = z.infer<typeof CreateDemoSchema>;
+export type UpdateDemoDto = z.infer<typeof UpdateDemoSchema>;

@@ -26,6 +26,8 @@ import { CvManager } from './pages/admin/CvManager';
 import { ProjectsManager } from './pages/admin/ProjectsManager';
 import { MessagesManager } from './pages/admin/MessagesManager';
 import { BlogPostsManager } from './pages/admin/BlogPostsManager';
+import { DemosManager } from './pages/admin/DemosManager';
+import { DemosPortal } from './pages/DemosPortal';
 import { DatabaseExplorer } from './pages/admin/DatabaseExplorer';
 
 /**
@@ -179,11 +181,15 @@ export const App = () => {
                 {/* RUTA: Detalle de Artículo */}
                 <Route path="/blog/:slug" element={<BlogPostDetail lang={lang} />} />
                 
+                {/* RUTA: Portal Demos */}
+                <Route path="/demos" element={<DemosPortal />} />
+                
                 {/* RUTAS DE ADMINISTRACIÓN (Protegidas) */}
                 <Route path="/admin/login" element={<Login />} />
                 <Route path="/admin" element={<AuthGuard><AdminLayout /></AuthGuard>}>
                   <Route path="dashboard" element={<Dashboard />} />
                   <Route path="projects" element={<ProjectsManager />} />
+                  <Route path="demos" element={<DemosManager />} />
                   <Route path="experience" element={<CvManager />} />
                   <Route path="posts" element={<BlogPostsManager />} />
                   <Route path="messages" element={<MessagesManager />} />

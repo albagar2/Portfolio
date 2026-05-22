@@ -12,6 +12,7 @@ import { api } from '../../services/api';
 const SIDEBAR_LINKS = [
   { to: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { to: '/admin/projects', label: 'Proyectos', icon: FolderKanban },
+  { to: '/admin/demos', label: 'Portal Demos', icon: Sparkles },
   { to: '/admin/experience', label: 'Trayectoria', icon: Briefcase },
   { to: '/admin/posts', label: 'Artículos', icon: Newspaper },
   { to: '/admin/messages', label: 'Mensajes', icon: MessageSquare },
