@@ -52,6 +52,7 @@ export const ProjectsManager = () => {
   const [techInput, setTechInput] = useState('');
   const [uploading, setUploading] = useState(false);
   const [syncing, setSyncing] = useState(false);
+  const [cleaning, setCleaning] = useState(false);
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -102,6 +103,20 @@ export const ProjectsManager = () => {
       showNotification('Error al sincronizar con GitHub', 'error');
     } finally {
       setSyncing(false);
+    }
+  };
+
+  const handleCleanDrafts = async () => {
+    setCleaning(true);
+    try {
+      const { data } = await api.delete('/projects/clean-drafts');
+      showNotification(data.message || 'Borradores eliminados', 'success');
+      fetchProjects();
+    } catch (err) {
+      console.error('Error cleaning drafts:', err);
+      showNotification('Error al limpiar borradores', 'error');
+    } finally {
+      setCleaning(false);
     }
   };
 
@@ -227,6 +242,14 @@ export const ProjectsManager = () => {
             className="flex-1 md:flex-none flex items-center justify-center gap-2 md:gap-3 px-3 md:px-6 py-4 md:py-5 bg-foreground/[0.05] hover:bg-foreground/10 border border-border rounded-2xl font-bold transition-all active:scale-95 text-xs md:text-sm disabled:opacity-50"
           >
             {syncing ? <Loader2 className="animate-spin" size={18} /> : <><span className="hidden xs:inline">Sincronizar GitHub</span> <Github size={18} /></>}
+          </button>
+
+          <button 
+            onClick={handleCleanDrafts}
+            disabled={cleaning}
+            className="flex-1 md:flex-none flex items-center justify-center gap-2 md:gap-3 px-3 md:px-6 py-4 md:py-5 bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/20 rounded-2xl font-bold transition-all active:scale-95 text-xs md:text-sm disabled:opacity-50"
+          >
+            {cleaning ? <Loader2 className="animate-spin" size={18} /> : <><span className="hidden xs:inline">Limpiar Borradores</span> <Trash2 size={18} /></>}
           </button>
 
           <button 

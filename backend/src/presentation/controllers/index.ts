@@ -200,6 +200,18 @@ export class ProjectController {
       res.status(500).json({ success: false, message: error.message });
     }
   });
+
+  cleanDrafts = asyncHandler(async (req: Request, res: Response) => {
+    const db = Database.getInstance();
+    try {
+      const result = await db.project.deleteMany({
+        where: { status: 'DRAFT' }
+      });
+      res.json({ success: true, message: `Se han eliminado ${result.count} borradores.` });
+    } catch (error: any) {
+      res.status(500).json({ success: false, message: error.message });
+    }
+  });
 }
 
 // ============================================================

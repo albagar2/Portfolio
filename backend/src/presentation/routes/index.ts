@@ -101,6 +101,10 @@ const projectRouter = Router();
 projectRouter.get('/', projectCtrl.getAll); // Público
 projectRouter.get('/slug/:slug', projectCtrl.getBySlug); // Público
 projectRouter.get('/:id', projectCtrl.getById); // Público
+
+// Tienen que estar antes de /:id si fueran GET, pero como es POST/DELETE no importa el conflicto, aunque por buenas prácticas la ponemos antes.
+projectRouter.delete('/clean-drafts', authMiddleware, authorize(UserRole.ADMIN), restrictToAdmin, projectCtrl.cleanDrafts);
+
 projectRouter.post('/', authMiddleware, authorize(UserRole.ADMIN, UserRole.EDITOR), restrictToAdmin, validate(CreateProjectSchema), projectCtrl.create);
 projectRouter.put('/:id', authMiddleware, authorize(UserRole.ADMIN, UserRole.EDITOR), restrictToAdmin, validate(UpdateProjectSchema), projectCtrl.update);
 projectRouter.post('/sync-github', authMiddleware, authorize(UserRole.ADMIN), restrictToAdmin, projectCtrl.syncGithub);
