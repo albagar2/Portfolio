@@ -498,7 +498,7 @@ export class DemoController {
     return Database.getInstance();
   }
 
-  async getAll(req: Request, res: Response) {
+  getAll = async (req: Request, res: Response) => {
     try {
       const demos = await this.db.demo.findMany({
         orderBy: { order: 'asc' }
@@ -507,9 +507,9 @@ export class DemoController {
     } catch (error: any) {
       res.status(500).json({ status: 'error', message: 'Error retrieving demos: ' + (error.message || String(error)) });
     }
-  }
+  };
 
-  async create(req: Request, res: Response) {
+  create = async (req: Request, res: Response) => {
     try {
       const demo = await this.db.demo.create({
         data: req.body
@@ -518,9 +518,9 @@ export class DemoController {
     } catch (error) {
       res.status(500).json({ status: 'error', message: 'Error creating demo' });
     }
-  }
+  };
 
-  async update(req: Request, res: Response) {
+  update = async (req: Request, res: Response) => {
     try {
       const demo = await this.db.demo.update({
         where: { id: req.params.id as string },
@@ -530,9 +530,9 @@ export class DemoController {
     } catch (error) {
       res.status(500).json({ status: 'error', message: 'Error updating demo' });
     }
-  }
+  };
 
-  async delete(req: Request, res: Response) {
+  delete = async (req: Request, res: Response) => {
     try {
       await this.db.demo.delete({
         where: { id: req.params.id as string }
@@ -541,9 +541,9 @@ export class DemoController {
     } catch (error) {
       res.status(500).json({ status: 'error', message: 'Error deleting demo' });
     }
-  }
+  };
 
-  async reorder(req: Request, res: Response) {
+  reorder = async (req: Request, res: Response) => {
     try {
       const { ids } = req.body;
       if (!Array.isArray(ids)) {
@@ -552,7 +552,7 @@ export class DemoController {
       }
 
       await this.db.$transaction(
-        ids.map((id, index) => 
+        ids.map((id: string, index: number) => 
           this.db.demo.update({
             where: { id },
             data: { order: index }
@@ -564,9 +564,9 @@ export class DemoController {
     } catch (error) {
       res.status(500).json({ status: 'error', message: 'Error reordering demos' });
     }
-  }
+  };
 
-  async checkStatus(req: Request, res: Response) {
+  checkStatus = async (req: Request, res: Response) => {
     try {
       const { url } = req.query;
       if (!url || typeof url !== 'string') {
@@ -593,5 +593,5 @@ export class DemoController {
     } catch (error) {
       res.status(500).json({ status: 'error', message: 'Error checking status' });
     }
-  }
+  };
 }
