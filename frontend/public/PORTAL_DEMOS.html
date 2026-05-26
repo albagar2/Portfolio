@@ -95,7 +95,7 @@
         </header>
 
         <!-- Grid de Proyectos -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div id="demos-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
             <!-- Bateria de Preguntas -->
             <article class="glass-panel rounded-xl p-6 relative overflow-hidden group">
@@ -198,5 +198,53 @@
             <p class="animate-pulse">> _</p>
         </div>
     </main>
+    <script>
+        async function loadDemos() {
+            const grid = document.getElementById('demos-grid');
+            const API_URL = window.location.hostname.includes('vercel.app') 
+                ? 'https://portfolio-production-93a3.up.railway.app/api' 
+                : 'http://localhost:8080/api';
+
+            try {
+                const response = await fetch(`${API_URL}/demos`);
+                const result = await response.json();
+                const demos = result.data || [];
+
+                if (demos.length > 0) {
+                    grid.innerHTML = ''; // Clear hardcoded if we have DB data
+                    demos.forEach(demo => {
+                        const color = demo.themeColor || '#00f0ff';
+                        const status = demo.status || 'OPERATIVO';
+                        
+                        const article = document.createElement('article');
+                        article.className = 'glass-panel rounded-xl p-6 relative overflow-hidden group';
+                        article.innerHTML = `
+                            <div class="absolute top-0 right-0 p-3">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border" style="color: ${color}; border-color: ${color}40; background: ${color}10">
+                                    ${status}
+                                </span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2 font-mono transition-colors" onmouseover="this.style.color='${color}'" onmouseout="this.style.color='white'">${demo.title}</h3>
+                            <p class="text-sm text-gray-400 mb-4 h-16" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">${demo.description}</p>
+                            <div class="flex flex-col gap-3">
+                                <a href="${demo.url}" target="_blank" 
+                                   class="w-full text-center px-4 py-2 border rounded transition-all font-mono text-sm font-bold uppercase tracking-wide"
+                                   style="border-color: ${color}80; color: ${color};"
+                                   onmouseover="this.style.backgroundColor='${color}'; this.style.color='#000';"
+                                   onmouseout="this.style.backgroundColor='transparent'; this.style.color='${color}';">
+                                    [ ${demo.btnText || 'Iniciar Demo'} ]
+                                </a>
+                            </div>
+                            <div class="absolute bottom-0 left-0 w-full h-[1px] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" style="background: linear-gradient(to right, transparent, ${color}, transparent);"></div>
+                        `;
+                        grid.appendChild(article);
+                    });
+                }
+            } catch (e) {
+                console.error('Error fetching demos from API:', e);
+            }
+        }
+        document.addEventListener('DOMContentLoaded', loadDemos);
+    </script>
 </body>
 </html>
