@@ -54,15 +54,15 @@ export const ContactModal = ({ isOpen, onClose, t }: ContactModalProps) => {
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[500] flex items-center justify-center p-6 bg-background/80 backdrop-blur-3xl">
-      <motion.div initial={{ scale: 0.9, y: 30 }} animate={{ scale: 1, y: 0 }} className="os-window w-full max-w-2xl border-[#FFB800]/40 overflow-hidden shadow-[0_0_100px_rgba(255,184,0,0.1)]">
+      <motion.div initial={{ scale: 0.9, y: 30 }} animate={{ scale: 1, y: 0 }} className="os-window w-full max-w-2xl border-[#FFB800]/40 overflow-hidden shadow-[0_0_100px_rgba(255,184,0,0.1)] flex flex-col max-h-[90vh]">
         {/* Cabecera del Gateway */}
-        <div className="os-header bg-[#FFB800]/10 border-[#FFB800]/20">
+        <div className="os-header bg-[#FFB800]/10 border-[#FFB800]/20 shrink-0">
           <div className="flex gap-2 mr-6"><div className="os-dot bg-red-500" /><div className="os-dot bg-yellow-400" /><div className="os-dot bg-green-500" /></div>
           <span className="font-mono text-[9px] font-black uppercase tracking-[0.6em] text-[#FFB800]">{t.contact.connect === 'CONTACTO' ? 'ENVIAR_MENSAJE.bin' : 'SEND_MESSAGE.bin'}</span>
           <button onClick={onClose} className="ml-auto p-3 opacity-40 hover:opacity-100 transition-opacity text-foreground"><X size={20} /></button>
         </div>
         
-        <div className="p-16 relative">
+        <div className="p-8 md:p-16 relative overflow-y-auto custom-scrollbar">
           <AnimatePresence mode="wait">
             {!isSuccess ? (
               <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, scale: 0.95 }} className="space-y-12">
