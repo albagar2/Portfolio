@@ -209,21 +209,21 @@ export const DemosManager = () => {
                      </div>
                      <div className="space-y-1">
                         <label className="text-[10px] font-black uppercase text-foreground/85">CodeName (Estado/Etiqueta)</label>
-                        <select value={formData.codeName} onChange={e => setFormData({...formData, codeName: e.target.value})} className="w-full bg-foreground/[0.05] border border-border rounded p-3 text-sm font-mono" required>
-                           <option value="OPERATIVO">OPERATIVO</option>
-                           <option value="STANDBY">STANDBY</option>
-                           <option value="BETA_TEST">BETA_TEST</option>
-                           <option value="DOCKER-DEPLOY">DOCKER-DEPLOY</option>
-                           <option value="CORE_SYSTEM">CORE_SYSTEM</option>
-                           <option value="MAINTENANCE">MAINTENANCE</option>
-                           <option value="OFFLINE">OFFLINE</option>
+                        <select value={formData.codeName} onChange={e => setFormData({...formData, codeName: e.target.value})} className="w-full bg-foreground/[0.05] border border-border rounded p-3 text-sm font-mono text-foreground" required>
+                           <option className="bg-[#0a0a0f] text-white" value="OPERATIVO">OPERATIVO</option>
+                           <option className="bg-[#0a0a0f] text-white" value="STANDBY">STANDBY</option>
+                           <option className="bg-[#0a0a0f] text-white" value="BETA_TEST">BETA_TEST</option>
+                           <option className="bg-[#0a0a0f] text-white" value="DOCKER-DEPLOY">DOCKER-DEPLOY</option>
+                           <option className="bg-[#0a0a0f] text-white" value="CORE_SYSTEM">CORE_SYSTEM</option>
+                           <option className="bg-[#0a0a0f] text-white" value="MAINTENANCE">MAINTENANCE</option>
+                           <option className="bg-[#0a0a0f] text-white" value="OFFLINE">OFFLINE</option>
                         </select>
                      </div>
                    </div>
                    
                    <div className="space-y-1">
                       <label className="text-[10px] font-black uppercase text-foreground/85">Descripción</label>
-                      <textarea value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full bg-foreground/[0.05] border border-border rounded p-3 text-sm min-h-[80px]" required />
+                      <textarea value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full bg-foreground/[0.05] border border-border rounded p-3 text-sm min-h-[80px] text-foreground" required />
                    </div>
 
                    <div className="space-y-1">
@@ -237,22 +237,22 @@ export const DemosManager = () => {
                           newBtnText = 'Iniciar Demo';
                         }
                         setFormData({...formData, url: newUrl, btnText: newBtnText});
-                      }} className="w-full bg-foreground/[0.05] border border-border rounded p-3 text-sm font-mono" placeholder="https://..." required />
+                      }} className="w-full bg-foreground/[0.05] border border-border rounded p-3 text-sm font-mono text-foreground" placeholder="https://..." required />
                    </div>
 
                    <div className="grid grid-cols-2 gap-4">
                      <div className="space-y-1">
                         <label className="text-[10px] font-black uppercase text-foreground/85">Color (Clase Tailwind)</label>
-                        <select value={formData.themeColor} onChange={e => setFormData({...formData, themeColor: e.target.value})} className="w-full bg-foreground/[0.05] border border-border rounded p-3 text-sm">
-                           <option value="#00f0ff">Cyber Blue</option>
-                           <option value="#bc13fe">Cyber Purple</option>
-                           <option value="#39ff14">Cyber Green</option>
-                           <option value="#f97316">Orange</option>
-                           <option value="#ec4899">Pink</option>
-                           <option value="#22d3ee">Cyan</option>
-                           <option value="#eab308">Yellow</option>
-                           <option value="#ef4444">Red</option>
-                           <option value="#ffffff">White</option>
+                        <select value={formData.themeColor} onChange={e => setFormData({...formData, themeColor: e.target.value})} className="w-full bg-foreground/[0.05] border border-border rounded p-3 text-sm text-foreground">
+                           <option className="bg-[#0a0a0f] text-[#00f0ff]" value="#00f0ff">Cyber Blue</option>
+                           <option className="bg-[#0a0a0f] text-[#bc13fe]" value="#bc13fe">Cyber Purple</option>
+                           <option className="bg-[#0a0a0f] text-[#39ff14]" value="#39ff14">Cyber Green</option>
+                           <option className="bg-[#0a0a0f] text-[#f97316]" value="#f97316">Orange</option>
+                           <option className="bg-[#0a0a0f] text-[#ec4899]" value="#ec4899">Pink</option>
+                           <option className="bg-[#0a0a0f] text-[#22d3ee]" value="#22d3ee">Cyan</option>
+                           <option className="bg-[#0a0a0f] text-[#eab308]" value="#eab308">Yellow</option>
+                           <option className="bg-[#0a0a0f] text-[#ef4444]" value="#ef4444">Red</option>
+                           <option className="bg-[#0a0a0f] text-[#ffffff]" value="#ffffff">White</option>
                         </select>
                      </div>
                      <div className="space-y-1">
