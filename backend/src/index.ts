@@ -15,12 +15,15 @@ import { errorHandler, notFoundHandler } from './presentation/middleware/error.m
 import { Database } from './infrastructure/database/prisma';
 import { initializeDatabase } from './init-db';
 import { injectMissingFour } from './inject-final';
+import { injectDemos } from './inject-demos';
 
 // Inicializar Persistencia de DB
 initializeDatabase();
 
 // Inyectar los 4 proyectos finales para completar 13
 injectMissingFour();
+// Inyectar las Demos si no existen
+injectDemos();
 
 console.log("Triggering Railway Deploy for Demos Schema update...");
 
