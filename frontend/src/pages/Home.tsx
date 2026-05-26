@@ -60,9 +60,9 @@ export const Home = ({ data, scaleX, onOpenContact, t, lang }: HomeProps) => {
                   <User size={14} /> {t.about.title}
                </span>
             </header>
-            <div className="p-12 lg:p-24 grid lg:grid-cols-2 gap-20 items-center">
+            <div className="p-6 md:p-10 lg:p-24 grid lg:grid-cols-2 gap-10 md:gap-20 items-center">
                <div className="space-y-10">
-                  <h2 className="text-6xl lg:text-8xl font-black italic uppercase tracking-tighter leading-none text-foreground">
+                  <h2 className="text-4xl md:text-6xl lg:text-8xl font-black italic uppercase tracking-tighter leading-none text-foreground">
                      {t.about.subtitle}
                   </h2>
                   <p className="text-xl lg:text-2xl text-foreground/85 font-mono uppercase tracking-widest leading-relaxed border-l-4 border-[var(--color-aqua)] pl-10">
@@ -102,7 +102,7 @@ export const Home = ({ data, scaleX, onOpenContact, t, lang }: HomeProps) => {
                   <Activity size={14} /> {t.skills.title}
                </span>
             </header>
-            <div className="p-10 lg:p-24 overflow-hidden">
+            <div className="p-6 md:p-10 lg:p-24 overflow-hidden">
                <SkillMatrix t={t} />
             </div>
          </motion.div>
@@ -117,7 +117,7 @@ export const Home = ({ data, scaleX, onOpenContact, t, lang }: HomeProps) => {
                   <Cpu size={14} /> {t.projects.module_title}
                </span>
             </header>
-            <div className="p-10 lg:p-24 bg-gradient-to-b from-transparent to-foreground/[0.02]">
+            <div className="p-6 md:p-10 lg:p-24 bg-gradient-to-b from-transparent to-foreground/[0.02]">
                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16">
                   {data.projects.map((p: any, idx: number) => (
                     <article key={p.id} className="h-full">
@@ -150,7 +150,7 @@ export const Home = ({ data, scaleX, onOpenContact, t, lang }: HomeProps) => {
                   <Github size={14} /> LIVE_GITHUB_REPOSITORY_FEED_v1.5
                </span>
             </header>
-            <div className="p-10 lg:p-24">
+            <div className="p-6 md:p-10 lg:p-24">
                <GithubFeed t={t} />
             </div>
          </motion.div>
@@ -165,9 +165,9 @@ export const Home = ({ data, scaleX, onOpenContact, t, lang }: HomeProps) => {
                   <Database size={14} /> {t.experience.module_title}
                </span>
             </header>
-            <div className="p-10 lg:p-32 grid lg:grid-cols-5 gap-20 lg:gap-32">
+            <div className="p-6 md:p-10 lg:p-32 grid lg:grid-cols-5 gap-10 md:gap-20 lg:gap-32">
               <aside className="lg:col-span-2 space-y-8">
-                 <h3 className="text-[8rem] lg:text-[10rem] font-black italic uppercase leading-none tracking-tighter opacity-[0.05] select-none text-foreground transition-opacity hover:opacity-10 cursor-default">
+                 <h3 className="text-5xl md:text-[8rem] lg:text-[10rem] font-black italic uppercase leading-none tracking-tighter opacity-[0.05] select-none text-foreground transition-opacity hover:opacity-10 cursor-default">
                     {t.experience.data_core.split(' ')[0]} <br /> {t.experience.data_core.split(' ')[1]}.
                  </h3>
                  <p className="font-mono text-[10px] text-foreground/85 uppercase tracking-[0.5em] border-l-[3px] border-[#FF007A]/40 pl-10 max-w-sm leading-relaxed">
@@ -181,7 +181,7 @@ export const Home = ({ data, scaleX, onOpenContact, t, lang }: HomeProps) => {
                       <div className="text-[10px] font-mono font-black text-[#FF007A] uppercase tracking-[0.6em] mb-4 flex items-center gap-4">
                          <div className="w-8 h-[1px] bg-[#FF007A]/50" /> LOG_{new Date(exp.startDate).getFullYear()} // SECTOR: PROD
                       </div>
-                      <h4 className="text-6xl font-black tracking-tighter uppercase italic text-foreground group-hover:text-[#FF007A] transition-colors leading-none mb-8">{getT(exp, 'position')}</h4>
+                      <h4 className="text-4xl md:text-6xl font-black tracking-tighter uppercase italic text-foreground group-hover:text-[#FF007A] transition-colors leading-none mb-4 md:mb-8">{getT(exp, 'position')}</h4>
                       <p className="text-foreground/85 leading-relaxed font-mono text-[11px] uppercase tracking-[0.2em] opacity-80 border-t border-border pt-10">{getT(exp, 'description')}</p>
                    </article>
                  ))}
@@ -199,9 +199,9 @@ export const Home = ({ data, scaleX, onOpenContact, t, lang }: HomeProps) => {
                   <GraduationCap size={14} /> {t.education.module_title}
                </span>
             </header>
-            <div className="p-10 lg:p-32 grid lg:grid-cols-5 gap-20 lg:gap-32">
+            <div className="p-6 md:p-10 lg:p-32 grid lg:grid-cols-5 gap-10 md:gap-20 lg:gap-32">
               <aside className="lg:col-span-2 space-y-8">
-                 <h3 className="text-[8rem] lg:text-[10rem] font-black italic uppercase leading-none tracking-tighter opacity-[0.05] select-none text-foreground">
+                 <h3 className="text-5xl md:text-[8rem] lg:text-[10rem] font-black italic uppercase leading-none tracking-tighter opacity-[0.05] select-none text-foreground">
                     {t.education.data_core.split(' ')[0]} <br /> {t.education.data_core.split(' ')[1]}.
                  </h3>
                  <p className="font-mono text-[10px] text-foreground/85 uppercase tracking-[0.5em] border-l-[3px] border-purple-500/40 pl-10 max-w-sm leading-relaxed">
@@ -215,7 +215,7 @@ export const Home = ({ data, scaleX, onOpenContact, t, lang }: HomeProps) => {
                       <div className="text-[10px] font-mono font-black text-purple-400 uppercase tracking-[0.6em] mb-4 flex items-center gap-4">
                          <div className="w-8 h-[1px] bg-purple-500/50" /> LOG_{new Date(edu.startDate).getFullYear()} // SECTOR: ACAD
                       </div>
-                      <h4 className="text-5xl font-black tracking-tighter uppercase italic text-foreground group-hover:text-purple-400 transition-colors leading-none mb-3">{getT(edu, 'degree')}</h4>
+                      <h4 className="text-3xl md:text-5xl font-black tracking-tighter uppercase italic text-foreground group-hover:text-purple-400 transition-colors leading-none mb-3">{getT(edu, 'degree')}</h4>
                       <p className="text-purple-400/60 font-mono text-[10px] uppercase font-bold tracking-widest mb-6">{edu.institution} // {getT(edu, 'field')}</p>
                       {edu.description && <p className="text-foreground/85 leading-relaxed font-mono text-[11px] uppercase tracking-[0.2em] opacity-80 border-t border-border pt-6">{getT(edu, 'description')}</p>}
                    </article>
@@ -234,7 +234,7 @@ export const Home = ({ data, scaleX, onOpenContact, t, lang }: HomeProps) => {
                   <Newspaper size={14} /> {t.posts.module_title}
                </span>
             </header>
-            <div className="p-10 lg:p-24">
+            <div className="p-6 md:p-10 lg:p-24">
                <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
                   {data.posts.map((post: any) => (
                     <article key={post.id} className="group relative">
@@ -254,7 +254,7 @@ export const Home = ({ data, scaleX, onOpenContact, t, lang }: HomeProps) => {
                              </time>
                           </header>
 
-                          <h3 className="text-4xl lg:text-5xl font-black tracking-tighter uppercase italic leading-[0.9] text-foreground group-hover:text-indigo-400 transition-all duration-500 mb-8 relative z-10 pr-10">
+                          <h3 className="text-2xl md:text-4xl lg:text-5xl font-black tracking-tighter uppercase italic leading-[0.9] text-foreground group-hover:text-indigo-400 transition-all duration-500 mb-8 relative z-10 pr-10">
                              {getT(post, 'title')}
                           </h3>
                           
@@ -279,13 +279,13 @@ export const Home = ({ data, scaleX, onOpenContact, t, lang }: HomeProps) => {
 
       {/* FOOTER CALL TO ACTION (Handshake) */}
       <section id="contact" className="py-40 px-6 lg:px-0">
-         <motion.div whileHover={{ scale: 1.01 }} className="os-window p-20 lg:p-48 text-center border-[#FFB800]/20 relative overflow-hidden group">
+         <motion.div whileHover={{ scale: 1.01 }} className="os-window p-10 md:p-20 lg:p-48 text-center border-[#FFB800]/20 relative overflow-hidden group">
             <div className="absolute inset-0 bg-gradient-to-br from-[#FFB800]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
             <Brain size={80} className="mx-auto text-[#FFB800] mb-12 animate-pulse opacity-40 shadow-2xl" />
-            <h2 className="text-7xl lg:text-[10rem] font-black italic uppercase mb-16 tracking-tighter leading-none opacity-[0.03] text-foreground select-none">{t.contact.connect}.</h2>
+            <h2 className="text-5xl md:text-7xl lg:text-[10rem] font-black italic uppercase mb-10 md:mb-16 tracking-tighter leading-none opacity-[0.03] text-foreground select-none">{t.contact.connect}.</h2>
             <button 
                onClick={onOpenContact} 
-               className="btn-os bg-[#FFB800] text-black shadow-[0_0_50px_rgba(255,184,0,0.3)] px-24 py-10 text-xs hover:px-32 transition-all duration-1000"
+               className="btn-os bg-[#FFB800] text-black shadow-[0_0_50px_rgba(255,184,0,0.3)] px-10 py-5 md:px-24 md:py-10 text-xs hover:px-14 md:hover:px-32 transition-all duration-1000"
             >
                {t.contact.handshake}
             </button>

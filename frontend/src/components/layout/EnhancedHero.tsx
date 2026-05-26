@@ -251,7 +251,7 @@ export const EnhancedHero = ({ profile, t, lang }: { profile: any, t: any, lang:
       <div className="absolute -bottom-[20%] -right-[10%] w-[60%] h-[60%] bg-purple-500/10 blur-[150px] rounded-full animate-pulse" style={{ animationDelay: '2s' }} />
 
       <motion.div style={{ opacity }} className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
-         <span className="text-[25rem] md:text-[45rem] font-black text-foreground uppercase tracking-tighter italic leading-none opacity-[0.02] select-none blur-3xl">ALBA</span>
+         <span className="text-[10rem] md:text-[25rem] lg:text-[45rem] font-black text-foreground uppercase tracking-tighter italic leading-none opacity-[0.02] select-none blur-3xl">ALBA</span>
       </motion.div>
 
       <div className="container-custom relative z-10 w-full text-center">
@@ -313,8 +313,8 @@ export const EnhancedHero = ({ profile, t, lang }: { profile: any, t: any, lang:
                    className="relative flex items-center ml-10"
                  >
                     {/* El Nodo .G */}
-                    <div className="relative group/g px-10 py-6 bg-white/[0.02] border border-white/10 rounded-[2rem] backdrop-blur-3xl hover:border-[var(--color-aqua)]/50 transition-all duration-700 shadow-3xl">
-                       <span className="text-10xl md:text-[13rem] font-black text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-[var(--color-aqua)]">
+                    <div className="relative group/g px-6 py-4 md:px-10 md:py-6 bg-white/[0.02] border border-white/10 rounded-[2rem] backdrop-blur-3xl hover:border-[var(--color-aqua)]/50 transition-all duration-700 shadow-3xl">
+                       <span className="text-7xl md:text-9xl lg:text-[13rem] font-black text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-[var(--color-aqua)]">
                           G
                        </span>
                        {/* Cantoneras High-Tech */}
@@ -334,7 +334,7 @@ export const EnhancedHero = ({ profile, t, lang }: { profile: any, t: any, lang:
           </div>
 
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }} className="space-y-20 pt-10">
-            <p className="text-white/70 text-xl md:text-3xl lg:text-4xl max-w-7xl mx-auto font-mono uppercase tracking-[0.25em] font-black px-12 leading-snug border-l-[6px] border-[var(--color-aqua)]/40 inline-block text-left italic">
+            <p className="text-white/70 text-lg md:text-3xl lg:text-4xl max-w-7xl mx-auto font-mono uppercase tracking-[0.25em] font-black px-6 md:px-12 leading-snug border-l-[6px] border-[var(--color-aqua)]/40 inline-block text-left italic">
               {t.hero.bio_1} <br /> 
               <span className="text-white font-black drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">{t.hero.bio_highlight}</span> <br />
               <span className="text-[var(--color-aqua)] opacity-90">{t.hero.bio_2}</span>
@@ -344,7 +344,7 @@ export const EnhancedHero = ({ profile, t, lang }: { profile: any, t: any, lang:
                <motion.button 
                  whileHover={{ scale: 1.05, boxShadow: "0 0 50px rgba(0, 255, 240, 0.4)" }}
                  whileTap={{ scale: 0.95 }}
-                 className="px-20 py-10 bg-[var(--color-aqua)] text-black rounded-full font-black text-[11px] font-mono uppercase tracking-[0.6em] shadow-[0_0_40px_rgba(0,255,240,0.2)]"
+                 className="px-8 py-5 md:px-20 md:py-10 bg-[var(--color-aqua)] text-black rounded-full font-black text-[9px] md:text-[11px] font-mono uppercase tracking-[0.6em] shadow-[0_0_40px_rgba(0,255,240,0.2)]"
                  onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
                >
                   {t.hero.btn_deploy} <Rocket size={20} className="ml-4 inline-block" />
@@ -354,7 +354,7 @@ export const EnhancedHero = ({ profile, t, lang }: { profile: any, t: any, lang:
                   href={lang === 'en' ? "/downloads/CV_en.pdf" : "/downloads/CV_es.pdf"}
                   download={lang === 'en' ? "CV_Alba_Garcia_EN.pdf" : "CV_Alba_Garcia_ES.pdf"}
                   whileHover={{ backgroundColor: 'rgba(255,255,255,0.05)', scale: 1.05 }}
-                  className="px-20 py-10 border-2 border-white/10 rounded-full font-black text-[11px] font-mono uppercase tracking-[0.6em] flex items-center gap-4 text-white/50 hover:text-white transition-all backdrop-blur-md"
+                  className="px-8 py-5 md:px-20 md:py-10 border-2 border-white/10 rounded-full font-black text-[9px] md:text-[11px] font-mono uppercase tracking-[0.6em] flex items-center gap-4 text-white/50 hover:text-white transition-all backdrop-blur-md"
                >
                   {t.hero.btn_dump} <Download size={20} />
                </motion.a>
