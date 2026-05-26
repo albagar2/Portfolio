@@ -504,8 +504,8 @@ export class DemoController {
         orderBy: { order: 'asc' }
       });
       res.json({ status: 'success', data: demos });
-    } catch (error) {
-      res.status(500).json({ status: 'error', message: 'Error retrieving demos' });
+    } catch (error: any) {
+      res.status(500).json({ status: 'error', message: 'Error retrieving demos: ' + (error.message || String(error)) });
     }
   }
 

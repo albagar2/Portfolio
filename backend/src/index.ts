@@ -143,6 +143,16 @@ app.get('/api/health', async (_req, res) => {
   }
 });
 
+app.get('/api/debug-push', async (_req, res) => {
+  try {
+    const { execSync } = await import('child_process');
+    const output = execSync('npx prisma db push --accept-data-loss', { encoding: 'utf-8' });
+    res.json({ status: 'ok', output });
+  } catch (err: any) {
+    res.status(500).json({ status: 'error', message: err.message, stdout: err.stdout?.toString(), stderr: err.stderr?.toString() });
+  }
+});
+
 // ============================================================
 // Rutas API
 // ============================================================
