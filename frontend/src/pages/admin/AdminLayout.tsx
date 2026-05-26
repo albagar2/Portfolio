@@ -47,15 +47,15 @@ export const AdminLayout = () => {
   return (
     <div className="dark flex min-h-screen bg-slate-950 text-slate-100 transition-colors duration-500">
       {/* Sidebar */}
-      <aside className="w-72 border-r border-border bg-foreground/[0.02] backdrop-blur-xl p-8 flex flex-col fixed h-screen z-50">
-        <Link to="/" className="flex items-center gap-3 mb-16 pl-4">
-           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-foreground">
-              <Sparkles size={24} />
+      <aside className="w-64 lg:w-72 border-r border-border bg-foreground/[0.02] backdrop-blur-xl p-4 lg:p-8 flex flex-col fixed h-screen z-50">
+        <Link to="/" className="flex items-center gap-3 mb-6 lg:mb-12 pl-2">
+           <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-foreground">
+              <Sparkles size={20} className="lg:w-6 lg:h-6" />
            </div>
-           <span className="font-black text-2xl tracking-tight">Admin.</span>
+           <span className="font-black text-xl lg:text-2xl tracking-tight">Admin.</span>
         </Link>
 
-        <nav className="flex flex-col gap-2 flex-grow">
+        <nav className="flex flex-col gap-1 lg:gap-2 flex-grow">
           {SIDEBAR_LINKS.map((link) => {
             if (link.adminOnly && user?.role !== 'ADMIN') return null;
             const isActive = location.pathname === link.to;
@@ -63,14 +63,14 @@ export const AdminLayout = () => {
                 <Link 
                   key={link.to} 
                   to={link.to}
-                  className={`flex items-center gap-4 px-6 py-4 rounded-2xl font-bold transition-all relative ${
+                  className={`flex items-center gap-3 lg:gap-4 px-4 py-2.5 lg:px-6 lg:py-4 rounded-xl lg:rounded-2xl font-bold text-sm lg:text-base transition-all relative shrink-0 ${
                     isActive ? 'bg-primary/10 text-primary border border-primary/20 shadow-lg shadow-blue-500/10' : 'text-foreground/85 hover:text-foreground hover:bg-foreground/[0.05]'
                   }`}
                 >
-                  <link.icon size={20} />
+                  <link.icon size={18} className="lg:w-5 lg:h-5" />
                   {link.label}
                   {link.to === '/admin/messages' && unreadCount > 0 && (
-                    <span className="absolute top-4 left-9 w-4 h-4 bg-red-500 text-[10px] text-foreground rounded-full flex items-center justify-center border-2 border-slate-900 shadow-lg animate-bounce">
+                    <span className="absolute top-2.5 lg:top-4 left-7 lg:left-9 w-4 h-4 bg-red-500 text-[9px] lg:text-[10px] text-foreground rounded-full flex items-center justify-center border-2 border-slate-900 shadow-lg animate-bounce">
                       {unreadCount > 9 ? '9+' : unreadCount}
                     </span>
                   )}
@@ -85,29 +85,29 @@ export const AdminLayout = () => {
           })}
         </nav>
 
-        <div className="pt-8 border-t border-border flex flex-col gap-4">
-           <div className="flex items-center gap-4 px-4 mb-2">
-              <div className="w-10 h-10 bg-foreground/[0.05] rounded-full flex items-center justify-center border border-border shadow-xl overflow-hidden">
-                 <User size={20} className="text-foreground/80" />
+        <div className="pt-4 lg:pt-8 border-t border-border flex flex-col gap-2 lg:gap-4 shrink-0">
+           <div className="flex items-center gap-3 lg:gap-4 px-2 lg:px-4 mb-1">
+              <div className="w-8 h-8 lg:w-10 lg:h-10 bg-foreground/[0.05] rounded-full flex items-center justify-center border border-border shadow-xl overflow-hidden shrink-0">
+                 <User size={16} className="lg:w-5 lg:h-5 text-foreground/80" />
               </div>
               <div className="flex flex-col overflow-hidden">
-                 <span className="text-sm font-bold truncate">{user?.name}</span>
-                 <span className="text-xs text-foreground/85 font-bold uppercase tracking-widest">{user?.role}</span>
+                 <span className="text-xs lg:text-sm font-bold truncate">{user?.name}</span>
+                 <span className="text-[10px] lg:text-xs text-foreground/85 font-bold uppercase tracking-widest">{user?.role}</span>
               </div>
            </div>
 
            <button 
              onClick={logout}
-             className="flex items-center gap-4 px-6 py-4 rounded-2xl font-bold text-red-400/70 hover:text-red-400 hover:bg-red-500/5 transition-all"
+             className="flex items-center gap-3 lg:gap-4 px-4 py-2.5 lg:px-6 lg:py-4 rounded-xl lg:rounded-2xl font-bold text-sm lg:text-base text-red-400/70 hover:text-red-400 hover:bg-red-500/5 transition-all"
            >
-              <LogOut size={20} />
+              <LogOut size={18} className="lg:w-5 lg:h-5" />
               Cerrar Sesión
            </button>
         </div>
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-grow ml-72 p-12 overflow-y-auto">
+      <main className="flex-grow ml-64 lg:ml-72 p-6 lg:p-12 overflow-y-auto">
          <Outlet />
       </main>
     </div>
