@@ -47,15 +47,15 @@ export const AdminLayout = () => {
   return (
     <div className="dark flex min-h-screen bg-slate-950 text-slate-100 transition-colors duration-500">
       {/* Sidebar */}
-      <aside className="w-64 lg:w-72 border-r border-border bg-foreground/[0.02] backdrop-blur-xl p-4 lg:p-8 flex flex-col fixed h-screen z-50">
-        <Link to="/" className="flex items-center gap-3 mb-6 lg:mb-12 pl-2">
-           <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-foreground">
-              <Sparkles size={20} className="lg:w-6 lg:h-6" />
+      <aside className="w-60 lg:w-72 border-r border-border bg-foreground/[0.02] backdrop-blur-xl p-3 lg:p-8 flex flex-col fixed h-screen z-50">
+        <Link to="/" className="flex items-center gap-3 mb-4 lg:mb-12 pl-2">
+           <div className="w-7 h-7 lg:w-10 lg:h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-foreground">
+              <Sparkles size={16} className="lg:w-6 lg:h-6" />
            </div>
-           <span className="font-black text-xl lg:text-2xl tracking-tight">Admin.</span>
+           <span className="font-black text-lg lg:text-2xl tracking-tight">Admin.</span>
         </Link>
 
-        <nav className="flex flex-col gap-1 lg:gap-2 flex-grow">
+        <nav className="flex flex-col gap-0.5 lg:gap-2 flex-grow justify-center">
           {SIDEBAR_LINKS.map((link) => {
             if (link.adminOnly && user?.role !== 'ADMIN') return null;
             const isActive = location.pathname === link.to;
@@ -63,14 +63,14 @@ export const AdminLayout = () => {
                 <Link 
                   key={link.to} 
                   to={link.to}
-                  className={`flex items-center gap-3 lg:gap-4 px-4 py-2.5 lg:px-6 lg:py-4 rounded-xl lg:rounded-2xl font-bold text-sm lg:text-base transition-all relative shrink-0 ${
-                    isActive ? 'bg-primary/10 text-primary border border-primary/20 shadow-lg shadow-blue-500/10' : 'text-foreground/85 hover:text-foreground hover:bg-foreground/[0.05]'
+                  className={`flex items-center gap-3 lg:gap-4 px-4 py-2 lg:px-6 lg:py-4 rounded-lg lg:rounded-2xl font-bold text-[13px] lg:text-base transition-all relative shrink-0 ${
+                    isActive ? 'bg-primary/10 text-primary border border-primary/20 shadow-sm shadow-blue-500/10' : 'text-foreground/85 hover:text-foreground hover:bg-foreground/[0.05]'
                   }`}
                 >
-                  <link.icon size={18} className="lg:w-5 lg:h-5" />
+                  <link.icon size={16} className="lg:w-5 lg:h-5" />
                   {link.label}
                   {link.to === '/admin/messages' && unreadCount > 0 && (
-                    <span className="absolute top-2.5 lg:top-4 left-7 lg:left-9 w-4 h-4 bg-red-500 text-[9px] lg:text-[10px] text-foreground rounded-full flex items-center justify-center border-2 border-slate-900 shadow-lg animate-bounce">
+                    <span className="absolute top-1.5 lg:top-4 left-7 lg:left-9 w-3.5 h-3.5 lg:w-4 lg:h-4 bg-red-500 text-[8px] lg:text-[10px] text-foreground rounded-full flex items-center justify-center border border-slate-900 shadow-sm animate-bounce">
                       {unreadCount > 9 ? '9+' : unreadCount}
                     </span>
                   )}
@@ -85,22 +85,22 @@ export const AdminLayout = () => {
           })}
         </nav>
 
-        <div className="pt-4 lg:pt-8 border-t border-border flex flex-col gap-2 lg:gap-4 shrink-0">
-           <div className="flex items-center gap-3 lg:gap-4 px-2 lg:px-4 mb-1">
-              <div className="w-8 h-8 lg:w-10 lg:h-10 bg-foreground/[0.05] rounded-full flex items-center justify-center border border-border shadow-xl overflow-hidden shrink-0">
-                 <User size={16} className="lg:w-5 lg:h-5 text-foreground/80" />
+        <div className="pt-3 lg:pt-8 border-t border-border flex flex-col gap-2 lg:gap-4 shrink-0 mt-auto">
+           <div className="flex items-center gap-3 lg:gap-4 px-2 lg:px-4 mb-0 lg:mb-1">
+              <div className="w-7 h-7 lg:w-10 lg:h-10 bg-foreground/[0.05] rounded-full flex items-center justify-center border border-border shadow-md overflow-hidden shrink-0">
+                 <User size={14} className="lg:w-5 lg:h-5 text-foreground/80" />
               </div>
               <div className="flex flex-col overflow-hidden">
-                 <span className="text-xs lg:text-sm font-bold truncate">{user?.name}</span>
-                 <span className="text-[10px] lg:text-xs text-foreground/85 font-bold uppercase tracking-widest">{user?.role}</span>
+                 <span className="text-[13px] lg:text-sm font-bold truncate">{user?.name}</span>
+                 <span className="text-[9px] lg:text-xs text-foreground/85 font-bold uppercase tracking-widest leading-none">{user?.role}</span>
               </div>
            </div>
 
            <button 
              onClick={logout}
-             className="flex items-center gap-3 lg:gap-4 px-4 py-2.5 lg:px-6 lg:py-4 rounded-xl lg:rounded-2xl font-bold text-sm lg:text-base text-red-400/70 hover:text-red-400 hover:bg-red-500/5 transition-all"
+             className="flex items-center gap-3 lg:gap-4 px-4 py-2 lg:px-6 lg:py-4 rounded-lg lg:rounded-2xl font-bold text-[13px] lg:text-base text-red-400/70 hover:text-red-400 hover:bg-red-500/5 transition-all"
            >
-              <LogOut size={18} className="lg:w-5 lg:h-5" />
+              <LogOut size={16} className="lg:w-5 lg:h-5" />
               Cerrar Sesión
            </button>
         </div>
