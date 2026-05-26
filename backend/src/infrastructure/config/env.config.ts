@@ -41,6 +41,13 @@ const envSchema = z.object({
   // Uploads
   UPLOAD_MAX_SIZE_MB: z.string().transform(Number).default('5'),
 
+  // Configuración de Email SMTP (Nodemailer)
+  SMTP_HOST: z.string().optional(),
+  SMTP_PORT: z.string().transform(Number).default('587'),
+  SMTP_USER: z.string().optional(),
+  SMTP_PASS: z.string().optional(),
+  SMTP_FROM: z.string().optional(),
+
   // Logging
   LOG_LEVEL: z.enum(['error', 'warn', 'info', 'debug']).default('info'),
 

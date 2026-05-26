@@ -58,7 +58,7 @@ export const ContactModal = ({ isOpen, onClose, t }: ContactModalProps) => {
         {/* Cabecera del Gateway */}
         <div className="os-header bg-[#FFB800]/10 border-[#FFB800]/20">
           <div className="flex gap-2 mr-6"><div className="os-dot bg-red-500" /><div className="os-dot bg-yellow-400" /><div className="os-dot bg-green-500" /></div>
-          <span className="font-mono text-[9px] font-black uppercase tracking-[0.6em] text-[#FFB800]">SIGNAL_GATEWAY.bin</span>
+          <span className="font-mono text-[9px] font-black uppercase tracking-[0.6em] text-[#FFB800]">{t.contact.connect === 'CONTACTO' ? 'ENVIAR_MENSAJE.bin' : 'SEND_MESSAGE.bin'}</span>
           <button onClick={onClose} className="ml-auto p-3 opacity-40 hover:opacity-100 transition-opacity text-foreground"><X size={20} /></button>
         </div>
         
@@ -68,8 +68,14 @@ export const ContactModal = ({ isOpen, onClose, t }: ContactModalProps) => {
               <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, scale: 0.95 }} className="space-y-12">
                  {/* Mensaje de Bienvenida al Nodo */}
                  <div className="space-y-4">
-                    <h2 className="text-6xl font-black italic uppercase italic tracking-tighter text-foreground">
-                      {t.contact.access_node.split(' ')[0]} <br /> <span className="text-[#FFB800]">{t.contact.access_node.split(' ')[1]}.</span>
+                    <h2 className="text-6xl font-black italic uppercase tracking-tighter text-foreground">
+                      {t.contact.access_node.split(' ')[0]}
+                      {t.contact.access_node.split(' ')[1] ? (
+                        <>
+                          <br />
+                          <span className="text-[#FFB800]">{t.contact.access_node.split(' ').slice(1).join(' ')}.</span>
+                        </>
+                      ) : '.'}
                     </h2>
                     <p className="font-mono text-[9px] text-foreground/85 uppercase tracking-widest leading-relaxed border-l-[3px] border-[#FFB800]/30 pl-8">
                       {t.contact.signal_desc}
@@ -115,9 +121,15 @@ export const ContactModal = ({ isOpen, onClose, t }: ContactModalProps) => {
                     <CheckCircle2 size={60} strokeWidth={3} />
                  </div>
                  <div className="space-y-4">
-                    <h4 className="text-4xl font-black italic uppercase text-foreground tracking-widest">
-                       {t.contact.success_title.split(' ')[0]} <br /> {t.contact.success_title.split(' ')[1]}.
-                    </h4>
+                     <h4 className="text-4xl font-black italic uppercase text-foreground tracking-widest">
+                        {t.contact.success_title.split(' ')[0]}
+                        {t.contact.success_title.split(' ')[1] ? (
+                          <>
+                            <br />
+                            <span className="text-[#FFB800]">{t.contact.success_title.split(' ').slice(1).join(' ')}</span>
+                          </>
+                        ) : ''}
+                     </h4>
                     <p className="font-mono text-xs text-[#FFB800] uppercase tracking-[0.4em]">
                        {t.contact.success_desc}
                     </p>

@@ -24,6 +24,7 @@ import {
   CreatePostDto, UpdatePostDto, CreateContactMessageDto,
 } from '../dtos';
 import { logger } from '../../infrastructure/config/logger';
+import { EmailService } from '../../infrastructure/services/email.service';
 
 // ============================================================
 // Caso de Uso: Autenticación
@@ -389,10 +390,24 @@ export class ContactMessageUseCase {
   }
 
   async create(dto: CreateContactMessageDto, ipAddress?: string): Promise<ContactMessageEntity> {
-    return this.contactRepo.create({
+    const createdMsg = await this.contactRepo.create({
       ...dto,
       ipAddress: ipAddress || null,
     });
+
+    // Enviar correo de forma asíncrona (en segundo plano)
+    EmailService.sendContactMessageEmail({
+      name: createdMsg.name,
+      email: createdMsg.email,
+      subject: createdMsg.subject,
+      message: createdMsg.message,
+      ipAddress: createdMsg.ipAddress,
+      createdAt: createdMsg.createdAt,
+    }).catch(err => {
+      logger.error('❌ Error asíncrono enviando email de contacto:', { error: err.message });
+    });
+
+    return createdMsg;
   }
 
   async markAsRead(id: string): Promise<ContactMessageEntity> {
