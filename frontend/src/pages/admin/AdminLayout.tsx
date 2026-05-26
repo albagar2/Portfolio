@@ -48,7 +48,7 @@ export const AdminLayout = () => {
     <div className="dark flex min-h-screen bg-slate-950 text-slate-100 transition-colors duration-500">
       {/* Sidebar */}
       <aside className="w-60 lg:w-72 border-r border-border bg-foreground/[0.02] backdrop-blur-xl p-2 lg:p-8 flex flex-col fixed inset-y-0 left-0 h-[100dvh] z-50">
-        <Link to="/" className="flex items-center gap-3 mb-2 lg:mb-12 pl-2">
+        <Link to="/" className="flex items-center gap-3 mb-2 [@media(max-height:750px)]:mb-0 lg:mb-12 pl-2">
            <div className="w-6 h-6 lg:w-10 lg:h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-foreground shrink-0">
               <Sparkles size={14} className="lg:w-6 lg:h-6" />
            </div>
@@ -63,7 +63,7 @@ export const AdminLayout = () => {
                 <Link 
                   key={link.to} 
                   to={link.to}
-                  className={`flex items-center gap-2 lg:gap-4 px-3 py-1.5 lg:px-6 lg:py-4 rounded-lg lg:rounded-2xl font-bold text-[11px] lg:text-base transition-all relative shrink-0 ${
+                  className={`flex items-center gap-2 lg:gap-4 px-3 py-1.5 [@media(max-height:750px)]:py-1 lg:px-6 lg:py-4 rounded-lg lg:rounded-2xl font-bold text-[11px] lg:text-base transition-all relative shrink-0 ${
                     isActive ? 'bg-primary/10 text-primary border border-primary/20 shadow-sm shadow-blue-500/10' : 'text-foreground/85 hover:text-foreground hover:bg-foreground/[0.05]'
                   }`}
                 >
@@ -85,8 +85,8 @@ export const AdminLayout = () => {
           })}
         </nav>
 
-        <div className="pt-2 lg:pt-8 border-t border-border flex flex-col gap-1 lg:gap-4 shrink-0 mt-auto">
-           <div className="flex items-center gap-2 lg:gap-4 px-2 lg:px-4 mb-0 lg:mb-1">
+        <div className="pt-2 [@media(max-height:750px)]:pt-1 lg:pt-8 border-t border-border flex flex-col gap-1 lg:gap-4 shrink-0 mt-auto">
+           <div className="flex items-center gap-2 lg:gap-4 px-2 lg:px-4 mb-0">
               <div className="w-6 h-6 lg:w-10 lg:h-10 bg-foreground/[0.05] rounded-full flex items-center justify-center border border-border shadow-md overflow-hidden shrink-0">
                  <User size={12} className="lg:w-5 lg:h-5 text-foreground/80" />
               </div>
@@ -98,7 +98,7 @@ export const AdminLayout = () => {
 
            <button 
              onClick={logout}
-             className="flex items-center gap-2 lg:gap-4 px-3 py-1.5 lg:px-6 lg:py-4 rounded-lg lg:rounded-2xl font-bold text-[11px] lg:text-base text-red-400/70 hover:text-red-400 hover:bg-red-500/5 transition-all w-full shrink-0"
+             className="flex items-center gap-2 lg:gap-4 px-3 py-1.5 [@media(max-height:750px)]:py-1 lg:px-6 lg:py-4 rounded-lg lg:rounded-2xl font-bold text-[11px] lg:text-base text-red-400/70 hover:text-red-400 hover:bg-red-500/5 transition-all w-full shrink-0"
            >
               <LogOut size={14} className="lg:w-5 lg:h-5 shrink-0" />
               <span className="truncate">Cerrar Sesión</span>
