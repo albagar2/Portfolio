@@ -216,6 +216,11 @@
                         const color = demo.themeColor || '#00f0ff';
                         const status = demo.status || 'OPERATIVO';
                         
+                        let displayBtnText = demo.btnText || 'Iniciar Demo';
+                        if (demo.url && (demo.url.includes('youtube.com') || demo.url.includes('youtu.be'))) {
+                            displayBtnText = 'Iniciar Vídeo';
+                        }
+                        
                         const article = document.createElement('article');
                         article.className = 'glass-panel rounded-xl p-6 relative overflow-hidden group';
                         article.innerHTML = `
@@ -232,7 +237,7 @@
                                    style="border-color: ${color}80; color: ${color};"
                                    onmouseover="this.style.backgroundColor='${color}'; this.style.color='#000';"
                                    onmouseout="this.style.backgroundColor='transparent'; this.style.color='${color}';">
-                                    [ ${demo.btnText || 'Iniciar Demo'} ]
+                                    [ ${displayBtnText} ]
                                 </a>
                             </div>
                             <div class="absolute bottom-0 left-0 w-full h-[1px] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" style="background: linear-gradient(to right, transparent, ${color}, transparent);"></div>

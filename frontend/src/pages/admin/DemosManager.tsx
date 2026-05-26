@@ -208,8 +208,16 @@ export const DemosManager = () => {
                         <input value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} className="w-full bg-foreground/[0.05] border border-border rounded p-3 text-sm font-bold" required />
                      </div>
                      <div className="space-y-1">
-                        <label className="text-[10px] font-black uppercase text-foreground/85">CodeName (ej: Project_01)</label>
-                        <input value={formData.codeName} onChange={e => setFormData({...formData, codeName: e.target.value})} className="w-full bg-foreground/[0.05] border border-border rounded p-3 text-sm font-mono" required />
+                        <label className="text-[10px] font-black uppercase text-foreground/85">CodeName (Estado/Etiqueta)</label>
+                        <select value={formData.codeName} onChange={e => setFormData({...formData, codeName: e.target.value})} className="w-full bg-foreground/[0.05] border border-border rounded p-3 text-sm font-mono" required>
+                           <option value="OPERATIVO">OPERATIVO</option>
+                           <option value="STANDBY">STANDBY</option>
+                           <option value="BETA_TEST">BETA_TEST</option>
+                           <option value="DOCKER-DEPLOY">DOCKER-DEPLOY</option>
+                           <option value="CORE_SYSTEM">CORE_SYSTEM</option>
+                           <option value="MAINTENANCE">MAINTENANCE</option>
+                           <option value="OFFLINE">OFFLINE</option>
+                        </select>
                      </div>
                    </div>
                    
@@ -220,7 +228,16 @@ export const DemosManager = () => {
 
                    <div className="space-y-1">
                       <label className="text-[10px] font-black uppercase text-foreground/85">URL Pública</label>
-                      <input type="url" value={formData.url} onChange={e => setFormData({...formData, url: e.target.value})} className="w-full bg-foreground/[0.05] border border-border rounded p-3 text-sm font-mono" placeholder="https://..." required />
+                      <input type="url" value={formData.url} onChange={e => {
+                        const newUrl = e.target.value;
+                        let newBtnText = formData.btnText;
+                        if (newUrl.includes('youtube.com') || newUrl.includes('youtu.be')) {
+                          newBtnText = 'Iniciar Vídeo';
+                        } else if (newBtnText === 'Iniciar Vídeo') {
+                          newBtnText = 'Iniciar Demo';
+                        }
+                        setFormData({...formData, url: newUrl, btnText: newBtnText});
+                      }} className="w-full bg-foreground/[0.05] border border-border rounded p-3 text-sm font-mono" placeholder="https://..." required />
                    </div>
 
                    <div className="grid grid-cols-2 gap-4">
