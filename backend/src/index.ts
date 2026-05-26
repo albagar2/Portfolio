@@ -22,6 +22,8 @@ initializeDatabase();
 // Inyectar los 4 proyectos finales para completar 13
 injectMissingFour();
 
+console.log("Triggering Railway Deploy for Demos Schema update...");
+
 const app = express();
 
 // Necesario para Railway/Vercel (están detrás de un proxy reverso)
