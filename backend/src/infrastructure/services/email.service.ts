@@ -1,47 +1,12 @@
-import nodemailer from 'nodemailer';
-import dns from 'dns';
 import { config } from '../config/env.config';
 import { logger } from '../config/logger';
 
-// Fuerza a Node.js a preferir IPv4 sobre IPv6. 
-// Soluciona el error ENETUNREACH en contenedores (como Railway) que no tienen enrutamiento IPv6 completo.
-if (dns.setDefaultResultOrder) {
-  dns.setDefaultResultOrder('ipv4first');
-}
+// Ya no usamos nodemailer porque Railway bloquea puertos SMTP
+// Usaremos la API HTTP de Resend directamente.
 
 export class EmailService {
-  private static transporter: nodemailer.Transporter | null = null;
-
-  private static getTransporter(): nodemailer.Transporter | null {
-    if (this.transporter) {
-      return this.transporter;
-    }
-
-    if (!config.SMTP_HOST || !config.SMTP_USER || !config.SMTP_PASS) {
-      logger.warn('⚠️ SMTP variables (SMTP_HOST, SMTP_USER, SMTP_PASS) not configured. Email sending is disabled.');
-      return null;
-    }
-
-    try {
-      this.transporter = nodemailer.createTransport({
-        host: config.SMTP_HOST,
-        port: config.SMTP_PORT,
-        secure: config.SMTP_PORT === 465, // true para puerto 465, false para otros
-        auth: {
-          user: config.SMTP_USER,
-          pass: config.SMTP_PASS,
-        },
-      });
-      logger.info('📧 Nodemailer SMTP transporter inicializado correctamente.');
-      return this.transporter;
-    } catch (err: any) {
-      logger.error('❌ Error al inicializar el transportador Nodemailer SMTP:', { error: err.message });
-      return null;
-    }
-  }
-
   /**
-   * Envía un correo con los detalles del mensaje de contacto
+   * Envía un correo con los detalles del mensaje de contacto usando Resend API
    */
   static async sendContactMessageEmail(data: {
     name: string;
@@ -51,8 +16,12 @@ export class EmailService {
     ipAddress?: string | null;
     createdAt?: Date;
   }): Promise<boolean> {
-    const adminEmail = config.ADMIN_EMAIL || 'albagarcialopez39@gmail.com';
-    const fromEmail = config.SMTP_FROM || config.SMTP_USER || 'no-reply@portfolio.dev';
+    const adminEmail = 'baciapez@gmail.com'; // El correo verificado en Resend
+    // IMPORTANTE: En el plan gratuito de Resend, el 'from' DEBE ser onboarding@resend.dev
+    const fromEmail = 'onboarding@resend.dev'; 
+    
+    // Aquí puedes poner tu key, o cogerla de las variables de entorno si la configuras allí luego
+    const resendApiKey = process.env.RESEND_API_KEY || 're_7C9muoLt_MBUuBx3SvBWDiysQd1vPb19p';
 
     const subjectText = `[Portfolio] Nuevo mensaje de ${data.name}: ${data.subject}`;
     const dateFormatted = data.createdAt ? new Date(data.createdAt).toLocaleString('es-ES') : new Date().toLocaleString('es-ES');
@@ -68,7 +37,7 @@ export class EmailService {
             <td style="padding: 8px 0; color: #222;">${data.name}</td>
           </tr>
           <tr>
-            <td style="padding: 8px 0; font-weight: bold; color: #555;">Email:</td>
+            <td style="padding: 8px 0; font-weight: bold; color: #555;">Email Original:</td>
             <td style="padding: 8px 0; color: #222;"><a href="mailto:${data.email}" style="color: #007bff; text-decoration: none;">${data.email}</a></td>
           </tr>
           <tr>
@@ -91,47 +60,39 @@ export class EmailService {
         </div>
         
         <div style="margin-top: 30px; text-align: center; font-size: 0.8em; color: #888; border-top: 1px solid #eaeaea; padding-top: 15px;">
-          Este correo fue generado automáticamente desde tu portfolio web.
+          Este correo fue generado automáticamente desde tu portfolio web a través de la API de Resend.
         </div>
       </div>
     `;
 
-    const textContent = `
-      NUEVO MENSAJE DE CONTACTO (PORTFOLIO)
-      ====================================
-      Remitente: ${data.name}
-      Email: ${data.email}
-      Asunto: ${data.subject}
-      Fecha: ${dateFormatted}
-      IP: ${ipStr}
-      
-      Mensaje:
-      ------------------------------------
-      ${data.message}
-    `;
-
-    logger.info(`📬 Procesando envío de email para mensaje de contacto de: ${data.email}`);
+    logger.info(`📬 Procesando envío de email HTTP (Resend) para: ${data.email}`);
     
-    const transporter = this.getTransporter();
-    if (!transporter) {
-      logger.warn('📧 Email no enviado a través de SMTP (SMTP no configurado). Se registra el mensaje en consola:');
-      logger.info(`[SMTP SIMULADO] DESTINATARIO: ${adminEmail}\nASUNTO: ${subjectText}\nCONTENIDO:\n${textContent}`);
-      return false;
-    }
-
     try {
-      await transporter.sendMail({
-        from: `"${data.name} (Portfolio)" <${fromEmail}>`,
-        to: adminEmail,
-        replyTo: data.email,
-        subject: subjectText,
-        text: textContent,
-        html: htmlContent,
+      const response = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': \`Bearer \${resendApiKey}\`
+        },
+        body: JSON.stringify({
+          from: \`Portfolio Contact <\${fromEmail}>\`,
+          to: [adminEmail],
+          reply_to: data.email,
+          subject: subjectText,
+          html: htmlContent,
+        })
       });
-      logger.info(`✅ Email de contacto enviado correctamente a ${adminEmail}`);
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        logger.error('❌ Error de la API de Resend:', errorData);
+        return false;
+      }
+
+      logger.info(\`✅ Email HTTP (Resend) enviado correctamente a \${adminEmail}\`);
       return true;
     } catch (err: any) {
-      logger.error('❌ Error al enviar el email de contacto a través de SMTP:', { error: err.message, stack: err.stack });
+      logger.error('❌ Error de red al contactar con Resend:', { error: err.message, stack: err.stack });
       return false;
     }
   }
