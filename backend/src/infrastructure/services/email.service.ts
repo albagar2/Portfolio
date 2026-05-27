@@ -72,10 +72,10 @@ export class EmailService {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': \`Bearer \${resendApiKey}\`
+          'Authorization': `Bearer ${resendApiKey}`
         },
         body: JSON.stringify({
-          from: \`Portfolio Contact <\${fromEmail}>\`,
+          from: `Portfolio Contact <${fromEmail}>`,
           to: [adminEmail],
           reply_to: data.email,
           subject: subjectText,
@@ -89,7 +89,7 @@ export class EmailService {
         return false;
       }
 
-      logger.info(\`✅ Email HTTP (Resend) enviado correctamente a \${adminEmail}\`);
+      logger.info(`✅ Email HTTP (Resend) enviado correctamente a ${adminEmail}`);
       return true;
     } catch (err: any) {
       logger.error('❌ Error de red al contactar con Resend:', { error: err.message, stack: err.stack });
