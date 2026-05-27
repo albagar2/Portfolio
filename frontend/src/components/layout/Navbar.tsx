@@ -13,7 +13,8 @@ interface NavbarProps {
 }
 
 /**
- * COMPONENTE: Navbar (Sistema de Control de Navegación)
+ * @fileoverview Navbar.tsx
+ * @description COMPONENTE: Navbar (Sistema de Control de Navegación).
  * Navegación dinámica con scroll suave inteligente y soporte para múltiples idiomas.
  */
 export const Navbar = ({ onOpenContact, lang, setLang, isDark, setIsDark, t }: NavbarProps) => {

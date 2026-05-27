@@ -1,6 +1,15 @@
+/**
+ * inject-demos.ts
+ * Este script se encarga de poblar la base de datos con información de demostración.
+ * Verifica si ya existen demos y, de no ser así, inserta un arreglo predefinido de demos
+ * con sus respectivas URLs, colores y estados.
+ */
 import { Database } from './infrastructure/database/prisma';
 import { logger } from './infrastructure/config/logger';
 
+/**
+ * Función asíncrona para inyectar los datos de las demos iniciales en la base de datos.
+ */
 export async function injectDemos() {
   const db = Database.getInstance();
   try {

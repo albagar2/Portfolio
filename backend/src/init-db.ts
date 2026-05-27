@@ -1,3 +1,9 @@
+/**
+ * init-db.ts
+ * Este archivo provee un script para inicializar la base de datos de SQLite en producción.
+ * Asegura que la base de datos se persista correctamente (por ejemplo, en un volumen de Railway)
+ * o, en caso de no existir, copia un archivo de base de datos predeterminado para su uso.
+ */
 import fs from 'fs';
 import path from 'path';
 import { logger } from './infrastructure/config/logger';
@@ -8,10 +14,12 @@ import { logger } from './infrastructure/config/logger';
  * pero se inicialice con los datos de Git si es necesario.
  */
 export const initializeDatabase = () => {
+  // Comprobamos si el entorno es producción
   const isProd = process.env.NODE_ENV === 'production';
-  if (!isProd) return;
+  if (!isProd) return; // Si no estamos en producción, terminamos temprano
 
-  // Detectar la ruta real que espera Prisma
+  // Detectar la ruta real que espera Prisma para la base de datos
+
   const defaultUrl = 'file:/app/data/portfolio.db';
   const dbUrl = process.env.DATABASE_URL || defaultUrl;
   

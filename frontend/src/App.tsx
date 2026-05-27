@@ -2,6 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route, useLocation, Navigate, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 
+/**
+ * @fileoverview App.tsx
+ * @description Componente raíz de la aplicación. Maneja el enrutamiento, el estado global
+ * básico (datos, tema, idioma) y la estructura principal del layout.
+ */
+
 // --- SERVICIOS Y CONSTANTES ---
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { NotificationProvider } from './context/NotificationContext';

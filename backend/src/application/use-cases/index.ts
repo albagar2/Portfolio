@@ -1,3 +1,9 @@
+/**
+ * application/use-cases/index.ts
+ * Define los "Casos de Uso" principales del dominio (Auth, Profile, Project, etc.).
+ * Implementa la lógica de negocio y orquesta las llamadas a los repositorios
+ * de forma independiente de la capa web o de base de datos.
+ */
 // ============================================================
 // Casos de Uso (Application Layer)
 // Contienen la lógica de negocio de la aplicación

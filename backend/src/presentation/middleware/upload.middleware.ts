@@ -1,3 +1,8 @@
+/**
+ * upload.middleware.ts
+ * Archivo TypeScript de la aplicación.
+ * Contiene la lógica y definiciones para esta parte del módulo.
+ */
 import multer from 'multer';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';

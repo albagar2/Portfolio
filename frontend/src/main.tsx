@@ -5,7 +5,13 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './index.css';
 
-// Configure React Query client with reasonable defaults for a portfolio
+/**
+ * @fileoverview main.tsx
+ * @description Punto de entrada principal de la aplicación React.
+ * Configura los proveedores de estado (React Query) y enrutamiento (React Router).
+ */
+
+// Configurar el cliente de React Query con valores predeterminados adecuados para un portafolio
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

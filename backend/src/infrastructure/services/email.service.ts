@@ -1,3 +1,8 @@
+/**
+ * email.service.ts
+ * Archivo TypeScript de la aplicación.
+ * Contiene la lógica y definiciones para esta parte del módulo.
+ */
 import { config } from '../config/env.config';
 import { logger } from '../config/logger';
 

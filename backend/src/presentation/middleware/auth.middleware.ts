@@ -1,3 +1,8 @@
+/**
+ * auth.middleware.ts
+ * Archivo TypeScript de la aplicación.
+ * Contiene la lógica y definiciones para esta parte del módulo.
+ */
 // ============================================================
 // Middleware de Autenticación y Autorización (RBAC)
 // Verifica JWT tokens y controla acceso por roles

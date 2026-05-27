@@ -1,3 +1,8 @@
+/**
+ * infrastructure/database/prisma.ts
+ * Encapsula la conexión de la base de datos usando PrismaClient.
+ * Emplea el patrón Singleton para asegurar que sólo exista una conexión activa y evitar memory leaks.
+ */
 // ============================================================
 // Cliente Prisma Singleton
 // Garantiza una única instancia de la conexión a BD

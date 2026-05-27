@@ -1,3 +1,8 @@
+/**
+ * infrastructure/auth/auth.service.ts
+ * Implementa la lógica técnica para la autenticación:
+ * generación y verificación de JWT, y cifrado (hashing) de contraseñas.
+ */
 // ============================================================
 // Servicio de Autenticación
 // Maneja JWT tokens, hash de contraseñas y verificación

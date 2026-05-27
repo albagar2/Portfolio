@@ -1,3 +1,8 @@
+/**
+ * index.ts
+ * Archivo TypeScript de la aplicación.
+ * Contiene la lógica y definiciones para esta parte del módulo.
+ */
 // ============================================================
 // Controladores (Presentation Layer)
 // Manejan las peticiones HTTP y delegan al caso de uso correspondiente

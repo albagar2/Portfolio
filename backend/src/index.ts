@@ -1,3 +1,9 @@
+/**
+ * index.ts
+ * Archivo principal y punto de entrada del backend de la aplicación.
+ * Aquí se configura el servidor Express, los middlewares de seguridad (CORS, Helmet, Rate Limit),
+ * las rutas, el manejo de errores, y se inicializa la conexión y sincronización de la base de datos.
+ */
 // ============================================================
 // Punto de Entrada del Backend
 // Configura Express con todas las capas de seguridad,

@@ -1,3 +1,8 @@
+/**
+ * infrastructure/config/env.config.ts
+ * Define y valida las variables de entorno de la aplicación.
+ * Proporciona un esquema Zod estricto para asegurar que todos los valores requeridos existan.
+ */
 // ============================================================
 // Configuración de Variables de Entorno
 // Carga y valida todas las variables necesarias con Zod

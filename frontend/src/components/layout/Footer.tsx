@@ -9,7 +9,8 @@ interface FooterProps {
 }
 
 /**
- * COMPONENTE: Footer (Sistema de Cierre de Sesión)
+ * @fileoverview Footer.tsx
+ * @description COMPONENTE: Footer (Sistema de Cierre de Sesión).
  * Muestra información de contacto, redes sociales y créditos de arquitectura.
  */
 export const Footer = ({ data, t, lang }: FooterProps) => {

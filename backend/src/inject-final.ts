@@ -1,6 +1,15 @@
+/**
+ * inject-final.ts
+ * Este script se encarga de inyectar 4 proyectos finales/reales (ej. LinguaCore, BulkQuest)
+ * en la base de datos. Utiliza una operación de upsert (actualizar/crear) para evitar
+ * duplicidad si ya se ejecutó anteriormente.
+ */
 import { Database } from './infrastructure/database/prisma';
 import { logger } from './infrastructure/config/logger';
 
+/**
+ * Función asíncrona para inyectar los proyectos reales del usuario a la base de datos.
+ */
 export const injectMissingFour = async () => {
   const prisma = Database.getInstance();
   try {

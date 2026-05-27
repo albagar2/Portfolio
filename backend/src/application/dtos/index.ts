@@ -1,3 +1,9 @@
+/**
+ * application/dtos/index.ts
+ * Archivo de definición de DTOs (Data Transfer Objects) usando Zod.
+ * Proporciona esquemas de validación estricta para garantizar que los datos de entrada
+ * cumplan con los formatos esperados antes de procesarlos.
+ */
 // ============================================================
 // DTOs (Data Transfer Objects) y Esquemas de Validación
 // Validan y transforman datos de entrada usando Zod

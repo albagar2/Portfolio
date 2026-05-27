@@ -1,3 +1,9 @@
+/**
+ * domain/errors/index.ts
+ * Define excepciones de dominio personalizadas.
+ * Permite manejar distintos tipos de errores semánticos (404, 400, 401, 403, etc.)
+ * de manera unificada y estructurada.
+ */
 // ============================================================
 // Errores de Dominio Personalizados
 // Errores semánticos que representan fallos de negocio,

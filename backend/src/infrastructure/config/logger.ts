@@ -1,3 +1,8 @@
+/**
+ * infrastructure/config/logger.ts
+ * Configura el sistema de logging utilizando Winston.
+ * Permite registrar mensajes de información, advertencia o error en consola.
+ */
 import winston from 'winston';
 
 /**

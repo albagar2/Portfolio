@@ -1,3 +1,9 @@
+/**
+ * domain/interfaces/repositories.ts
+ * Define los contratos para los repositorios de datos (interfaces).
+ * La implementación real (por ej. Prisma) se encuentra en la capa de infraestructura,
+ * lo que permite invertir las dependencias.
+ */
 // ============================================================
 // Interfaces de Repositorios (Domain Layer)
 // Definen los contratos que la capa de infraestructura

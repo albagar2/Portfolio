@@ -1,6 +1,10 @@
 import axios from 'axios';
 
-// Base URL from environment variable or default local
+/**
+ * @fileoverview api.ts
+ * @description Servicio de cliente HTTP (axios) para la comunicación con el backend.
+ * Incluye interceptores para manejar tokens de autenticación y su refresco.
+ */// URL base desde variable de entorno o detectar entorno de producción
 // Base URL from environment variable or detect production
 const API_URL = import.meta.env.VITE_API_URL || 
   (window.location.hostname.includes('railway.app') || window.location.hostname.includes('vercel.app') 
@@ -14,7 +18,7 @@ export const api = axios.create({
   },
 });
 
-// Variables to handle Token Refresh Queue
+// Variables para manejar la cola de refresco de tokens (Token Refresh Queue)
 let isRefreshing = false;
 let failedQueue: any[] = [];
 
@@ -29,7 +33,7 @@ const processQueue = (error: any, token: string | null = null) => {
   failedQueue = [];
 };
 
-// Request Interceptor: Attach the access token to all requests
+// Interceptor de Petición: Adjuntar el token de acceso a todas las solicitudes
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('accessToken');
@@ -41,16 +45,16 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Response Interceptor: Handle expired tokens with Refresh Token flow and Queue system
+// Interceptor de Respuesta: Manejar tokens expirados con flujo de Refresh Token y sistema de colas
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    // Avoid infinite loops: only retry once and only for 401s
+    // Evitar bucles infinitos: solo reintentar una vez y solo para errores 401
     if (error.response?.status === 401 && !originalRequest._retry) {
       
-      // If we are already refreshing, we push this request to the queue
+      // Si ya estamos refrescando, empujamos esta petición a la cola
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });
@@ -69,27 +73,27 @@ api.interceptors.response.use(
 
       if (refreshToken) {
         try {
-          // Attempt to get a new access token
+          // Intentar obtener un nuevo token de acceso
           const { data } = await axios.post(`${API_URL}/auth/refresh`, { refreshToken });
           
           if (data.success) {
             const { accessToken, refreshToken: newRefreshToken } = data.data;
             
-            // Store new tokens
+            // Almacenar nuevos tokens
             localStorage.setItem('accessToken', accessToken);
             localStorage.setItem('refreshToken', newRefreshToken);
             
-            // Re-run original request with new token
+            // Volver a ejecutar la petición original con el nuevo token
             originalRequest.headers.Authorization = `Bearer ${accessToken}`;
             
-            // Process the rest of the queue with the new token
+            // Procesar el resto de la cola con el nuevo token
             processQueue(null, accessToken);
             
             return api(originalRequest);
           }
         } catch (refreshError) {
           processQueue(refreshError, null);
-          // Refresh token failed -> Logout
+          // Falló el refresco del token -> Cerrar sesión
           localStorage.removeItem('accessToken');
           localStorage.removeItem('refreshToken');
           // No redirigir automáticamente aquí para no romper la navegación pública

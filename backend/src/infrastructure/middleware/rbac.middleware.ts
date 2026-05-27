@@ -1,3 +1,8 @@
+/**
+ * rbac.middleware.ts
+ * Archivo TypeScript de la aplicación.
+ * Contiene la lógica y definiciones para esta parte del módulo.
+ */
 import { Request, Response, NextFunction } from 'express';
 import { logger } from '../config/logger';
 

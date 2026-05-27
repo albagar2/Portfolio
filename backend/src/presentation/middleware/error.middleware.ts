@@ -1,3 +1,8 @@
+/**
+ * error.middleware.ts
+ * Archivo TypeScript de la aplicación.
+ * Contiene la lógica y definiciones para esta parte del módulo.
+ */
 // ============================================================
 // Middleware Global de Manejo de Errores
 // Captura todos los errores y los transforma en respuestas HTTP

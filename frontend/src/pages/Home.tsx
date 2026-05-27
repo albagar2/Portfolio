@@ -17,7 +17,8 @@ interface HomeProps {
 }
 
 /**
- * PÁGINA: Home (Nodo Principal)
+ * @fileoverview Home.tsx
+ * @description PÁGINA: Home (Nodo Principal).
  * Estructura de la página central del portafolio.
  * Orquesta todas las secciones principales (Hero, Skills, Proyectos, Experiencia, Blog).
  */

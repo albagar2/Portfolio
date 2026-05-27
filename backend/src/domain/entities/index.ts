@@ -1,3 +1,8 @@
+/**
+ * domain/entities/index.ts
+ * Contiene la definición de las interfaces y enums de negocio centrales de la aplicación.
+ * Define la estructura de las entidades puras (User, Profile, Project, etc.).
+ */
 // ============================================================
 // Entidades del Dominio
 // Representan los objetos de negocio puros, sin dependencias

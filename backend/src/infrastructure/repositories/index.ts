@@ -1,3 +1,8 @@
+/**
+ * index.ts
+ * Archivo TypeScript de la aplicación.
+ * Contiene la lógica y definiciones para esta parte del módulo.
+ */
 // ============================================================
 // Implementaciones de Repositorios con Prisma
 // Capa de infraestructura - implementan las interfaces del dominio

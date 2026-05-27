@@ -1,6 +1,15 @@
+/**
+ * inject-projects.ts
+ * Este archivo inyecta proyectos de demostración (ej. Family Drive, ALBA-OS Control Center)
+ * en la base de datos si detecta que la tabla está vacía. Es útil para poblar el
+ * entorno de pruebas rápidamente sin modificar el perfil del usuario.
+ */
 import { Database } from './infrastructure/database/prisma';
 import { logger } from './infrastructure/config/logger';
 
+/**
+ * Función asíncrona segura para inyectar proyectos demostrativos sin afectar el perfil.
+ */
 export const injectProjectsSafe = async () => {
   const prisma = Database.getInstance();
   try {

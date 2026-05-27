@@ -1,7 +1,11 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { api } from '../services/api';
 
-interface User {
+/**
+ * @fileoverview AuthContext.tsx
+ * @description Contexto de Autenticación de la aplicación.
+ * Proporciona el estado de sesión del usuario y las funciones para iniciar y cerrar sesión.
+ */interface User {
   userId: string;
   email: string;
   name: string;
@@ -19,6 +23,8 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  // ESTADO LOCAL: Maneja los datos del usuario actual y el estado de carga
+
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -36,6 +42,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsLoading(false);
   }, []);
 
+  // Función para verificar si hay una sesión activa al cargar la aplicación
   const checkAuth = useCallback(async () => {
     const token = localStorage.getItem('accessToken');
     if (!token) {
@@ -61,6 +68,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, [logout]);
 
+  // EFECTO: Se ejecuta al montar el proveedor para verificar la autenticación
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);

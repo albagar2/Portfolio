@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 /**
- * COMPONENTE: Cursor Personalizado
+ * @fileoverview CustomCursor.tsx
+ * @description COMPONENTE: Cursor Personalizado.
  * Renderiza un cursor estilizado siguiendo el mouse con coordenadas X,Y en tiempo real.
  */
 export const CustomCursor = () => {

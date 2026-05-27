@@ -1,3 +1,8 @@
+/**
+ * validate.middleware.ts
+ * Archivo TypeScript de la aplicación.
+ * Contiene la lógica y definiciones para esta parte del módulo.
+ */
 // ============================================================
 // Middleware de Validación con Zod
 // Wrapper que valida el body de las peticiones usando Zod schemas

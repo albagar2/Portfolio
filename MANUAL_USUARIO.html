@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual de Usuario - Portfolio Web</title>
+    <style>
+        :root {
+            --bg-color: #0d0d0d;
+            --text-color: #e0e0e0;
+            --accent-color: #FFB800;
+            --code-bg: #1a1a1a;
+            --border-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        h1, h2, h3 {
+            color: var(--accent-color);
+            margin-top: 2em;
+        }
+        h1 {
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            text-transform: uppercase;
+            font-style: italic;
+            font-weight: 900;
+        }
+        h2 {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+        }
+        code {
+            background-color: var(--code-bg);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #ff9d00;
+        }
+        pre {
+            background-color: var(--code-bg);
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+        }
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            color: inherit;
+        }
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .note {
+            background-color: rgba(255, 184, 0, 0.1);
+            border-left: 4px solid var(--accent-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        th {
+            color: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Manual de Usuario - Portfolio Web</h1>
+    <p>Bienvenido al manual operativo de tu Portfolio Web. Este documento contiene toda la información necesaria para arrancar, configurar y mantener tu página web.</p>
+
+    <h2>1. Arquitectura del Sistema</h2>
+    <p>El proyecto está dividido en dos partes principales, comunicadas a través de una API REST:</p>
+    <ul>
+        <li><strong>Frontend (Carpeta <code>frontend</code>):</strong> Interfaz de usuario construida con React, TypeScript y Vite. Utiliza TailwindCSS para los estilos y Framer Motion para las animaciones.</li>
+        <li><strong>Backend (Carpeta <code>backend</code>):</strong> Servidor construido con Node.js, Express y TypeScript. Se encarga de la base de datos, correos y panel de administración.</li>
+        <li><strong>Base de Datos:</strong> SQLite (archivo local <code>portfolio.db</code>). Gestionado con Prisma ORM.</li>
+    </ul>
+
+    <h2>2. Arrancar el Proyecto Localmente</h2>
+    <p>Para probar y modificar el proyecto en tu ordenador, he preparado unos scripts automáticos (archivos <code>.bat</code>) en la carpeta principal:</p>
+    <ul>
+        <li><code>ARRANCAR_TODO.bat</code>: Instala las dependencias si faltan, genera la base de datos y arranca el frontend y el backend al mismo tiempo. Usa este script siempre que quieras trabajar.</li>
+        <li><code>CERRAR_TODO.bat</code>: Cierra de forma segura todos los procesos de Node.js en tu ordenador por si algo se queda colgado.</li>
+        <li><code>VERIFICAR_SISTEMA.bat</code>: Chequea que tienes Node.js instalado y que los puertos están libres.</li>
+    </ul>
+    <p>Una vez arrancado, podrás acceder a:</p>
+    <ul>
+        <li><strong>Web:</strong> <a href="http://localhost:5173" target="_blank">http://localhost:5173</a></li>
+        <li><strong>Backend API:</strong> <a href="http://localhost:4000/api" target="_blank">http://localhost:4000/api</a></li>
+    </ul>
+
+    <h2>3. Configuración del Formulario de Contacto (Resend)</h2>
+    <p>El formulario de la web utiliza la API gratuita de Resend para enviarte los mensajes por correo, esquivando los bloqueos de los servidores gratuitos (como Railway).</p>
+    <div class="note">
+        <strong>Importante:</strong> Para que funcione correctamente en producción, debes asegurarte de que la clave de Resend esté configurada en las Variables de Entorno.
+    </div>
+    <p>En el panel de tu servidor (Railway o Vercel backend), añade la siguiente variable:</p>
+    <pre><code>RESEND_API_KEY=re_tu_clave_secreta_aqui</code></pre>
+    <p>El correo destino al que llegarán los mensajes será siempre <code>baciapez@gmail.com</code>.</p>
+
+    <h2>4. Panel de Administración y Contenido</h2>
+    <p>El portfolio incluye un panel de administración para gestionar proyectos, experiencia y tu perfil (si lo tienes activado en las rutas). Si deseas inyectar o reiniciar los datos de demostración (LinguaCore, etc.), el sistema lo hace de forma automática la primera vez que se crea la base de datos gracias a los archivos <code>inject-projects.ts</code> en el backend.</p>
+
+    <h2>5. Guía de Despliegue (Producción)</h2>
+    <p>El sistema está optimizado para desplegarse de la siguiente forma:</p>
+    <h3>5.1 Frontend (Vercel recomendado)</h3>
+    <ol>
+        <li>Conecta tu repositorio de GitHub a Vercel.</li>
+        <li>Selecciona la carpeta <code>frontend</code> como "Root Directory".</li>
+        <li>El framework debe ser "Vite".</li>
+        <li>En variables de entorno, añade: <code>VITE_API_URL=https://tu-url-del-backend.railway.app/api</code></li>
+    </ol>
+    
+    <h3>5.2 Backend (Railway recomendado)</h3>
+    <ol>
+        <li>Conecta tu GitHub a Railway y despliega la carpeta <code>backend</code>.</li>
+        <li>Añade un <strong>Volumen</strong> en Railway para que el archivo de base de datos SQLite no se borre al reiniciar el servidor. Monta el volumen en <code>/app/data</code> o similar.</li>
+        <li>Variables de entorno clave:
+<pre><code>PORT=8080
+DATABASE_URL=file:/app/data/portfolio.db
+NODE_ENV=production
+CORS_ORIGIN=https://tu-url-del-frontend.vercel.app
+RESEND_API_KEY=re_tu_clave...</code></pre>
+        </li>
+    </ol>
+
+    <h2>6. Resolución de Problemas Comunes (FAQ)</h2>
+    <table>
+        <tr>
+            <th>Problema</th>
+            <th>Solución</th>
+        </tr>
+        <tr>
+            <td>Al enviar el formulario dice "Error de conexión" o "Timeout".</td>
+            <td>Asegúrate de que la API de Resend está puesta y que el backend está encendido. Revisa los logs de Railway por si hubiera un fallo en el token.</td>
+        </tr>
+        <tr>
+            <td>La web carga pero los proyectos no aparecen.</td>
+            <td>El frontend no se está pudiendo comunicar con el backend. Verifica que <code>VITE_API_URL</code> apunta correctamente a la URL pública de tu backend.</td>
+        </tr>
+        <tr>
+            <td>Los cambios en el código no se ven reflejados localmente.</td>
+            <td>Refresca la caché del navegador (Ctrl+F5) o asegúrate de que el terminal donde arrancaste <code>ARRANCAR_TODO.bat</code> no haya mostrado errores.</td>
+        </tr>
+    </table>
+
+    <hr style="border: 0; border-top: 1px solid var(--border-color); margin-top: 40px;">
+    <p style="text-align: center; color: #888; font-size: 0.9em;">
+        Sistema creado y mantenido para el Portfolio de Alba. <br>
+        Documentación generada automáticamente.
+    </p>
+
+</body>
+</html>

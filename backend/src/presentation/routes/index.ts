@@ -1,3 +1,8 @@
+/**
+ * index.ts
+ * Archivo TypeScript de la aplicación.
+ * Contiene la lógica y definiciones para esta parte del módulo.
+ */
 // ============================================================
 // Definición de Rutas API
 // Configura todas las rutas con sus middleware de validación,

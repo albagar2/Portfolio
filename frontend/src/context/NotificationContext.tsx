@@ -2,7 +2,10 @@ import React, { createContext, useContext, useState, useCallback, ReactNode } fr
 import { AnimatePresence } from 'framer-motion';
 import { Toast } from '../components/layout/Toast';
 
-type NotificationType = 'success' | 'error' | 'info';
+/**
+ * @fileoverview NotificationContext.tsx
+ * @description Contexto global para manejar notificaciones (Toasts) en la aplicación.
+ */type NotificationType = 'success' | 'error' | 'info';
 
 interface NotificationContextType {
   showNotification: (message: string, type?: NotificationType) => void;
@@ -16,6 +19,7 @@ const NotificationContext = createContext<NotificationContextType | undefined>(u
  * Reemplaza los alerts nativos por notificaciones estilizadas de ALBA-OS.
  */
 export const NotificationProvider = ({ children }: { children: ReactNode }) => {
+  // ESTADO LOCAL: Maneja la notificación actual a mostrar
   const [notification, setNotification] = useState<{ message: string; type: NotificationType } | null>(null);
 
   const showNotification = useCallback((message: string, type: NotificationType = 'info') => {
