@@ -1,6 +1,13 @@
 import nodemailer from 'nodemailer';
+import dns from 'dns';
 import { config } from '../config/env.config';
 import { logger } from '../config/logger';
+
+// Fuerza a Node.js a preferir IPv4 sobre IPv6. 
+// Soluciona el error ENETUNREACH en contenedores (como Railway) que no tienen enrutamiento IPv6 completo.
+if (dns.setDefaultResultOrder) {
+  dns.setDefaultResultOrder('ipv4first');
+}
 
 export class EmailService {
   private static transporter: nodemailer.Transporter | null = null;
