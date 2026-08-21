@@ -3,6 +3,7 @@
 // ============================================================
 
 import { AuthService } from '../../src/infrastructure/auth/auth.service';
+import { UserRole } from '../../src/domain/entities';
 
 // Mock de config para tests
 jest.mock('../../src/infrastructure/config/env.config', () => ({
@@ -60,7 +61,7 @@ describe('AuthService', () => {
       const payload = {
         userId: 'test-user-id',
         email: 'test@test.com',
-        role: 'ADMIN' as const,
+        role: UserRole.ADMIN,
       };
 
       const tokens = AuthService.generateTokens(payload);
@@ -77,7 +78,7 @@ describe('AuthService', () => {
       const payload = {
         userId: 'test-user-id',
         email: 'test@test.com',
-        role: 'ADMIN' as const,
+        role: UserRole.ADMIN,
       };
 
       const tokens = AuthService.generateTokens(payload);
@@ -98,7 +99,7 @@ describe('AuthService', () => {
       const payload = {
         userId: 'test-user-id',
         email: 'test@test.com',
-        role: 'ADMIN' as const,
+        role: UserRole.ADMIN,
       };
 
       const tokens = AuthService.generateTokens(payload);
