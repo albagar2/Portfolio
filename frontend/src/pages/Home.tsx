@@ -7,9 +7,10 @@ import { ProjectCard, EnhancedHero } from '../components/layout/EnhancedHero';
 import { ProjectModal } from '../components/layout/ProjectModal';
 import { GithubFeed } from '../components/sections/GithubFeed';
 import { Footer } from '../components/layout/Footer';
+import { PortfolioData, Project } from '../types/portfolio';
 
 interface HomeProps {
-  data: any;
+  data: PortfolioData;
   scaleX: any;
   onOpenContact: () => void;
   t: any;
@@ -23,7 +24,7 @@ interface HomeProps {
  * Orquesta todas las secciones principales (Hero, Skills, Proyectos, Experiencia, Blog).
  */
 export const Home = ({ data, scaleX, onOpenContact, t, lang }: HomeProps) => {
-  const [selectedProject, setSelectedProject] = React.useState<any>(null);
+  const [selectedProject, setSelectedProject] = React.useState<Project | null>(null);
 
   // Helper para obtener el campo traducido o el original de respaldo
   const getT = (obj: any, field: string) => {

@@ -13,6 +13,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import { NotificationProvider } from './context/NotificationContext';
 import { api } from './services/api';
 import { translations } from './constants/translations';
+import { PortfolioData } from './types/portfolio';
 
 // --- COMPONENTES DE DISEÑO (LAYOUT) ---
 import { CustomCursor } from './components/layout/CustomCursor';
@@ -62,7 +63,7 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
  */
 export const App = () => {
   // Estado de Datos Maestros (Proyectos, Experiencia, Educación, Posts y Perfil)
-  const [data, setData] = useState<any>({ projects: [], exp: [], edu: [], posts: [], profile: null });
+  const [data, setData] = useState<PortfolioData>({ projects: [], exp: [], edu: [], posts: [], profile: null });
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [lang, setLang] = useState('es');
   const [isDark, setIsDark] = useState(true);

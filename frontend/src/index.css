@@ -84,7 +84,6 @@ section {
     font-family: var(--font-outfit);
     margin: 0;
     overflow-x: hidden;
-    cursor: none; 
   }
   
   .light body {

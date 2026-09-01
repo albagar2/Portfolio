@@ -11,24 +11,24 @@ const InteractiveTerminal = ({ lang }: { lang: string }) => {
     
     const terminalTexts = {
         en: {
-            init: ['ALBA_OS_BOOT_SEQUENCE_OK', 'Initializing kernel...', 'Accessing user_profile.bin', 'Type "help" for a list of commands.'],
-            help: 'AVAILABLE_CMDS: bio, skills, projects, stack, clear, whoami',
-            bio: 'Alba García: Software Architect specializing in high-performance digital ecosystems.',
-            skills: 'CORE_STACK: React 18, TypeScript, Node.js, PostgreSQL, Cloud_Infra.',
-            projects: 'SCANNING: [Gasoil, EsquelasTV, ALBA-OS, NeuralGuard, CryptoPro, BioSync, EchoVault, GestorPro, ComfortFood] Found 9 active nodes.',
-            stack: 'TECH: Next.js, Framer_Motion, Tailwind, Python, SQLite.',
-            whoami: 'USER: Recruiter_Entity // STATUS: Authorized_Access',
-            err: (cmd: string) => `ERR: Command "${cmd}" not found in core database.`
+            init: ['SYSTEM_READY', 'Interactive Terminal Loaded.', 'Type "help" to see available commands.'],
+            help: 'AVAILABLE_CMDS: bio, skills, projects, stack, clear, contact',
+            bio: 'Alba García: Full-Stack Developer specializing in modern Web Architecture, React, TypeScript & Node.js.',
+            skills: 'CORE_STACK: React 18, TypeScript, Node.js, Express, PostgreSQL, Prisma, Tailwind, Docker.',
+            projects: 'PROJECTS: [Gasoil Control, EsquelasTV, SoundWave, NeuralGuard, CryptoPro, BioSync, EchoVault, GestorPro]',
+            stack: 'TECH: React 18, Vite, Framer Motion, Express, PostgreSQL, Docker, Git.',
+            contact: 'EMAIL: contact@albagarcia.dev // GITHUB: github.com/albagar2',
+            err: (cmd: string) => `Command "${cmd}" not recognized. Type "help" for options.`
         },
         es: {
-            init: ['ALBA_OS_BOOT_SEQUENCE_OK', 'Inicializando kernel...', 'Accediendo a user_profile.bin', 'Escribe "help" para ver los comandos.'],
-            help: 'CMDS_DISPONIBLES: bio, skills, projects, stack, clear, whoami',
-            bio: 'Alba García: Arquitecta de Software especializada en ecosistemas digitales de alto rendimiento.',
-            skills: 'CORE_STACK: React 18, TypeScript, Node.js, PostgreSQL, Cloud_Infra.',
-            projects: 'ESCANEANDO: [Gasoil, EsquelasTV, ALBA-OS, NeuralGuard, CryptoPro, BioSync, EchoVault, GestorPro, ComfortFood] 9 nodos activos.',
-            stack: 'TECH: Next.js, Framer_Motion, Tailwind, Python, SQLite.',
-            whoami: 'USUARIO: Recruiter_Entity // ESTADO: Acceso_Autorizado',
-            err: (cmd: string) => `ERR: Comando "${cmd}" no encontrado en el núcleo.`
+            init: ['SISTEMA_LISTO', 'Terminal interactiva cargada.', 'Escribe "help" para ver los comandos disponibles.'],
+            help: 'COMANDOS: bio, skills, proyectos, stack, clear, contacto',
+            bio: 'Alba García: Desarrolladora Full-Stack especializada en arquitectura web moderna, React, TypeScript y Node.js.',
+            skills: 'STACK PRINCIPAL: React 18, TypeScript, Node.js, Express, PostgreSQL, Prisma, Tailwind, Docker.',
+            projects: 'PROYECTOS: [Control Gasoil, EsquelasTV, SoundWave, NeuralGuard, CryptoPro, BioSync, EchoVault, GestorPro]',
+            stack: 'TECNOLOGÍAS: React 18, Vite, Framer Motion, Express, PostgreSQL, Docker, Git.',
+            contacto: 'EMAIL: contacto@albagarcia.dev // GITHUB: github.com/albagar2',
+            err: (cmd: string) => `Comando "${cmd}" no reconocido. Escribe "help" para ver las opciones.`
         }
     };
 
@@ -52,9 +52,9 @@ const InteractiveTerminal = ({ lang }: { lang: string }) => {
             case 'help': response = texts.help; break;
             case 'bio': response = texts.bio; break;
             case 'skills': response = texts.skills; break;
-            case 'projects': response = texts.projects; break;
+            case 'projects': case 'proyectos': response = texts.projects; break;
             case 'stack': response = texts.stack; break;
-            case 'whoami': response = texts.whoami; break;
+            case 'contact': case 'contacto': response = 'contact' in texts ? texts.contact : (texts as any).contacto; break;
             case 'clear': setHistory([]); setInput(''); return;
             default: response = texts.err(cmd);
         }
